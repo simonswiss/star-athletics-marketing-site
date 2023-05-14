@@ -4,6 +4,7 @@ import image1 from '@/public/images/01.jpeg'
 import image2 from '@/public/images/02.jpeg'
 import image3 from '@/public/images/03.jpeg'
 import image4 from '@/public/images/04.jpeg'
+import Link from 'next/link'
 
 export default function Hero() {
   return (
@@ -61,15 +62,15 @@ export default function Hero() {
                 the way to invitation only advanced runners.
               </p>
               <div className="mt-10 flex items-center gap-x-6">
-                <a
+                <Link
                   href="#"
                   className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Enroll now
-                </a>
-                <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+                </Link>
+                <Link href="/coaches" className="text-sm font-semibold leading-6 text-gray-900">
                   Meet the coaches <span aria-hidden="true">→</span>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
