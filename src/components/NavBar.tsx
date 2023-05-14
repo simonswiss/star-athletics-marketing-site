@@ -9,13 +9,16 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from '@/components/Logo'
 
 const navigation = [
-  { name: 'Sydney', href: '#' },
-  { name: 'Woolgoolga', href: '#' },
-  // { name: "Marketplace", href: "#" },
-  // { name: "Company", href: "#" },
+  { name: 'Sydney', href: '/sydney' },
+  { name: 'Woopi', href: '/woopi' },
+  { name: 'Coaches', href: '/coaches' },
+  { name: 'FAQ', href: '/faq' },
 ]
 
-export default function Header() {
+const beforeSessions = navigation.slice(0, 2)
+const afterSessions = navigation.slice(2)
+
+export default function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -28,7 +31,7 @@ export default function Header() {
           <div className="flex lg:flex-1">
             <Link href="#" className="group">
               <span className="sr-only">Star Athletics</span>
-              <Logo className="h-9 group-hover:-rotate-1 transition" />
+              <Logo className="h-9 group-hover:scale-[0.98] transition" />
             </Link>
           </div>
           <div className="flex lg:hidden">
@@ -42,7 +45,17 @@ export default function Header() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
+            {beforeSessions.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Dropdown />
+            {afterSessions.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
@@ -108,5 +121,83 @@ export default function Header() {
         </Dialog>
       </header>
     </div>
+  )
+}
+
+import { Fragment } from 'react'
+import { Popover, Transition } from '@headlessui/react'
+import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import {
+  ArrowPathIcon,
+  ChartPieIcon,
+  CursorArrowRaysIcon,
+  FingerPrintIcon,
+  SquaresPlusIcon,
+} from '@heroicons/react/24/outline'
+
+const solutions = [
+  {
+    name: 'Sydney',
+    description: `Session in Sydney's Northern Beaches`,
+    href: '/sydney/sessions',
+    icon: ChartPieIcon,
+  },
+  {
+    name: 'Woopi',
+    description: 'Sessions in Woolgoolga',
+    href: '/woopi/sessions',
+    icon: CursorArrowRaysIcon,
+  },
+]
+const callsToAction = [
+  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
+  { name: 'Contact sales', href: '#', icon: PhoneIcon },
+]
+
+function Dropdown() {
+  return (
+    <Popover className="relative">
+      <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+        <span>Sessions</span>
+        <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
+      </Popover.Button>
+
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-200"
+        enterFrom="opacity-0 translate-y-1"
+        enterTo="opacity-100 translate-y-0"
+        leave="transition ease-in duration-150"
+        leaveFrom="opacity-100 translate-y-0"
+        leaveTo="opacity-0 translate-y-1"
+      >
+        <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+          <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+            <div className="p-4">
+              {solutions.map((item) => (
+                <div
+                  key={item.name}
+                  className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50"
+                >
+                  <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <item.icon
+                      className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <div>
+                    <a href={item.href} className="font-semibold text-gray-900">
+                      {item.name}
+                      <span className="absolute inset-0" />
+                    </a>
+                    <p className="mt-1 text-gray-600">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Popover.Panel>
+      </Transition>
+    </Popover>
   )
 }
