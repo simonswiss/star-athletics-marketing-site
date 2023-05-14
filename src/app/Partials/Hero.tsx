@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import image1 from '@/public/images/01.jpeg'
 import image2 from '@/public/images/02.jpeg'
 import image3 from '@/public/images/03.jpeg'
@@ -73,7 +75,9 @@ export default function Hero() {
             <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
               <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
                 <div className="relative">
-                  <img
+                  <Image
+                    width={176}
+                    height={176 * 1.5}
                     src="/images/01.jpeg"
                     alt=""
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -83,7 +87,9 @@ export default function Hero() {
               </div>
               <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
                 <div className="relative">
-                  <img
+                  <Image
+                    width={176}
+                    height={176 * 1.5}
                     src="/images/02.jpeg"
                     alt=""
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -91,7 +97,9 @@ export default function Hero() {
                   <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                 </div>
                 <div className="relative">
-                  <img
+                  <Image
+                    width={176}
+                    height={176 * 1.5}
                     src="/images/03.jpeg"
                     alt=""
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -101,7 +109,9 @@ export default function Hero() {
               </div>
               <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
                 <div className="relative">
-                  <img
+                  <Image
+                    width={176}
+                    height={176 * 1.5}
                     src="/images/04.jpeg"
                     alt=""
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -109,7 +119,9 @@ export default function Hero() {
                   <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                 </div>
                 <div className="relative">
-                  <img
+                  <Image
+                    width={176}
+                    height={176 * 1.5}
                     src="/images/05.jpeg"
                     alt=""
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
