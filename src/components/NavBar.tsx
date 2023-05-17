@@ -12,6 +12,7 @@ const navigation = [
   { name: 'Sydney', href: '/sydney' },
   { name: 'Woopi', href: '/woopi' },
   { name: 'Coaches', href: '/coaches' },
+  { name: 'Events', href: '/events' },
   { name: 'FAQ', href: '/faq' },
 ]
 
@@ -31,7 +32,7 @@ export default function NavBar() {
           <div className="flex lg:flex-1">
             <Link href="#" className="group">
               <span className="sr-only">Star Athletics</span>
-              <Logo className="h-9 group-hover:scale-[0.98] transition" />
+              <Logo className="h-9 transition group-hover:scale-[0.98]" />
             </Link>
           </div>
           <div className="flex lg:hidden">
@@ -97,7 +98,17 @@ export default function NavBar() {
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
+                  {beforeSessions.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                  <Dropdown />
+                  {afterSessions.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
@@ -181,7 +192,7 @@ function Dropdown() {
                 >
                   <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                     <item.icon
-                      className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                      className="h-6 w-6 text-gray-600 group-hover:text-purple-600"
                       aria-hidden="true"
                     />
                   </div>

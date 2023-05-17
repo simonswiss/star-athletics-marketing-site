@@ -6,7 +6,7 @@ export default function Introduction() {
     <>
       <div className="bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-base font-semibold leading-7 text-indigo-600">
+          <p className="text-base font-semibold leading-7 text-purple-600">
             Your journey starts today
           </p>
           <h2 className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -56,7 +56,7 @@ export default function Introduction() {
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div className="lg:pr-4">
               <div className="lg:max-w-lg">
-                <p className="text-base font-semibold leading-7 text-indigo-600">
+                <p className="text-base font-semibold leading-7 text-purple-600">
                   It&apos;s more than running.
                 </p>
                 <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -94,7 +94,7 @@ export default function Introduction() {
                                 >
                                     <li className="flex gap-x-3">
                                         <CloudArrowUpIcon
-                                            className="mt-1 h-5 w-5 flex-none text-indigo-600"
+                                            className="mt-1 h-5 w-5 flex-none text-purple-600"
                                             aria-hidden="true"
                                         />
                                         <span>
@@ -110,7 +110,7 @@ export default function Introduction() {
                                     </li>
                                     <li className="flex gap-x-3">
                                         <LockClosedIcon
-                                            className="mt-1 h-5 w-5 flex-none text-indigo-600"
+                                            className="mt-1 h-5 w-5 flex-none text-purple-600"
                                             aria-hidden="true"
                                         />
                                         <span>
@@ -124,7 +124,7 @@ export default function Introduction() {
                                     </li>
                                     <li className="flex gap-x-3">
                                         <ServerIcon
-                                            className="mt-1 h-5 w-5 flex-none text-indigo-600"
+                                            className="mt-1 h-5 w-5 flex-none text-purple-600"
                                             aria-hidden="true"
                                         />
                                         <span>
