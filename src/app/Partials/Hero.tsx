@@ -60,11 +60,11 @@ export default function Hero() {
               </h1>
               <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
                 Star Athletics operates in{' '}
-                <Link href="/sydney" className="font-bold text-cyan-500">
+                <Link href="/sydney" className="font-bold text-cyan-500 hover:underline">
                   Sydney&apos;s Northern Beaches
                 </Link>{' '}
                 and{' '}
-                <Link href="/woopi" className="font-bold text-purple-500">
+                <Link href="/woopi" className="font-bold text-purple-500 hover:underline">
                   Woolgoolga
                 </Link>
                 . We provide a smooth transition from beginner fun to intermediate, all the way to
