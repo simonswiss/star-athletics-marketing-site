@@ -55,11 +55,20 @@ export default function Hero() {
           <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
             <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Fun-filled athletics for all levels. Pre-school to young adults.
+                <span className="text-purple-500">Fun-filled</span> athletics for{' '}
+                <span className="text-cyan-500">all levels</span>. Pre-school to young adults.
               </h1>
               <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                Star Athletics provides a smooth transition from beginner fun to intermediate, all
-                the way to invitation only advanced runners.
+                Star Athletics operates in{' '}
+                <Link href="/sydney" className="font-bold text-cyan-500">
+                  Sydney&apos;s Northern Beaches
+                </Link>{' '}
+                and{' '}
+                <Link href="/woopi" className="font-bold text-purple-500">
+                  Woolgoolga
+                </Link>
+                . We provide a smooth transition from beginner fun to intermediate, all the way to
+                invitation only advanced runners.
               </p>
               <div className="mt-10 flex items-center gap-x-6">
                 <Link
