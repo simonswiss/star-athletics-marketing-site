@@ -1,0 +1,9 @@
+name: Full Session
+day: Friday
+startTime: 5:00 PM
+endTime: 6:00 PM
+location: The Tavern
+capacity: 20
+enrolments: 20
+description: This is an example of a full session, which cannot be booked.
+bookingFormUrl: https://star-athletics.com.au
