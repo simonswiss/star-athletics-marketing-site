@@ -30,5 +30,9 @@ export const homepage = singleton({
       }),
       altText: fields.text({ label: 'Alt Text' }),
     }),
+    primaryTestimonial: fields.relationship({
+      label: 'Primary Testimonial',
+      collection: 'testimonials',
+    }),
   },
 })
