@@ -1,12 +1,24 @@
 import Image from 'next/image'
 
+import { reader } from '@/app/keystatic/reader'
+
 import image1 from '@/public/images/01.jpeg'
 import image2 from '@/public/images/02.jpeg'
 import image3 from '@/public/images/03.jpeg'
 import image4 from '@/public/images/04.jpeg'
 import Link from 'next/link'
 
-export default function Hero() {
+export default async function Hero() {
+  const data = await reader.singletons.homepage.read()
+  const image1 = data?.heroImages[0]
+  const image2 = data?.heroImages[1]
+  const image3 = data?.heroImages[2]
+  const image4 = data?.heroImages[3]
+  const image5 = data?.heroImages[4]
+
+  if (!image1 || !image2 || !image3 || !image4 || !image5) {
+    throw new Error('Missing homepage hero images, make sure there are 5 images in the CMS.')
+  }
   return (
     <div className="relative isolate">
       <svg
@@ -88,8 +100,8 @@ export default function Hero() {
                   <Image
                     width={176}
                     height={176 * 1.5}
-                    src="/images/01.jpeg"
-                    alt=""
+                    src={image1.url}
+                    alt={image1.altText}
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                   />
                   <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -100,8 +112,8 @@ export default function Hero() {
                   <Image
                     width={176}
                     height={176 * 1.5}
-                    src="/images/02.jpeg"
-                    alt=""
+                    src={image2.url}
+                    alt={image2.altText}
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                   />
                   <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -110,8 +122,8 @@ export default function Hero() {
                   <Image
                     width={176}
                     height={176 * 1.5}
-                    src="/images/03.jpeg"
-                    alt=""
+                    src={image3.url}
+                    alt={image3.altText}
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                   />
                   <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -122,8 +134,8 @@ export default function Hero() {
                   <Image
                     width={176}
                     height={176 * 1.5}
-                    src="/images/04.jpeg"
-                    alt=""
+                    src={image4.url}
+                    alt={image4.altText}
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                   />
                   <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -132,8 +144,8 @@ export default function Hero() {
                   <Image
                     width={176}
                     height={176 * 1.5}
-                    src="/images/05.jpeg"
-                    alt=""
+                    src={image5.url}
+                    alt={image5.altText}
                     className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                   />
                   <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />

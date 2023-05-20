@@ -1,7 +1,12 @@
-import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 
-export default function Introduction() {
+import { reader } from '@/app/keystatic/reader'
+
+export default async function Introduction() {
+  const data = await reader.singletons.homepage.read()
+  const bigImage = data?.bigImage
+  if (!bigImage)
+    throw new Error('Missing homepage big image, make sure there is an image in the CMS.')
   return (
     <>
       <div className="bg-white px-6 py-24 sm:py-32 lg:px-8">
@@ -75,8 +80,8 @@ export default function Introduction() {
               width={912}
               height={643}
               className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
-              src="/images/01.jpeg"
-              alt=""
+              src={bigImage.url}
+              alt={bigImage.altText}
             />
           </div>
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">

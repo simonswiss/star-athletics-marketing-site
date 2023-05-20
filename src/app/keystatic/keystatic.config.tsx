@@ -2,9 +2,13 @@ import { config, collection } from '@keystatic/core'
 
 import { storage } from './storage'
 import { sessionSchema } from './schema/sessions'
+import { homepage } from './schema/homepage'
 
 export default config({
   storage,
+  singletons: {
+    homepage,
+  },
   collections: {
     sydneySessions: collection({
       label: 'Sydney Sessions',
