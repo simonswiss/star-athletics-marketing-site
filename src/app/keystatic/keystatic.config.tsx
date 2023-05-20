@@ -4,9 +4,7 @@ import { storage } from './storage'
 import { sessionSchema } from './schema/sessions'
 
 export default config({
-  storage: {
-    kind: 'local',
-  },
+  storage,
   collections: {
     sydneySessions: collection({
       label: 'Sydney Sessions',
