@@ -1,9 +1,10 @@
 import { config, collection } from '@keystatic/core'
 
 import { storage } from './storage'
-import { sessionSchema } from './schema/sessions'
-import { testimonials } from './schema/testimonials'
 import { homepage } from './schema/homepage'
+import { sessionSchema } from './schema/sessions'
+import { coaches } from './schema/coaches'
+import { testimonials } from './schema/testimonials'
 
 export default config({
   storage,
@@ -23,6 +24,7 @@ export default config({
       slugField: 'name',
       schema: sessionSchema,
     }),
+    coaches,
     testimonials,
   },
 })
