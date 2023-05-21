@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import clsx from 'clsx'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -18,6 +20,7 @@ const navigation = [
 
 export default function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
     <div className="bg-white">
@@ -43,15 +46,21 @@ export default function NavBar() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navigation.map((item) => {
+              const isActive = pathname?.startsWith(item.href)
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={clsx(
+                    'border-b-2 border-transparent text-sm font-semibold leading-6 text-gray-900 hover:border-gray-900',
+                    isActive && 'border-gray-900'
+                  )}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link

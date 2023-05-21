@@ -9,7 +9,7 @@ export default async function Introduction() {
     throw new Error('Missing homepage big image, make sure there is an image in the CMS.')
   return (
     <>
-      <div className="bg-white px-6 py-24 sm:py-32 lg:px-8">
+      <div className="bg-white px-6 py-16 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-base font-semibold leading-7 text-purple-600">
             Your journey starts today
@@ -79,7 +79,7 @@ export default async function Introduction() {
             <Image
               width={912}
               height={643}
-              className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+              className="w-[130%] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
               src={bigImage.url}
               alt={bigImage.altText}
             />

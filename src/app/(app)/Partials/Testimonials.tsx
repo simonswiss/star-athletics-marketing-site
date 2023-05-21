@@ -105,7 +105,7 @@ export default async function Example() {
                 >
                   {column.map((testimonial) => (
                     <figure
-                      key={testimonial.entry.role}
+                      key={testimonial.slug}
                       className="rounded-2xl bg-white p-6 shadow-lg ring-1 ring-gray-900/5"
                     >
                       <blockquote className="text-gray-900">

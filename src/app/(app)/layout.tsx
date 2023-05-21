@@ -14,9 +14,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} grid grid-rows-[auto,1fr,auto] min-h-screen`}>
+      <body className={`${inter.className} grid min-h-screen grid-rows-[auto,1fr,auto]`}>
         <NavBar />
-        <main>{children}</main>
+        <main className="max-w-full overflow-x-hidden">{children}</main>
         <Footer />
       </body>
     </html>
