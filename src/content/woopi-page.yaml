@@ -1,0 +1,13 @@
+title: Star Athletics Woopi
+leadText: >-
+  This is the lead text field. It should be a high-impact, one-two sentence
+  paragraph.
+introText: >-
+  This is a secondary intro paragraph to bring some more details about the
+  Sydney sessions. Again, it should be one or two sentences long, not much more.
+buttonText: View Woopi sessions
+images:
+  - url: /images/woopi-page/images/0/url.jpeg
+  - url: /images/woopi-page/images/1/url.jpeg
+  - url: /images/woopi-page/images/2/url.jpeg
+  - url: /images/woopi-page/images/3/url.jpeg

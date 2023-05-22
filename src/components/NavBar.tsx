@@ -32,7 +32,7 @@ export default function NavBar() {
           <div className="flex lg:flex-1">
             <Link href="#" className="group">
               <span className="sr-only">Star Athletics</span>
-              <Logo className="h-9 transition group-hover:scale-[0.98]" />
+              <Logo className="h-9" />
             </Link>
           </div>
           <div className="flex lg:hidden">
