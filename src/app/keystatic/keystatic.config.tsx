@@ -10,7 +10,9 @@ import { coaches } from './schema/coaches'
 import { testimonials } from './schema/testimonials'
 
 export default config({
-  storage,
+  storage: {
+    kind: 'local',
+  },
   singletons: {
     homepage,
     sydneyPage,
