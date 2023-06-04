@@ -6,7 +6,7 @@ export const woopiPage = singleton({
   schema: {
     title: fields.text({ label: 'Title' }),
     leadText: fields.text({ label: 'Lead Text', multiline: true }),
-    introText: fields.text({ label: 'Intro Text', multiline: true }),
+    introText: fields.document({ label: 'Intro Text', formatting: true, links: true }),
     buttonText: fields.text({ label: 'Button Text' }),
     images: fields.array(
       fields.object({

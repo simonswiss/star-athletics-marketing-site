@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { ShieldCheckIcon } from '@heroicons/react/24/outline'
 import { reader } from '@/app/keystatic/reader'
 import { DocumentRenderer } from '@keystatic/core/renderer'
@@ -72,8 +73,8 @@ export default async function Example({
               </div>
             </div>
             <div className="mt-10 flex">
-              <a
-                href="#"
+              <Link
+                href={`/${coach.region.toLowerCase()}/sessions`}
                 className={twMerge(
                   'text-base font-semibold leading-7 hover:underline',
                   coach.region === 'Sydney' ? 'text-purple-600' : 'text-sky-500'
@@ -81,7 +82,7 @@ export default async function Example({
               >
                 View {coach.name}&apos;s sessions in {coach.region}{' '}
                 <span aria-hidden="true">&rarr;</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

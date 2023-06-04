@@ -3,6 +3,12 @@
     "name": "Sydney",
     "items": [
       {
+        "name": "Overview",
+        "description": "An overview of the Sydney program",
+        "href": "/sydney",
+        "icon": "MapIcon"
+      },
+      {
         "name": "Group Sessions",
         "description": "Fun filled sessions, for all ages and abilities",
         "href": "/sydney/sessions",
@@ -29,6 +35,12 @@
   "woopi": {
     "name": "Woopi",
     "items": [
+      {
+        "name": "Overview",
+        "description": "An overview of the Woopi program",
+        "href": "/woopi",
+        "icon": "MapIcon"
+      },
       {
         "name": "Group Sessions",
         "description": "Fun filled sessions, for all ages and abilities",

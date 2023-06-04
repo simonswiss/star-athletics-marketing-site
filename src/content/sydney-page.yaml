@@ -1,10 +1,7 @@
-title: Star Athletics Sydney Hello
+title: Star Athletics Sydney
 leadText: >-
-  This is the lead text field. It DKLJ KLSDJ LSKDJ KDshould be a high-impact,
-  one-two sentence paragraph.
-introText: >-
-  This is a secondary intro paragraph to bring some more details about the
-  Sydney sessions. Again, it should be one or two sentences long, not much more.
+  This is the lead text field. It should be a high-impact, one-two sentence
+  paragraph.
 buttonText: View our Sydney sessions
 images:
   - url: /images/sydney-page/images/0/url.jpeg

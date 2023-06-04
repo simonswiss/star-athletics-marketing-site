@@ -13,6 +13,7 @@ import {
   StarIcon,
   ListBulletIcon,
   FaceSmileIcon,
+  MapIcon,
 } from '@heroicons/react/24/outline'
 
 import {
@@ -36,6 +37,7 @@ const iconsLookup: Record<string, typeof ArrowPathIcon> = {
   StarIcon,
   ListBulletIcon,
   FaceSmileIcon,
+  MapIcon,
   ChatBubbleOvalLeftIcon,
 }
 
