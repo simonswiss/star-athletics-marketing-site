@@ -1,0 +1,69 @@
+{
+  "sydney": {
+    "name": "Sydney",
+    "items": [
+      {
+        "name": "Group Sessions",
+        "description": "Fun filled sessions, for all ages and abilities",
+        "href": "#",
+        "icon": "SparklesIcon"
+      },
+      {
+        "name": "One-on-one Coaching",
+        "description": "Personal sessions, tailored to your goals",
+        "href": "#",
+        "icon": "StarIcon"
+      },
+      {
+        "name": "Holiday Camps",
+        "description": "Stay fit and entertained during the holidays",
+        "href": "#",
+        "icon": "PhotoIcon"
+      },
+      {
+        "name": "Schools",
+        "description": "Programs specifically designed for schools",
+        "href": "#",
+        "icon": "AcademicCapIcon"
+      }
+    ],
+    "callsToAction": [
+      { "name": "View all sessions", "href": "#", "icon": "ListBulletIcon" },
+      { "name": "Ask a question", "href": "#", "icon": "ChatBubbleOvalLeftIcon" }
+    ]
+  },
+  "woopi": {
+    "name": "Woopi",
+    "items": [
+      {
+        "name": "Schools",
+        "description": "Get a better understanding of your traffic",
+        "href": "#",
+        "icon": "ChartPieIcon"
+      },
+      {
+        "name": "Group Sessions",
+        "description": "Speak directly to your customers",
+        "href": "#",
+        "icon": "CursorArrowRaysIcon"
+      },
+      {
+        "name": "Holiday Camps",
+        "description": "Your customers’ data will be safe and secure",
+        "href": "#",
+        "icon": "FingerPrintIcon"
+      },
+      {
+        "name": "Woopi Region Overview",
+        "description": "Build strategic funnels that will convert",
+        "href": "/woopi",
+        "icon": "ArrowPathIcon"
+      }
+    ],
+    "callsToAction": [
+      { "name": "Watch demo", "href": "#", "icon": "PlayCircleIcon" },
+      { "name": "Contact sales", "href": "#", "icon": "PhoneIcon" }
+    ]
+  },
+  "links": [{ "name": "NSW Events", "href": "/events" }]
+}

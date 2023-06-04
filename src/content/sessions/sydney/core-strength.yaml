@@ -1,10 +1,11 @@
 name: Core Strength
-day: Wednesday
-startTime: 6:00 AM
-endTime: 7:00 AM
+status: closed
+day: Friday
+startTime: 4:00 AM
+endTime: 5:00 AM
 location: Location goes here
 capacity: 12
-enrolments: 3
+enrolments: 11
 description: >-
   A session focused on core strength. Lorem ipsum dolor sit amet consectetur
   adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo

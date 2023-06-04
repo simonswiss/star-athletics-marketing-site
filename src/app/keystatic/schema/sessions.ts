@@ -2,6 +2,15 @@ import { fields } from '@keystatic/core'
 
 export const sessionSchema = {
   name: fields.slug({ name: { label: 'Name' } }),
+  status: fields.select({
+    label: 'Status',
+    options: [
+      { label: 'Open for registgration', value: 'Open for registration' },
+      { label: 'Waitlist ', value: 'waitlist' },
+      { label: 'Closed', value: 'closed' },
+    ],
+    defaultValue: 'Open for registration',
+  }),
   day: fields.select({
     label: 'Day',
     options: [

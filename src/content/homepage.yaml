@@ -1,8 +1,8 @@
 heroImages:
   - url: /images/homepage/heroImages/0/url.jpeg
   - url: /images/homepage/heroImages/1/url.jpeg
-    altText: Sprint finish
   - url: /images/homepage/heroImages/2/url.jpeg
+    altText: Sprint finish
   - url: /images/homepage/heroImages/3/url.jpeg
   - url: /images/homepage/heroImages/4/url.jpeg
 bigImage:

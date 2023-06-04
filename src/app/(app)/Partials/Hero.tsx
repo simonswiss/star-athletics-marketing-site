@@ -84,14 +84,20 @@ export default async function Hero() {
               </p>
               <div className="mt-10 flex items-center gap-x-6">
                 <Link
-                  href="/register"
+                  href="/sydney/sessions"
                   className="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                 >
-                  Enroll now
+                  Sydney sessions
                 </Link>
-                <Link href="/coaches" className="text-sm font-semibold leading-6 text-gray-900">
+                <Link
+                  href="/woopi/sessions"
+                  className="rounded-md bg-cyan-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                >
+                  Woopi sessions
+                </Link>
+                {/* <Link href="/coaches" className="text-sm font-semibold leading-6 text-gray-900">
                   Meet the coaches <span aria-hidden="true">→</span>
-                </Link>
+                </Link> */}
               </div>
             </div>
             <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
