@@ -70,9 +70,12 @@ export default function Example() {
         <div className="hidden flex-1 items-center justify-end gap-x-6 lg:flex">
           <Link
             href="/contact"
-            className="lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900"
+            className={twMerge(
+              'border-b-2 border-transparent lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900',
+              pathname === '/contact' && 'border-gray-900'
+            )}
           >
-            Ask a question
+            Contact
           </Link>
           <Link
             href="/register"
@@ -123,9 +126,12 @@ export default function Example() {
               <div className="py-6">
                 <Link
                   href="/contact"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className={twMerge(
+                    '-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50',
+                    pathname === '/contact' && 'underline decoration-2'
+                  )}
                 >
-                  Ask a question
+                  Contact
                 </Link>
                 <Link
                   href="/register"
