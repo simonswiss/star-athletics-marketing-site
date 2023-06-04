@@ -5,7 +5,7 @@
       {
         "name": "Group Sessions",
         "description": "Fun filled sessions, for all ages and abilities",
-        "href": "#",
+        "href": "/sydney/sessions",
         "icon": "SparklesIcon"
       },
       {
@@ -15,54 +15,48 @@
         "icon": "StarIcon"
       },
       {
-        "name": "Holiday Camps",
-        "description": "Stay fit and entertained during the holidays",
-        "href": "#",
-        "icon": "PhotoIcon"
-      },
-      {
         "name": "Schools",
         "description": "Programs specifically designed for schools",
         "href": "#",
         "icon": "AcademicCapIcon"
+      },
+      {
+        "name": "Holiday Camps",
+        "description": "Stay fit and entertained during the holidays",
+        "href": "#",
+        "icon": "PhotoIcon"
       }
     ],
     "callsToAction": [
-      { "name": "View all sessions", "href": "#", "icon": "ListBulletIcon" },
-      { "name": "Ask a question", "href": "#", "icon": "ChatBubbleOvalLeftIcon" }
+      { "name": "View all sessions", "href": "/sydney/sessions", "icon": "ListBulletIcon" },
+      { "name": "Ask a question", "href": "/contact", "icon": "ChatBubbleOvalLeftIcon" }
     ]
   },
   "woopi": {
     "name": "Woopi",
     "items": [
       {
-        "name": "Schools",
-        "description": "Get a better understanding of your traffic",
-        "href": "#",
-        "icon": "ChartPieIcon"
+        "name": "Group Sessions",
+        "description": "Fun filled sessions, for all ages and abilities",
+        "href": "/woopi/sessions",
+        "icon": "SparklesIcon"
       },
       {
-        "name": "Group Sessions",
-        "description": "Speak directly to your customers",
+        "name": "Schools",
+        "description": "Programs specifically designed for schools",
         "href": "#",
-        "icon": "CursorArrowRaysIcon"
+        "icon": "AcademicCapIcon"
       },
       {
         "name": "Holiday Camps",
-        "description": "Your customers’ data will be safe and secure",
+        "description": "Stay fit and entertained during the holidays",
         "href": "#",
-        "icon": "FingerPrintIcon"
-      },
-      {
-        "name": "Woopi Region Overview",
-        "description": "Build strategic funnels that will convert",
-        "href": "/woopi",
-        "icon": "ArrowPathIcon"
+        "icon": "PhotoIcon"
       }
     ],
     "callsToAction": [
-      { "name": "Watch demo", "href": "#", "icon": "PlayCircleIcon" },
-      { "name": "Contact sales", "href": "#", "icon": "PhoneIcon" }
+      { "name": "View all sessions", "href": "/woopi/sessions", "icon": "ListBulletIcon" },
+      { "name": "Ask a question", "href": "/contact", "icon": "ChatBubbleOvalLeftIcon" }
     ]
   },
   "links": [{ "name": "NSW Events", "href": "/events" }]

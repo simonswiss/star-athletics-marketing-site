@@ -1,15 +1,11 @@
 import Image from 'next/image'
-
-import { reader } from '@/app/keystatic/reader'
-
-import image1 from '@/public/images/01.jpeg'
-import image2 from '@/public/images/02.jpeg'
-import image3 from '@/public/images/03.jpeg'
-import image4 from '@/public/images/04.jpeg'
 import Link from 'next/link'
 
+import { reader } from '@/app/keystatic/reader'
+import { DocumentRenderer } from '@keystatic/core/renderer'
+
 export default async function Hero() {
-  const data = await reader.singletons.homepage.read()
+  const data = await reader.singletons.homepage.read({ resolveLinkedFiles: true })
   const image1 = data?.heroImages[0]
   const image2 = data?.heroImages[1]
   const image3 = data?.heroImages[2]
@@ -67,21 +63,20 @@ export default async function Hero() {
           <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
             <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                <span className="text-purple-500">Fun-filled</span> athletics for{' '}
-                <span className="text-cyan-500">all levels</span>. Pre-school to young adults.
-              </h1>
-              <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                Star Athletics operates in{' '}
-                <Link href="/sydney" className="font-bold text-cyan-500 hover:underline">
-                  Sydney&apos;s Northern Beaches
+                Fun-filled athletics in{' '}
+                <Link href="/sydney" className="text-purple-500 hover:underline">
+                  Sydney
                 </Link>{' '}
                 and{' '}
-                <Link href="/woopi" className="font-bold text-purple-500 hover:underline">
-                  Woolgoolga
+                <Link href="/woopi" className="text-sky-500 hover:underline">
+                  Woopi
                 </Link>
-                . We provide a smooth transition from beginner fun to intermediate, all the way to
-                invitation only advanced runners.
-              </p>
+                . From pre-school to young adults.
+              </h1>
+              <div className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
+                <DocumentRenderer document={data.heroIntroText} />
+              </div>
+
               <div className="mt-10 flex items-center gap-x-6">
                 <Link
                   href="/sydney/sessions"
@@ -91,7 +86,7 @@ export default async function Hero() {
                 </Link>
                 <Link
                   href="/woopi/sessions"
-                  className="rounded-md bg-cyan-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                  className="rounded-md bg-sky-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                 >
                   Woopi sessions
                 </Link>

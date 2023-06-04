@@ -4,6 +4,13 @@ export const homepage = singleton({
   label: 'Homepage',
   path: 'src/content/homepage',
   schema: {
+    heroIntroText: fields.document({
+      label: 'Hero Intro Text',
+      formatting: {
+        inlineMarks: true,
+      },
+      links: true,
+    }),
     heroImages: fields.array(
       fields.object({
         url: fields.image({
@@ -30,8 +37,19 @@ export const homepage = singleton({
       }),
       altText: fields.text({ label: 'Alt Text' }),
     }),
+    introductionEyebrow: fields.text({ label: 'Introduction Eyebrow' }),
+    introductionTitle: fields.text({ label: 'Introduction Title' }),
+    introductionLeadText: fields.text({ label: 'Introduction Lead Text', multiline: true }),
+    introductionText: fields.document({
+      label: 'Introduction Main Text',
+      formatting: {
+        inlineMarks: true,
+      },
+      links: true,
+    }),
     primaryTestimonial: fields.relationship({
-      label: 'Primary Testimonial',
+      label: 'Featured Testimonial',
+      description: 'The testimonial that will be displayed more prominently.',
       collection: 'testimonials',
     }),
   },

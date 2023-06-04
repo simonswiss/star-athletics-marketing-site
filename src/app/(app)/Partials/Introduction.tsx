@@ -1,9 +1,10 @@
 import Image from 'next/image'
 
 import { reader } from '@/app/keystatic/reader'
+import { DocumentRenderer } from '@keystatic/core/renderer'
 
 export default async function Introduction() {
-  const data = await reader.singletons.homepage.read()
+  const data = await reader.singletons.homepage.read({ resolveLinkedFiles: true })
   const bigImage = data?.bigImage
   if (!bigImage)
     throw new Error('Missing homepage big image, make sure there is an image in the CMS.')
@@ -62,16 +63,12 @@ export default async function Introduction() {
             <div className="lg:pr-4">
               <div className="lg:max-w-lg">
                 <p className="text-base font-semibold leading-7 text-purple-600">
-                  It&apos;s more than running.
+                  {data.introductionEyebrow}
                 </p>
                 <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  A way of life.
+                  {data.introductionTitle}
                 </h1>
-                <p className="mt-6 text-xl leading-8 text-gray-700">
-                  Beyond improving performance, we also build confidence, focus and concentration.
-                  We firmly believe that a strong mind and fit body are key components to success
-                  and happiness in life.
-                </p>
+                <p className="mt-6 text-xl leading-8 text-gray-700">{data.introductionLeadText}</p>
               </div>
             </div>
           </div>
@@ -86,75 +83,8 @@ export default async function Introduction() {
           </div>
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div className="lg:pr-4">
-              <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
-                <p>
-                  Our classes for children are aimed at developing good technique and a life-long
-                  desire to run and stay fit. By planting the seeds for success through
-                  individualised goal-setting, children learn about the pleasure of setting and
-                  achieving goals – all within a safe, monitored framework.
-                </p>
-                {/* <ul
-                                    role="list"
-                                    className="mt-8 space-y-8 text-gray-600"
-                                >
-                                    <li className="flex gap-x-3">
-                                        <CloudArrowUpIcon
-                                            className="mt-1 h-5 w-5 flex-none text-purple-600"
-                                            aria-hidden="true"
-                                        />
-                                        <span>
-                                            <strong className="font-semibold text-gray-900">
-                                                Push to deploy.
-                                            </strong>{" "}
-                                            Lorem ipsum, dolor sit amet
-                                            consectetur adipisicing elit.
-                                            Maiores impedit perferendis suscipit
-                                            eaque, iste dolor cupiditate
-                                            blanditiis ratione.
-                                        </span>
-                                    </li>
-                                    <li className="flex gap-x-3">
-                                        <LockClosedIcon
-                                            className="mt-1 h-5 w-5 flex-none text-purple-600"
-                                            aria-hidden="true"
-                                        />
-                                        <span>
-                                            <strong className="font-semibold text-gray-900">
-                                                SSL certificates.
-                                            </strong>{" "}
-                                            Anim aute id magna aliqua ad ad non
-                                            deserunt sunt. Qui irure qui lorem
-                                            cupidatat commodo.
-                                        </span>
-                                    </li>
-                                    <li className="flex gap-x-3">
-                                        <ServerIcon
-                                            className="mt-1 h-5 w-5 flex-none text-purple-600"
-                                            aria-hidden="true"
-                                        />
-                                        <span>
-                                            <strong className="font-semibold text-gray-900">
-                                                Database backups.
-                                            </strong>{" "}
-                                            Ac tincidunt sapien vehicula erat
-                                            auctor pellentesque rhoncus. Et
-                                            magna sit morbi lobortis.
-                                        </span>
-                                    </li>
-                                </ul> */}
-                <p className="mt-8">
-                  Teenagers, whose bodies and brains are going through tremendous physical and
-                  chemical changes throughout adolescence, benefit from physical challenges that
-                  either sharpen their existing sporting skills or establish the fitness foundation
-                  that they may not yet have developed.
-                </p>{' '}
-                <p className="mt-8">
-                  Achieving personal bests in a social environment outside their usual circle of
-                  friends and school peers is very motivating.
-                </p>
-                <p className="mt-8">
-                  Come join the fun - we&apos;re looking forward to meeting you!
-                </p>
+              <div className="max-w-xl space-y-8 text-base leading-7 text-gray-700 lg:max-w-lg">
+                <DocumentRenderer document={data.introductionText} />
               </div>
             </div>
           </div>
