@@ -1,7 +1,7 @@
 import { singleton, fields } from '@keystatic/core'
 
 export const sydneyPage = singleton({
-  label: 'Sydney Page',
+  label: 'Sydney Landing Page',
   path: 'src/content/sydney-page',
   schema: {
     title: fields.text({ label: 'Title' }),

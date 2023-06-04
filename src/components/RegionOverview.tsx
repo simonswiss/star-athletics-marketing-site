@@ -1,6 +1,11 @@
+'use client'
+
 import Image from 'next/image'
+import Link from 'next/link'
 import type { EntryWithResolvedLinkedFiles } from '@keystatic/core/reader'
 import { DocumentRenderer } from '@keystatic/core/renderer'
+import { twMerge } from 'tailwind-merge'
+import { usePathname } from 'next/navigation'
 
 import keystaticConfig from '@/app/keystatic/keystatic.config'
 
@@ -9,6 +14,7 @@ type Props = EntryWithResolvedLinkedFiles<
 >
 
 export function RegionOverview({ data }: { data: Props }) {
+  const pathname = usePathname()
   return (
     <div className="overflow-hidden bg-white py-32">
       <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
@@ -22,12 +28,17 @@ export function RegionOverview({ data }: { data: Props }) {
               <DocumentRenderer document={data.introText} />
             </div>
             <div className="mt-10 flex">
-              <a
-                href="/woopi/sessions"
-                className="rounded-md bg-sky-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+              <Link
+                href={`${pathname}/sessions`}
+                className={twMerge(
+                  'rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+                  pathname?.includes('sydney')
+                    ? 'bg-purple-500 hover:bg-purple-400 focus-visible:outline-purple-500'
+                    : 'bg-sky-500 hover:bg-sky-400 focus-visible:outline-sky-500'
+                )}
               >
                 {data.buttonText} <span aria-hidden="true">&rarr;</span>
-              </a>
+              </Link>
             </div>
           </div>
 

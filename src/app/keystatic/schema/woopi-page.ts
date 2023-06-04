@@ -1,7 +1,7 @@
 import { singleton, fields } from '@keystatic/core'
 
 export const woopiPage = singleton({
-  label: 'Woopi Page',
+  label: 'Woopi Landing Page',
   path: 'src/content/woopi-page',
   schema: {
     title: fields.text({ label: 'Title' }),

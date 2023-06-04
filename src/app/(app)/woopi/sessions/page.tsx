@@ -1,18 +1,17 @@
+import { reader } from '@/app/keystatic/reader'
+
 import { Sessions } from '@/components/sessions'
 
-export default function WoopiSessions() {
+export default async function WoopiSessions() {
+  const data = await reader.singletons.woopiSessionsPage.readOrThrow()
   return (
     <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto mt-12 max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Our Woopi sessions
+            {data.title}
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            This is the placeholder page for the Woopi sessions. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Provident minus deleniti architecto eos hic at soluta
-            laudantium aspernatur esse magni laboriosam.
-          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-600">{data.leadText}</p>
         </div>
         {/* @ts-expect-error Server Component */}
         <Sessions region="woopi" />

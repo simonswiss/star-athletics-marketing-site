@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ShieldCheckIcon } from '@heroicons/react/24/outline'
+import { StarIcon } from '@heroicons/react/20/solid'
 import { reader } from '@/app/keystatic/reader'
 import { DocumentRenderer } from '@keystatic/core/renderer'
 import { twMerge } from 'tailwind-merge'
