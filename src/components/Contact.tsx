@@ -25,7 +25,7 @@ const socials = [
   {
     name: 'Facebook',
     href: 'https://www.facebook.com/starathleticsaustralia',
-    icon: (props) => (
+    icon: (props: React.ComponentProps<'svg'>) => (
       <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
         <path
           fillRule="evenodd"
@@ -38,7 +38,7 @@ const socials = [
   {
     name: 'Instagram',
     href: 'https://www.instagram.com/star__athletics/',
-    icon: (props) => (
+    icon: (props: React.ComponentProps<'svg'>) => (
       <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
         <path
           fillRule="evenodd"
