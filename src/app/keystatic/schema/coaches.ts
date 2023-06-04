@@ -13,6 +13,11 @@ export const coaches = collection({
       directory: 'public/images/coaches',
       publicPath: '/images/coaches/',
     }),
+    shortIntro: fields.text({ label: 'Short Intro', multiline: true }),
     bio: fields.document({ label: 'Bio', formatting: true, links: true }),
+    qualifications: fields.array(fields.text({ label: 'Qualification' }), {
+      label: 'Qualifications',
+      itemLabel: (props) => props.value,
+    }),
   },
 })

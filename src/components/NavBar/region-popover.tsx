@@ -12,6 +12,7 @@ import {
   SparklesIcon,
   StarIcon,
   ListBulletIcon,
+  FaceSmileIcon,
 } from '@heroicons/react/24/outline'
 
 import {
@@ -34,6 +35,7 @@ const iconsLookup: Record<string, typeof ArrowPathIcon> = {
   SparklesIcon,
   StarIcon,
   ListBulletIcon,
+  FaceSmileIcon,
   ChatBubbleOvalLeftIcon,
 }
 
@@ -147,7 +149,7 @@ export function RegionPopover({ region }: { region: ItemProps }) {
                   <Icon
                     className={twMerge(
                       'h-5 w-5 flex-none',
-                      region.name === 'Sydney' ? 'text-purple-600' : 'text-sky-500'
+                      region.name === 'Sydney' ? 'text-purple-600' : 'text-sky-600'
                     )}
                     aria-hidden="true"
                   />
