@@ -17,7 +17,7 @@ export async function generateStaticParams() {
   const coachSlugs = await reader.collections.coaches.list()
 
   return coachSlugs.map((slug) => ({
-    slug,
+    coach: slug,
   }))
 }
 
