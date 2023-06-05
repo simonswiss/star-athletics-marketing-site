@@ -13,6 +13,14 @@ const stats = [
   { label: 'Raised', value: '$25M' },
 ]
 
+export async function generateStaticParams() {
+  const coachSlugs = await reader.collections.coaches.list()
+
+  return coachSlugs.map((slug) => ({
+    slug,
+  }))
+}
+
 export default async function Example({
   params: { coach: coachSlug },
 }: {
