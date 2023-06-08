@@ -7,6 +7,10 @@ leadText: >-
 buttonText: View our Sydney sessions
 images:
   - url: /images/sydney-page/images/0/url.jpeg
-  - url: /images/sydney-page/images/1/url.jpeg
-  - url: /images/sydney-page/images/2/url.jpeg
-  - url: /images/sydney-page/images/3/url.jpeg
+    altText: Plateau Monday Group Distance Start
+  - url: /images/sydney-page/images/1/url.jpg
+    altText: High Jump Group Hol Camp
+  - url: /images/sydney-page/images/2/url.png
+    altText: track crouch start
+  - url: /images/sydney-page/images/3/url.jpg
+    altText: Trails camp group photo
