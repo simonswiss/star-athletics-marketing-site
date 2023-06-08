@@ -1,12 +1,15 @@
 name: Interval Training
+status: Open for registration
 day: Wednesday
-startTime: 6:00 AM
-endTime: 7:00 AM
-location: Location goes here
-capacity: 12
+startTime: 4:00 PM
+endTime: 5:00 PM
+location: Centennial Oval, Woolgoolga
+capacity: 25
 enrolments: 3
-description: >-
-  A session focused on core strength. Lorem ipsum dolor sit amet consectetur
-  adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo
-  inventore.
+description: >
+  Unleash the speed of your young sprinters and distance runners in a supportive
+  and enjoyable environment with our specialized session designed for kids aged
+  11 and older. Our program is tailored to help them achieve their peak speed
+  potential while fostering a fun and caring atmosphere. Join us and watch their
+  athletic dreams take flight!
 bookingFormUrl: https://thinkmill.com.au
