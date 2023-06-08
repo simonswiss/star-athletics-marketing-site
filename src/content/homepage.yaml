@@ -1,10 +1,14 @@
 heroImages:
   - url: /images/homepage/heroImages/0/url.jpeg
+    altText: Sydney 10 Finisher
   - url: /images/homepage/heroImages/1/url.jpeg
+    altText: Zone representatives 2023
   - url: /images/homepage/heroImages/2/url.jpeg
     altText: Sprint finish
   - url: /images/homepage/heroImages/3/url.jpeg
+    altText: Friends for life
   - url: /images/homepage/heroImages/4/url.jpeg
+    altText: Sprint start
 bigImage:
   url: /images/homepage/bigImage/url.jpeg
   altText: Anthony and Alix holiding a race certificate
