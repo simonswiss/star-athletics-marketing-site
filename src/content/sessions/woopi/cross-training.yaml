@@ -1,4 +1,8 @@
 name: Cross Training
+status: open
+day: Friday
+startTime: 4:00 PM
+endTime: 5:00PM
 sortIndex: 10
 status: open
 day: Sunday
@@ -13,5 +17,6 @@ description: >-
   additional session, we promote cross-training to ensure overall body
   development and balanced physical abilities. Contact Heather for pricing
   details.
+bookingFormUrl: >-
+  https://docs.google.com/forms/d/e/1FAIpQLSer7EHhg3TWnXgxwTz_h46vFm_40g-vwaKT-BTmnQvc2MM73w/viewform?usp=pp_url&entry.126188496=Friday+4+pm+Cross+training,+Woolgoolga+Beach
 price: $20/session
-bookingFormUrl: www.star-athletics.com.au
