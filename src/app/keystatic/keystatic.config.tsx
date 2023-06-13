@@ -20,6 +20,7 @@ import { faqs } from './schema/faqs'
 import { nswEventsPage } from './schema/nsw-events-page'
 import { nswEvents } from './schema/nsw-events'
 import { contacts } from './schema/contacts'
+import { registerPage } from './schema/register-page'
 
 export default config({
   storage,
@@ -39,6 +40,7 @@ export default config({
     woopiHolidayCamps,
     nswEventsPage,
     contacts,
+    registerPage,
   },
   collections: {
     sydneySessions: collection({

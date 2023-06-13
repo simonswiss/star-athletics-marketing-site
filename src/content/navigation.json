@@ -77,5 +77,8 @@
       { "name": "Meet The Coach", "href": "/coaches/heather", "icon": "FaceSmileIcon" }
     ]
   },
-  "links": [{ "name": "NSW Events", "href": "/nsw-events" }]
+  "links": [
+    { "name": "Coaches", "href": "/coaches" },
+    { "name": "NSW Events", "href": "/nsw-events" }
+  ]
 }

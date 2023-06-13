@@ -5,6 +5,6 @@ export const coachesPage = singleton({
   path: 'src/content/coaches-page',
   schema: {
     title: fields.text({ label: 'Title' }),
-    introText: fields.text({ label: 'Intro Text', multiline: true }),
+    introText: fields.document({ label: 'Intro Text', formatting: true, links: true }),
   },
 })
