@@ -16,16 +16,16 @@ export default async function RegisterPage() {
           </div>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
-              href="#"
+              href={data.sydneyLink || '#'}
               className="rounded-md bg-sky-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
             >
-              Register in Sydney
+              {data.sydneyButtonText}
             </a>
             <a
-              href="#"
+              href={data.woopiLink || '#'}
               className="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
             >
-              Register in Woopi
+              {data.woopiButtonText}
             </a>
           </div>
         </div>
