@@ -7,7 +7,10 @@ export async function Sessions({ region }: { region: string }) {
   const sessions = await collection.all()
   const sortedSessions = sessions.sort((a, b) => {
     // Sort sessions by sortIndex
-    return a.entry.sortIndex - b.entry.sortIndex
+    if (a.entry.sortIndex && b.entry.sortIndex) {
+      return a.entry.sortIndex - b.entry.sortIndex
+    }
+    return 1
   })
 
   return (

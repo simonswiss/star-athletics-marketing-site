@@ -17,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} grid min-h-screen grid-rows-[auto,1fr,auto]`}>
         <NavBar />
         <main className="max-w-full overflow-x-hidden">{children}</main>
+        {/* @ts-expect-error Server Component */}
         <Footer />
       </body>
     </html>
