@@ -25,6 +25,12 @@
         "description": "Stay fit and entertained during the holidays",
         "href": "/sydney/holiday-camps",
         "icon": "PhotoIcon"
+      },
+      {
+        "name": "Popup Clinics",
+        "description": "Temporary and targetted training sessions",
+        "href": "/sydney/popup-clinics",
+        "icon": "BoltIcon"
       }
     ],
     "callsToAction": [

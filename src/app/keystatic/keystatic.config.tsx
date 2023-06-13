@@ -10,6 +10,7 @@ import { woopiPage } from './schema/woopi-page'
 import { woopiSessionsPage } from './schema/woopi-sessions-page'
 import { woopiOneOnOne } from './schema/woopi-one-on-one'
 import { woopiHolidayCamps } from './schema/woopi-holiday-camps'
+import { sydneyPopupClinics } from './schema/sydney-popup-clinics'
 import { woopiSchools } from './schema/woopi-schools'
 import { coachesPage } from './schema/coaches-page'
 import { sessionSchema } from './schema/sessions'
@@ -30,6 +31,7 @@ export default config({
     sydneySessionsPage,
     sydneyOneOnOne,
     sydneyHolidayCamps,
+    sydneyPopupClinics,
     woopiPage,
     woopiSchools,
     woopiSessionsPage,
