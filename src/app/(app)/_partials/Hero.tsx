@@ -65,13 +65,13 @@ export default async function Hero() {
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                 Fun-filled athletics in{' '}
                 <Link href="/sydney" className="text-purple-500 hover:underline">
-                  Sydney
+                  Sydney’s Northern Beaches
                 </Link>{' '}
                 and{' '}
                 <Link href="/woopi" className="text-sky-500 hover:underline">
-                  Woopi
+                  Mid North Coast Woopi
                 </Link>
-                . From pre-school to young adults.
+                .
               </h1>
               <div className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
                 <DocumentRenderer document={data.heroIntroText} />

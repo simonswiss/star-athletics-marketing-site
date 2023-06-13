@@ -1,5 +1,6 @@
 name: Cross Training
-status: Open for registration
+sortIndex: 10
+status: open
 day: Sunday
 startTime: 2:00 PM
 endTime: 3:00PM
@@ -12,4 +13,5 @@ description: >-
   additional session, we promote cross-training to ensure overall body
   development and balanced physical abilities. Contact Heather for pricing
   details.
+price: $20/session
 bookingFormUrl: www.star-athletics.com.au

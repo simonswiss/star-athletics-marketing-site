@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ClockIcon, MapIcon } from '@heroicons/react/24/outline'
+import { ClockIcon, MapIcon, BanknotesIcon } from '@heroicons/react/24/outline'
 
 import { reader } from '@/app/keystatic/reader'
 
@@ -32,6 +32,12 @@ export async function Session({ slug, region }: { slug: string; region: string }
           <MapIcon className="h-5 w-5 text-slate-400" />
           <p className="text-sm text-slate-500">{session.location}</p>
         </div>
+        {session.price && (
+          <div className="mt-2 flex items-center gap-2">
+            <BanknotesIcon className="h-5 w-5 text-slate-400" />
+            <p className="text-sm text-slate-500">{session.price}</p>
+          </div>
+        )}
         <div className="mt-4">
           <span
             className={clsx(
@@ -46,20 +52,36 @@ export async function Session({ slug, region }: { slug: string; region: string }
           </span>
         </div>
         <p className="mt-4 flex-auto">{session.description}</p>
-        <p className="mt-6">
-          {spotsLeft ? (
+
+        {session.status === 'open' && session.bookingFormUrl && (
+          <p className="mt-6">
             <a
-              className="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
-              href="#"
+              className="text-sm font-semibold leading-6 text-purple-600"
+              href={session.bookingFormUrl}
             >
-              Enroll now
+              Enroll now <span aria-hidden="true">→</span>
             </a>
-          ) : (
-            <a href={slug} className="text-sm font-semibold leading-6 text-purple-600">
-              {spotsLeft ? 'Join session' : 'Get on waitlist'} <span aria-hidden="true">→</span>
+          </p>
+        )}
+
+        {session.status === 'waitlist' && (
+          <p className="mt-6">
+            <a
+              href={`mailto:${
+                region === 'sydney'
+                  ? 'kirsten@star-athletics.com.au'
+                  : 'heather@star-athletics.com.au'
+              }?subject=Waitlist for ${session.name}`}
+              className="text-sm font-semibold leading-6 text-purple-600"
+            >
+              Get on waitlist <span aria-hidden="true">→</span>
             </a>
-          )}
-        </p>
+          </p>
+        )}
+
+        {session.status === 'closed' && (
+          <p className="mt-6 text-sm font-semibold leading-6 text-red-500">Registrations closed</p>
+        )}
       </dd>
     </div>
   )

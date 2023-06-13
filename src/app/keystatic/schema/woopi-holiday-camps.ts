@@ -5,6 +5,11 @@ export const woopiHolidayCamps = singleton({
   path: 'src/content/woopi-holiday-camps',
   schema: {
     title: fields.text({ label: 'Title' }),
+    image: fields.image({
+      label: 'Image',
+      directory: 'public/images/woopi-holiday-camps',
+      publicPath: '/images/woopi-holiday-camps/',
+    }),
     document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
   },
 })

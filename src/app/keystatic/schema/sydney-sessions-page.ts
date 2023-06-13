@@ -5,6 +5,11 @@ export const sydneySessionsPage = singleton({
   path: 'src/content/sydney-sessions-page',
   schema: {
     title: fields.text({ label: 'Title' }),
-    leadText: fields.text({ label: 'Lead Text', multiline: true }),
+    image: fields.image({
+      label: 'Image',
+      directory: 'public/images/sydney-sessions-page',
+      publicPath: '/images/sydney-sessions-page/',
+    }),
+    leadText: fields.document({ label: 'Lead Text', formatting: true, links: true }),
   },
 })

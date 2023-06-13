@@ -16,6 +16,9 @@ import { sessionSchema } from './schema/sessions'
 import { coaches } from './schema/coaches'
 import { testimonials } from './schema/testimonials'
 import { faqs } from './schema/faqs'
+import { nswEventsPage } from './schema/nsw-events-page'
+import { nswEvents } from './schema/nsw-events'
+import { contacts } from './schema/contacts'
 
 export default config({
   storage,
@@ -32,6 +35,8 @@ export default config({
     woopiSessionsPage,
     woopiOneOnOne,
     woopiHolidayCamps,
+    nswEventsPage,
+    contacts,
   },
   collections: {
     sydneySessions: collection({
@@ -48,5 +53,6 @@ export default config({
     }),
     coaches,
     testimonials,
+    nswEvents,
   },
 })

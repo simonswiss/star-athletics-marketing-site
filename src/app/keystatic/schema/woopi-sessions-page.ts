@@ -5,6 +5,11 @@ export const woopiSessionsPage = singleton({
   path: 'src/content/woopi-sessions-page',
   schema: {
     title: fields.text({ label: 'Title' }),
-    leadText: fields.text({ label: 'Lead Text', multiline: true }),
+    leadText: fields.document({ label: 'Lead Text', formatting: true, links: true }),
+    image: fields.image({
+      label: 'Image',
+      directory: 'public/images/woopi-sessions-page',
+      publicPath: '/images/woopi-sessions-page/',
+    }),
   },
 })

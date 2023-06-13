@@ -42,16 +42,16 @@
         "icon": "MapIcon"
       },
       {
-        "name": "Schools",
-        "description": "Programs specifically designed for schools",
-        "href": "/woopi/schools",
-        "icon": "AcademicCapIcon"
-      },
-      {
         "name": "Group Sessions",
         "description": "Fun filled sessions, for all ages and abilities",
         "href": "/woopi/sessions",
         "icon": "SparklesIcon"
+      },
+      {
+        "name": "Schools",
+        "description": "Programs specifically designed for schools",
+        "href": "/woopi/schools",
+        "icon": "AcademicCapIcon"
       },
       {
         "name": "One-on-One Coaching",
@@ -71,5 +71,5 @@
       { "name": "Meet The Coach", "href": "/coaches/heather", "icon": "FaceSmileIcon" }
     ]
   },
-  "links": [{ "name": "NSW Events", "href": "/events" }]
+  "links": [{ "name": "NSW Events", "href": "/nsw-events" }]
 }

@@ -1,21 +1,10 @@
 import Image from 'next/image'
-import { twMerge } from 'tailwind-merge'
+import { reader } from '@/app/keystatic/reader'
 import { DocumentRenderer } from '@keystatic/core/renderer'
-import { EntryWithResolvedLinkedFiles } from '@keystatic/core/reader'
-import keystaticConfig from '@/app/keystatic/keystatic.config'
+import { NswEvents } from '@/components/nsw-events'
 
-const stats = [
-  { label: 'Founded', value: '2021' },
-  { label: 'Employees', value: '37' },
-  { label: 'Countries', value: '12' },
-  { label: 'Raised', value: '$25M' },
-]
-
-type Props = {
-  data: EntryWithResolvedLinkedFiles<(typeof keystaticConfig)['singletons']['sydneyHolidayCamps']>
-}
-
-export async function PlaceholderPage({ data }: Props) {
+export default async function Example() {
+  const data = await reader.singletons.nswEventsPage.readOrThrow({ resolveLinkedFiles: true })
   return (
     <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -55,6 +44,8 @@ export async function PlaceholderPage({ data }: Props) {
             </div>
           </div>
         )}
+        {/* @ts-expect-error Server Component */}
+        <NswEvents />
       </div>
     </div>
   )

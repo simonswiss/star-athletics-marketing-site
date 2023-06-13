@@ -2,14 +2,19 @@ import { fields } from '@keystatic/core'
 
 export const sessionSchema = {
   name: fields.slug({ name: { label: 'Name' } }),
+  sortIndex: fields.integer({
+    label: 'Sort Index',
+    description: 'Used to sort sessions in the list, lower index listed first',
+    defaultValue: 20,
+  }),
   status: fields.select({
     label: 'Status',
     options: [
-      { label: 'Open for registgration', value: 'Open for registration' },
+      { label: 'Open for registgration', value: 'open' },
       { label: 'Waitlist ', value: 'waitlist' },
       { label: 'Closed', value: 'closed' },
     ],
-    defaultValue: 'Open for registration',
+    defaultValue: 'open',
   }),
   day: fields.select({
     label: 'Day',
@@ -38,5 +43,6 @@ export const sessionSchema = {
     validation: { isRequired: true, min: 0, max: 100 },
   }),
   description: fields.text({ label: 'Description', multiline: true }),
+  price: fields.text({ label: 'Price' }),
   bookingFormUrl: fields.url({ label: 'Booking Form URL' }),
 }

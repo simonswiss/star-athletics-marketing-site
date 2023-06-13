@@ -1,0 +1,11 @@
+name: Test NSW event
+status: closed
+date: '2023-06-30'
+startTime: 7:00 AM
+endTime: 5:00 PM
+location: Opera House
+capacity: 20
+enrolments: 8
+description: This is the event description
+price: '40'
+bookingFormUrl: '#'
