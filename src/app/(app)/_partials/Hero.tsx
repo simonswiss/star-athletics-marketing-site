@@ -64,11 +64,11 @@ export default async function Hero() {
             <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                 Fun-filled athletics in{' '}
-                <Link href="/sydney" className="text-purple-500 hover:underline">
+                <Link href="/sydney" className="text-sky-500 hover:underline">
                   Sydney’s Northern Beaches
                 </Link>{' '}
                 and{' '}
-                <Link href="/woopi" className="text-sky-500 hover:underline">
+                <Link href="/woopi" className="text-purple-500 hover:underline">
                   Mid-North Coast Woopi
                 </Link>
                 .
@@ -80,13 +80,13 @@ export default async function Hero() {
               <div className="mt-10 flex items-center gap-x-6">
                 <Link
                   href="/sydney/sessions"
-                  className="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
+                  className="rounded-md bg-sky-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                 >
                   Sydney sessions
                 </Link>
                 <Link
                   href="/woopi/sessions"
-                  className="rounded-md bg-sky-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                  className="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                 >
                   Woopi sessions
                 </Link>

@@ -65,8 +65,8 @@ export function RegionPopover({ region }: { region: ItemProps }) {
         className={twMerge(
           'flex items-center gap-x-1 text-sm font-semibold leading-6 focus:outline-none focus:ring focus:ring-offset-2',
           region.name === 'Sydney'
-            ? 'text-purple-800 ring-purple-200'
-            : ' text-sky-800 ring-sky-200'
+            ? 'text-sky-800 ring-sky-200'
+            : ' text-purple-800 ring-purple-200'
         )}
       >
         {region.name}
@@ -91,23 +91,23 @@ export function RegionPopover({ region }: { region: ItemProps }) {
                   key={item.name}
                   className={twMerge(
                     'group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6',
-                    region.name === 'Sydney' ? 'hover:bg-purple-50' : 'hover:bg-sky-50'
+                    region.name === 'Sydney' ? 'hover:bg-sky-50' : 'hover:bg-purple-50'
                   )}
                 >
                   <div
                     className={twMerge(
                       'flex h-11 w-11 flex-none items-center justify-center rounded-lg',
                       region.name === 'Sydney'
-                        ? 'bg-purple-50 group-hover:bg-purple-100'
-                        : 'bg-sky-50 group-hover:bg-sky-100'
+                        ? 'bg-sky-50 group-hover:bg-sky-100'
+                        : 'bg-purple-50 group-hover:bg-purple-100'
                     )}
                   >
                     <Icon
                       className={twMerge(
                         'h-6 w-6',
                         region.name === 'Sydney'
-                          ? 'text-gray-600 group-hover:text-purple-600'
-                          : 'text-gray-600 group-hover:text-sky-500'
+                          ? 'text-gray-600 group-hover:text-sky-500'
+                          : 'text-gray-600 group-hover:text-purple-600'
                       )}
                       aria-hidden="true"
                     />
@@ -117,7 +117,7 @@ export function RegionPopover({ region }: { region: ItemProps }) {
                       href={item.href}
                       className={twMerge(
                         'block font-semibold',
-                        region.name === 'Sydney' ? 'text-purple-900' : 'text-sky-900'
+                        region.name === 'Sydney' ? 'text-sky-900' : 'text-purple-900'
                       )}
                     >
                       {item.name}
@@ -133,8 +133,8 @@ export function RegionPopover({ region }: { region: ItemProps }) {
             className={twMerge(
               'grid grid-cols-2 divide-x',
               region.name === 'Sydney'
-                ? 'divide-purple-900/5 bg-purple-50'
-                : 'divide-sky-900/5 bg-sky-50'
+                ? 'divide-sky-900/5 bg-sky-50'
+                : 'divide-purple-900/5 bg-purple-50'
             )}
           >
             {region.callsToAction.map((item) => {
@@ -146,14 +146,14 @@ export function RegionPopover({ region }: { region: ItemProps }) {
                   className={twMerge(
                     'flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6',
                     region.name === 'Sydney'
-                      ? 'text-purple-900 hover:bg-purple-100'
-                      : 'text-sky-900 hover:bg-sky-100'
+                      ? 'text-sky-900 hover:bg-sky-100'
+                      : 'text-purple-900 hover:bg-purple-100'
                   )}
                 >
                   <Icon
                     className={twMerge(
                       'h-5 w-5 flex-none',
-                      region.name === 'Sydney' ? 'text-purple-600' : 'text-sky-600'
+                      region.name === 'Sydney' ? 'text-sky-600' : 'text-purple-600'
                     )}
                     aria-hidden="true"
                   />

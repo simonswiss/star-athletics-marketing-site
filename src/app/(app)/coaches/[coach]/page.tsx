@@ -68,7 +68,7 @@ export default async function Example({
               <p
                 className={twMerge(
                   'text-base font-semibold leading-7',
-                  coach.region === 'sydney' ? 'text-purple-600' : 'text-sky-500'
+                  coach.region === 'Sydney' ? 'text-sky-500' : 'text-purple-600'
                 )}
               >
                 {coach.role}
@@ -86,7 +86,7 @@ export default async function Example({
                 href={`/${coach.region.toLowerCase()}/sessions`}
                 className={twMerge(
                   'text-base font-semibold leading-7 hover:underline',
-                  coach.region === 'Sydney' ? 'text-purple-600' : 'text-sky-500'
+                  coach.region === 'Sydney' ? 'text-sky-500' : 'text-purple-600'
                 )}
               >
                 View {coach.name}&apos;s sessions in {coach.region}{' '}

@@ -33,8 +33,8 @@ export function RegionOverview({ data }: { data: Props }) {
                 className={twMerge(
                   'rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
                   pathname?.includes('sydney')
-                    ? 'bg-purple-500 hover:bg-purple-400 focus-visible:outline-purple-500'
-                    : 'bg-sky-500 hover:bg-sky-400 focus-visible:outline-sky-500'
+                    ? 'bg-sky-500 hover:bg-sky-400 focus-visible:outline-sky-500'
+                    : 'bg-purple-500 hover:bg-purple-400 focus-visible:outline-purple-500'
                 )}
               >
                 {data.buttonText} <span aria-hidden="true">&rarr;</span>

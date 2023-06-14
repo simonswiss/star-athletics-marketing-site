@@ -58,14 +58,14 @@ export async function Contact() {
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
               {/* Sydney Region */}
-              <div className={twMerge('rounded-2xl bg-gray-50 p-10', 'bg-purple-50/75')}>
+              <div className="rounded-2xl bg-sky-50/75 p-10">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">Sydney Region</h3>
                 <dl className="mt-3 space-y-1 text-sm leading-6 text-gray-600">
                   <div>
                     <dt className="sr-only">Email</dt>
                     <dd>
                       <a
-                        className={twMerge('font-semibold text-indigo-600', 'text-purple-600')}
+                        className="font-semibold text-sky-600"
                         href={`mailto:${contacts.sydney.email}`}
                       >
                         {contacts.sydney.email}
@@ -82,14 +82,14 @@ export async function Contact() {
               </div>
 
               {/* Woopi Region */}
-              <div className={twMerge('rounded-2xl bg-gray-50 p-10', 'bg-sky-50/75')}>
+              <div className="rounded-2xl bg-purple-50/75 p-10">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">Woopi Region</h3>
                 <dl className="mt-3 space-y-1 text-sm leading-6 text-gray-600">
                   <div>
                     <dt className="sr-only">Email</dt>
                     <dd>
                       <a
-                        className={twMerge('font-semibold text-indigo-600', 'text-sky-600')}
+                        className="font-semibold text-purple-600"
                         href={`mailto:${contacts.woopi.email}`}
                       >
                         {contacts.woopi.email}
