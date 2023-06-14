@@ -69,7 +69,7 @@ export default async function Hero() {
                 </Link>{' '}
                 and{' '}
                 <Link href="/woopi" className="text-sky-500 hover:underline">
-                  Mid North Coast Woopi
+                  Mid-North Coast Woopi
                 </Link>
                 .
               </h1>
