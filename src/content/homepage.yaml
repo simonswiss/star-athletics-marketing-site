@@ -1,14 +1,14 @@
 heroImages:
   - url: /images/homepage/heroImages/0/url.jpeg
     altText: coach and sprinter
-  - url: /images/homepage/heroImages/1/url.jpg
-    altText: Active Kids
-  - url: /images/homepage/heroImages/2/url.jpeg
-    altText: Friends for life
-  - url: /images/homepage/heroImages/3/url.jpeg
-    altText: Sprint start
-  - url: /images/homepage/heroImages/4/url.jpeg
+  - url: /images/homepage/heroImages/1/url.jpeg
     altText: Brother and sister
+  - url: /images/homepage/heroImages/2/url.jpg
+    altText: Active Kids
+  - url: /images/homepage/heroImages/3/url.jpeg
+    altText: Friends for life
+  - url: /images/homepage/heroImages/4/url.jpeg
+    altText: Sprint start
 bigImage:
   url: /images/homepage/bigImage/url.jpeg
   altText: Anthony and Alix holiding a race certificate
