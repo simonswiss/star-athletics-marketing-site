@@ -23,6 +23,7 @@ export const homepage = singleton({
       }),
       {
         label: 'Hero Images',
+        description: '5 (required) images to be displayed in the hero section',
         itemLabel: (props) =>
           props.fields.altText.value || "No alt text for this image (it's important for SEO!)",
         validation: { length: { min: 5, max: 5 } },
@@ -31,13 +32,20 @@ export const homepage = singleton({
     bigImage: fields.object({
       url: fields.image({
         label: 'Big Image',
+        description: 'The big image displayed split-screen next to the introduction text',
         directory: 'public/images/homepage',
         publicPath: '/images/homepage/',
         validation: { isRequired: true },
       }),
-      altText: fields.text({ label: 'Alt Text' }),
+      altText: fields.text({
+        label: 'Alt Text',
+        description: 'The alt text for the big image — important for SEO and accessibility',
+      }),
     }),
-    introductionEyebrow: fields.text({ label: 'Introduction Eyebrow' }),
+    introductionEyebrow: fields.text({
+      label: 'Introduction Eyebrow',
+      description: 'The little colorful highlight above the heading',
+    }),
     introductionTitle: fields.text({ label: 'Introduction Title' }),
     introductionLeadText: fields.text({ label: 'Introduction Lead Text', multiline: true }),
     introductionText: fields.document({

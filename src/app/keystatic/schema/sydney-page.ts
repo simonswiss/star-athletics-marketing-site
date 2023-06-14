@@ -20,6 +20,7 @@ export const sydneyPage = singleton({
       }),
       {
         label: 'Images',
+        description: '4 (required) images to be displayed in the Sydney landing page',
         itemLabel: (props) =>
           props.fields.altText.value || "No alt text for this image (it's important for SEO!)",
         validation: { length: { min: 4, max: 4 } },
