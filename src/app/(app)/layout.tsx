@@ -1,5 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 
 import NavBar from '@/components/NavBar'
 import Footer from '@/components/Footer'
@@ -34,6 +35,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="max-w-full overflow-x-hidden">{children}</main>
         {/* @ts-expect-error Server Component */}
         <Footer />
+
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=UA-22027845-15"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-22027845-15');
+    
+    `}
+        </Script>
       </body>
     </html>
   )
