@@ -24,12 +24,15 @@ export default async function Example() {
         </div>
         <ul role="list" className="-mt-12 space-y-12 divide-y divide-gray-200 xl:col-span-3">
           {coaches.map((coach) => (
-            <li key={coach.entry.name} className="flex flex-col gap-10 pt-12 sm:flex-row">
+            <li
+              key={coach.entry.name}
+              className="flex flex-col items-start gap-10 pt-12 sm:flex-row"
+            >
               {coach.entry.avatar && (
                 <Image
-                  className="aspect-[4/5] w-52 flex-none rounded-2xl object-cover"
+                  className="aspect-[4/5] w-52 rounded-2xl object-cover"
                   src={coach.entry.avatar}
-                  width={400}
+                  width={800}
                   height={800}
                   alt=""
                 />
