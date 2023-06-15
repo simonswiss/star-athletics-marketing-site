@@ -14,7 +14,7 @@ const description =
   'Fun-filled athletics in Sydney’s Northern Beaches and Woolgoolga on the Mid-North Coast'
 
 export const metadata = {
-  metadataBase: new URL('https://star-athletics.vercel.app/'),
+  metadataBase: new URL('https://star-athletics.com.au/'),
   title: {
     template: `%s | ${title}`,
     default: title,
