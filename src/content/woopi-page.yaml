@@ -6,10 +6,10 @@ leadText: >-
 buttonText: View our Woopi sessions
 images:
   - url: /images/woopi-page/images/0/url.jpeg
+    altText: Area Cross Country 2023
+  - url: /images/woopi-page/images/1/url.jpeg
     altText: Cross country pop up training 2023
-  - url: /images/woopi-page/images/1/url.jpg
-    altText: coach running
   - url: /images/woopi-page/images/2/url.jpg
     altText: Winners of the 100m, 200m, 800m and 1500m 2023
-  - url: /images/woopi-page/images/3/url.jpeg
-    altText: Area Cross Country 2023
+  - url: /images/woopi-page/images/3/url.jpg
+    altText: coach running
