@@ -6,6 +6,24 @@ import { ShieldCheckIcon } from '@heroicons/react/24/outline'
 
 import { reader } from '@/app/keystatic/reader'
 
+import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+
+export async function generateMetadata() {
+  const pageData = await reader.singletons.coachesPage.readOrThrow()
+
+  const metaTitleAndDescription = {
+    title: pageData.title,
+  }
+
+  return {
+    ...metaTitleAndDescription,
+    openGraph: {
+      ...metaTitleAndDescription,
+      ...sharedOpenGraphMetadata,
+    },
+  }
+}
+
 export default async function Example() {
   const coachesPage = await reader.singletons.coachesPage.readOrThrow({ resolveLinkedFiles: true })
   const coaches = await reader.collections.coaches.all({ resolveLinkedFiles: true })

@@ -3,6 +3,27 @@ import { DocumentRenderer } from '@keystatic/core/renderer'
 
 import { Sessions } from '@/components/sessions'
 
+import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+
+export async function generateMetadata() {
+  const pageData = await reader.singletons.woopiSessionsPage.readOrThrow({
+    resolveLinkedFiles: true,
+  })
+
+  const metaTitleAndDescription = {
+    title: pageData.title,
+    description: pageData.leadText[0].children[0].text,
+  }
+
+  return {
+    ...metaTitleAndDescription,
+    openGraph: {
+      ...metaTitleAndDescription,
+      ...sharedOpenGraphMetadata,
+    },
+  }
+}
+
 export default async function WoopiSessions() {
   const data = await reader.singletons.woopiSessionsPage.readOrThrow({ resolveLinkedFiles: true })
   return (

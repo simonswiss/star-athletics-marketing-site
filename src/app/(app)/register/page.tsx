@@ -2,6 +2,27 @@ import { DocumentRenderer } from '@keystatic/core/renderer'
 
 import { reader } from '@/app/keystatic/reader'
 
+import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+
+export async function generateMetadata() {
+  const pageData = await reader.singletons.registerPage.readOrThrow({
+    resolveLinkedFiles: true,
+  })
+
+  const metaTitleAndDescription = {
+    title: pageData.title,
+    description: pageData.document[0].children[0].text,
+  }
+
+  return {
+    ...metaTitleAndDescription,
+    openGraph: {
+      ...metaTitleAndDescription,
+      ...sharedOpenGraphMetadata,
+    },
+  }
+}
+
 export default async function RegisterPage() {
   const data = await reader.singletons.registerPage.readOrThrow({ resolveLinkedFiles: true })
   return (

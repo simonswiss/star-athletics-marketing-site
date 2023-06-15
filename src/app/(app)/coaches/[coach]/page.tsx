@@ -1,17 +1,34 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ShieldCheckIcon } from '@heroicons/react/24/outline'
-import { StarIcon } from '@heroicons/react/20/solid'
 import { reader } from '@/app/keystatic/reader'
 import { DocumentRenderer } from '@keystatic/core/renderer'
 import { twMerge } from 'tailwind-merge'
 
-const stats = [
-  { label: 'Founded', value: '2021' },
-  { label: 'Employees', value: '37' },
-  { label: 'Countries', value: '12' },
-  { label: 'Raised', value: '$25M' },
-]
+import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+
+export async function generateMetadata({
+  params: { coach: coachSlug },
+}: {
+  params: { coach: string }
+}) {
+  const coach = await reader.collections.coaches.readOrThrow(coachSlug, {
+    resolveLinkedFiles: true,
+  })
+
+  const metaTitleAndDescription = {
+    title: `${coach.name} — ${coach.role}`,
+    description: coach.shortIntro,
+  }
+
+  return {
+    ...metaTitleAndDescription,
+    openGraph: {
+      ...metaTitleAndDescription,
+      ...sharedOpenGraphMetadata,
+    },
+  }
+}
 
 export async function generateStaticParams() {
   const coachSlugs = await reader.collections.coaches.list()
