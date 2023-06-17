@@ -54,12 +54,6 @@
         "icon": "SparklesIcon"
       },
       {
-        "name": "Schools",
-        "description": "Programs specifically designed for schools",
-        "href": "/woopi/schools",
-        "icon": "AcademicCapIcon"
-      },
-      {
         "name": "One-on-One Coaching",
         "description": "Personal sessions, tailored to your goals",
         "href": "/woopi/one-on-one",
@@ -70,6 +64,12 @@
         "description": "Stay fit and entertained during the holidays",
         "href": "/woopi/holiday-camps",
         "icon": "PhotoIcon"
+      },
+      {
+        "name": "Popup Clinics",
+        "description": "Temporary and targetted training sessions",
+        "href": "/woopi/popup-clinics",
+        "icon": "BoltIcon"
       }
     ],
     "callsToAction": [
