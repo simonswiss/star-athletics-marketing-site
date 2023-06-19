@@ -1,4 +1,4 @@
-import { makeAPIRouteHandler } from '@keystatic/next/api'
+import { makeRouteHandler } from '@keystatic/next/route-handler'
 import keystaticConfig from '@/app/keystatic/keystatic.config'
 
 export const config = {
@@ -10,6 +10,6 @@ export const config = {
   },
 }
 
-export default makeAPIRouteHandler({
+export const { POST, GET } = makeRouteHandler({
   config: keystaticConfig,
 })
