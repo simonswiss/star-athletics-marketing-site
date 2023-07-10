@@ -1,17 +1,19 @@
-name: Interval Training
+name: Interval Training + Strength
 sortIndex: 2
 status: open
 day: Wednesday
-startTime: 4:00 PM
-endTime: 5:00 PM
+startTime: 4:30 PM
+endTime: 6:00 PM
 location: Centennial Oval, Woolgoolga
 capacity: 20
-enrolments: 7
+enrolments: 5
 description: >
   Unleash the speed of your young sprinters and distance runners in a supportive
   and enjoyable environment with our specialized session. Our program is
   tailored to help them achieve their peak speed potential while fostering a fun
-  and caring atmosphere. Join us and watch their athletic dreams take flight!
+  and caring atmosphere. The last 30 minutes will be deticated to strength,
+  mobility and flexxibility. Join us and watch their athletic dreams take
+  flight!
 price: ' $10/session'
 bookingFormUrl: >-
   https://docs.google.com/forms/d/e/1FAIpQLSer7EHhg3TWnXgxwTz_h46vFm_40g-vwaKT-BTmnQvc2MM73w/viewform?usp=pp_url&entry.126188496=Wednesday+4pm+Interval+Training,+Cenntenial+Oval,+Woolgoolga
