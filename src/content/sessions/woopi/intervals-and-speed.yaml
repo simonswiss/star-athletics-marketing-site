@@ -1,18 +1,17 @@
-name: Cross Training
-sortIndex: 10
+name: Intervals and Speed
+sortIndex: 20
 status: open
-day: Friday
-startTime: 4:00 PM
-endTime: 5:00PM
-location: Woolgoolga Beach
+day: Thursday
+startTime: 7:15 PM
+endTime: 8:30PM
+location: Centennial Oval
 capacity: 20
 enrolments: 4
 description: >-
   This session complements your regular weekly training routine, focusing on
-  enhancing endurance and strength for athletes. By incorporating this
-  additional session, we promote cross-training to ensure overall body
-  development and balanced physical abilities. Contact Heather for pricing
-  details.
+  enhancing endurance and speed for athletes. By incorporating this additional
+  session, we ensure overall body development and balanced physical abilities.
+  Contact Heather for pricing details.
 price: $10/session
 bookingFormUrl: >-
   https://docs.google.com/forms/d/e/1FAIpQLSer7EHhg3TWnXgxwTz_h46vFm_40g-vwaKT-BTmnQvc2MM73w/viewform?usp=pp_url&entry.126188496=Friday+4+pm+Cross+training,+Woolgoolga+Beach
