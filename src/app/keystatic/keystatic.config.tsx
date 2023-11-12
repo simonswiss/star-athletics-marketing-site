@@ -29,6 +29,44 @@ import { faqs } from './schema/faqs'
 
 export default config({
   storage,
+  ui: {
+    brand: {
+      name: 'Star Athletics',
+      mark: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="24" fill="none">
+          <path
+            fill="currentColor"
+            d="m25 13-2 1v-2l-2-2h3l1-2 1 2h2l-1 2v2l-2-1Zm7-4h-5l-2-5-2 5h-5l4 4-1 4 4-2 4 2-1-4 4-4Z"
+          />
+          <path
+            fill="currentColor"
+            d="m31 19-6-3-6 3 2-6-5-4 6-1-5-8L0 24 15 9l4 4-16 9 16-8-1 6-18 4h34l-3-5Z"
+          />
+        </svg>
+      ),
+    },
+    navigation: {
+      Sydney: [
+        'sydneySessions',
+        'sydneyPage',
+        'sydneySessionsPage',
+        'sydneyOneOnOne',
+        'sydneyHolidayCamps',
+        'sydneyPopupClinics',
+      ],
+      Woopi: [
+        'woopiSessions',
+        'woopiPage',
+        'woopiSchools',
+        'woopiSessionsPage',
+        'woopiOneOnOne',
+        'woopiHolidayCamps',
+        'woopiPopupClinics',
+      ],
+      Collections: ['coaches', 'testimonials', 'nswEvents'],
+      Pages: ['homepage', 'coachesPage', 'faqs', 'nswEventsPage', 'contacts', 'registerPage'],
+    },
+  },
   singletons: {
     homepage,
     coachesPage,
