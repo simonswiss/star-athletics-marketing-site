@@ -10,6 +10,14 @@ export const woopiHolidayCamps = singleton({
       directory: 'public/images/woopi-holiday-camps',
       publicPath: '/images/woopi-holiday-camps/',
     }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({
+      label: 'Lead Text',
+      formatting: true,
+      links: true,
+      images: {
+        directory: 'public/images/woopi-holiday-camps',
+        publicPath: '/images/woopi-holiday-camps/',
+      },
+    }),
   },
 })

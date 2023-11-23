@@ -5,7 +5,7 @@ export const contacts = singleton({
   path: 'src/content/contacts',
   schema: {
     title: fields.text({ label: 'Title' }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({ label: 'Lead Text', formatting: true, links: true }),
     general: fields.object({
       email: fields.text({
         label: 'General Enquiries Email',

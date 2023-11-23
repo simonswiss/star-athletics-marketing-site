@@ -10,6 +10,14 @@ export const woopiPopupClinics = singleton({
       directory: 'public/images/woopi-popup-clinics',
       publicPath: '/images/woopi-popup-clinics/',
     }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({
+      label: 'Lead Text',
+      formatting: true,
+      links: true,
+      images: {
+        directory: 'public/images/woopi-popup-clinics',
+        publicPath: '/images/woopi-popup-clinics/',
+      },
+    }),
   },
 })

@@ -10,6 +10,14 @@ export const sydneyPopupClinics = singleton({
       directory: 'public/images/sydney-popup-clinics',
       publicPath: '/images/sydney-popup-clinics/',
     }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({
+      label: 'Lead Text',
+      formatting: true,
+      links: true,
+      images: {
+        directory: 'public/images/sydney-popup-clinics',
+        publicPath: '/images/sydney-popup-clinics/',
+      },
+    }),
   },
 })

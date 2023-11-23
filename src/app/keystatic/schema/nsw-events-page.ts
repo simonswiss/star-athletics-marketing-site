@@ -10,6 +10,14 @@ export const nswEventsPage = singleton({
       directory: 'public/images/nsw-events',
       publicPath: '/images/nsw-events/',
     }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({
+      label: 'Lead Text',
+      formatting: true,
+      links: true,
+      images: {
+        directory: 'public/images/nsw-events',
+        publicPath: '/images/nsw-events/',
+      },
+    }),
   },
 })

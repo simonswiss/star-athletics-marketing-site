@@ -10,6 +10,14 @@ export const sydneyHolidayCamps = singleton({
       directory: 'public/images/sydney-holiday-camps',
       publicPath: '/images/sydney-holiday-camps/',
     }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({
+      label: 'Lead Text',
+      formatting: true,
+      links: true,
+      images: {
+        directory: 'public/images/sydney-holiday-camps',
+        publicPath: '/images/sydney-holiday-camps/',
+      },
+    }),
   },
 })

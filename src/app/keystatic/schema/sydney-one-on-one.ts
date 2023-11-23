@@ -10,6 +10,14 @@ export const sydneyOneOnOne = singleton({
       directory: 'public/images/sydney-one-on-one',
       publicPath: '/images/sydney-one-on-one/',
     }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({
+      label: 'Lead Text',
+      formatting: true,
+      links: true,
+      images: {
+        directory: 'public/images/sydney-one-on-one',
+        publicPath: '/images/sydney-one-on-one/',
+      },
+    }),
   },
 })

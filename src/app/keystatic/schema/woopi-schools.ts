@@ -10,6 +10,14 @@ export const woopiSchools = singleton({
       directory: 'public/images/woopi-schools',
       publicPath: '/images/woopi-schools/',
     }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({
+      label: 'Lead Text',
+      formatting: true,
+      links: true,
+      images: {
+        directory: 'public/images/woopi-schools',
+        publicPath: '/images/woopi-schools/',
+      },
+    }),
   },
 })

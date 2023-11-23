@@ -1,15 +1,7 @@
 import Image from 'next/image'
-import { twMerge } from 'tailwind-merge'
 import { DocumentRenderer } from '@keystatic/core/renderer'
 import { EntryWithResolvedLinkedFiles } from '@keystatic/core/reader'
 import keystaticConfig from '@/app/keystatic/keystatic.config'
-
-const stats = [
-  { label: 'Founded', value: '2021' },
-  { label: 'Employees', value: '37' },
-  { label: 'Countries', value: '12' },
-  { label: 'Raised', value: '$25M' },
-]
 
 type Props = {
   data: EntryWithResolvedLinkedFiles<(typeof keystaticConfig)['singletons']['sydneyHolidayCamps']>
@@ -38,7 +30,22 @@ export async function PlaceholderPage({ data }: Props) {
                   {data.title}
                 </h1>
                 <div className="prose mt-6 max-w-xl">
-                  <DocumentRenderer document={data.document} />
+                  <DocumentRenderer
+                    document={data.document}
+                    renderers={{
+                      block: {
+                        image: (props) => (
+                          <Image
+                            src={props.src}
+                            alt={props.alt}
+                            width={800}
+                            height={600}
+                            className="h-auto w-full rounded-lg shadow-lg"
+                          />
+                        ),
+                      },
+                    }}
+                  />
                 </div>
               </div>
             </div>

@@ -10,7 +10,7 @@ export const registerPage = singleton({
     //   directory: 'public/images/register-page',
     //   publicPath: '/images/register-page/',
     // }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({ label: 'Lead Text', formatting: true, links: true }),
     sydneyButtonText: fields.text({ label: 'Sydney Button Text' }),
     sydneyLink: fields.url({ label: 'Sydney Registration URL' }),
     woopiButtonText: fields.text({ label: 'Woopi Button Text' }),

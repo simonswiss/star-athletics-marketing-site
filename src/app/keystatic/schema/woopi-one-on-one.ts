@@ -10,6 +10,14 @@ export const woopiOneOnOne = singleton({
       directory: 'public/images/woopi-one-on-one',
       publicPath: '/images/woopi-one-on-one/',
     }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true, images: true }),
+    document: fields.document({
+      label: 'Lead Text',
+      formatting: true,
+      links: true,
+      images: {
+        directory: 'public/images/woopi-one-on-one',
+        publicPath: '/images/woopi-one-on-one/',
+      },
+    }),
   },
 })
