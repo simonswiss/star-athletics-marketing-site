@@ -1,7 +1,7 @@
-name: Speed and Agility Monday
-sortIndex: 1
+name: Speed and Agility Wednesday
+sortIndex: 2
 status: open
-day: Monday
+day: Wednesday
 startTime: 7:15 AM
 endTime: 8:20 AM
 location: Centennial Park, Woolgoolga
@@ -14,4 +14,3 @@ description: >-
   your kids with a convenient school drop-off afterwards. Elevate their
   abilities today!
 price: ' $10/session'
-bookingFormUrl: https://forms.gle/MsFUQ4BzVTGQidH48
