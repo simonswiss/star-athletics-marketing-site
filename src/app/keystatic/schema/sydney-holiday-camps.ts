@@ -3,6 +3,7 @@ import { singleton, fields } from '@keystatic/core'
 export const sydneyHolidayCamps = singleton({
   label: 'Sydney Holiday Camps',
   path: 'src/content/sydney-holiday-camps',
+  format: { contentField: 'leadText' },
   schema: {
     title: fields.text({ label: 'Title' }),
     image: fields.image({
@@ -10,13 +11,13 @@ export const sydneyHolidayCamps = singleton({
       directory: 'public/images/sydney-holiday-camps',
       publicPath: '/images/sydney-holiday-camps/',
     }),
-    document: fields.document({
+    leadText: fields.mdx({
       label: 'Lead Text',
-      formatting: true,
-      links: true,
-      images: {
-        directory: 'public/images/sydney-holiday-camps',
-        publicPath: '/images/sydney-holiday-camps/',
+      options: {
+        image: {
+          directory: 'public/images/sydney-holiday-camps',
+          publicPath: '/images/sydney-holiday-camps/',
+        },
       },
     }),
   },

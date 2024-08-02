@@ -8,9 +8,9 @@ export default function Home() {
       {/* @ts-expect-error Server Component */}
       <Hero />
       {/* @ts-expect-error Server Component */}
-      <Introduction />
+      {/* <Introduction /> */}
       {/* @ts-expect-error Server Component */}
-      <Testimonials />
+      {/* <Testimonials /> */}
     </>
   )
 }

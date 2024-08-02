@@ -3,6 +3,9 @@ import { singleton, fields } from '@keystatic/core'
 export const sydneyOneOnOne = singleton({
   label: 'Sydney One-on-one',
   path: 'src/content/sydney-one-on-one',
+  format: {
+    contentField: 'leadText',
+  },
   schema: {
     title: fields.text({ label: 'Title' }),
     image: fields.image({
@@ -10,13 +13,13 @@ export const sydneyOneOnOne = singleton({
       directory: 'public/images/sydney-one-on-one',
       publicPath: '/images/sydney-one-on-one/',
     }),
-    document: fields.document({
+    leadText: fields.mdx({
       label: 'Lead Text',
-      formatting: true,
-      links: true,
-      images: {
-        directory: 'public/images/sydney-one-on-one',
-        publicPath: '/images/sydney-one-on-one/',
+      options: {
+        image: {
+          directory: 'public/images/sydney-one-on-one',
+          publicPath: '/images/sydney-one-on-one/',
+        },
       },
     }),
   },

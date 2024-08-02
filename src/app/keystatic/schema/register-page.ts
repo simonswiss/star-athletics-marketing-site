@@ -3,6 +3,9 @@ import { singleton, fields } from '@keystatic/core'
 export const registerPage = singleton({
   label: 'Register Page',
   path: 'src/content/register-page',
+  format: {
+    contentField: 'leadText',
+  },
   schema: {
     title: fields.text({ label: 'Title' }),
     // image: fields.image({
@@ -10,7 +13,7 @@ export const registerPage = singleton({
     //   directory: 'public/images/register-page',
     //   publicPath: '/images/register-page/',
     // }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true }),
+    leadText: fields.mdx({ label: 'Lead Text' }),
     sydneyButtonText: fields.text({ label: 'Sydney Button Text' }),
     sydneyLink: fields.url({ label: 'Sydney Registration URL' }),
     woopiButtonText: fields.text({ label: 'Woopi Button Text' }),

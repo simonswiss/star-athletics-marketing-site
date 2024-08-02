@@ -3,6 +3,9 @@ import { singleton, fields } from '@keystatic/core'
 export const nswEventsPage = singleton({
   label: 'NSW Events Page',
   path: 'src/content/nsw-events',
+  format: {
+    contentField: 'leadText',
+  },
   schema: {
     title: fields.text({ label: 'Title' }),
     image: fields.image({
@@ -10,13 +13,13 @@ export const nswEventsPage = singleton({
       directory: 'public/images/nsw-events',
       publicPath: '/images/nsw-events/',
     }),
-    document: fields.document({
+    leadText: fields.mdx({
       label: 'Lead Text',
-      formatting: true,
-      links: true,
-      images: {
-        directory: 'public/images/nsw-events',
-        publicPath: '/images/nsw-events/',
+      options: {
+        image: {
+          directory: 'public/images/nsw-events',
+          publicPath: '/images/nsw-events/',
+        },
       },
     }),
   },

@@ -3,10 +3,11 @@ import { singleton, fields } from '@keystatic/core'
 export const woopiPage = singleton({
   label: 'Woopi Landing Page',
   path: 'src/content/woopi-page',
+  format: { contentField: 'introText' },
   schema: {
     title: fields.text({ label: 'Title' }),
     leadText: fields.text({ label: 'Lead Text', multiline: true }),
-    introText: fields.document({ label: 'Intro Text', formatting: true, links: true }),
+    introText: fields.mdx({ label: 'Intro Text' }),
     buttonText: fields.text({ label: 'Button Text' }),
     images: fields.array(
       fields.object({

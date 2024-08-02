@@ -4,6 +4,7 @@ export const testimonials = collection({
   label: 'Testimonials',
   path: 'src/content/testimonials/*',
   slugField: 'name',
+  columns: ['testimonial'],
   schema: {
     name: fields.slug({ name: { label: 'Name' } }),
     testimonial: fields.text({ label: 'Testimonial', multiline: true }),

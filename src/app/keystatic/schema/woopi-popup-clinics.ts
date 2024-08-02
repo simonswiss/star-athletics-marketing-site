@@ -3,6 +3,7 @@ import { singleton, fields } from '@keystatic/core'
 export const woopiPopupClinics = singleton({
   label: 'Woopi Popup Clinics',
   path: 'src/content/woopi-popup-clinics',
+  format: { contentField: 'leadText' },
   schema: {
     title: fields.text({ label: 'Title' }),
     image: fields.image({
@@ -10,13 +11,13 @@ export const woopiPopupClinics = singleton({
       directory: 'public/images/woopi-popup-clinics',
       publicPath: '/images/woopi-popup-clinics/',
     }),
-    document: fields.document({
+    leadText: fields.mdx({
       label: 'Lead Text',
-      formatting: true,
-      links: true,
-      images: {
-        directory: 'public/images/woopi-popup-clinics',
-        publicPath: '/images/woopi-popup-clinics/',
+      options: {
+        image: {
+          directory: 'public/images/woopi-popup-clinics',
+          publicPath: '/images/woopi-popup-clinics/',
+        },
       },
     }),
   },

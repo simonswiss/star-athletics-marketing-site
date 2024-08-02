@@ -2,7 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { reader } from '@/app/keystatic/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemote } from 'next-mdx-remote'
 
 export default async function Hero() {
   const data = await reader.singletons.homepage.read({ resolveLinkedFiles: true })
@@ -15,6 +17,8 @@ export default async function Hero() {
   if (!image1 || !image2 || !image3 || !image4 || !image5) {
     throw new Error('Missing homepage hero images, make sure there are 5 images in the CMS.')
   }
+
+  const mdxSource = await serialize(data.heroIntroText)
   return (
     <div className="relative isolate">
       <svg
@@ -74,7 +78,8 @@ export default async function Hero() {
                 .
               </h1>
               <div className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                <DocumentRenderer document={data.heroIntroText} />
+                {/* <DocumentRenderer document={data.heroIntroText} /> */}
+                <MDXRemote source={mdxSource} />
               </div>
 
               <div className="mt-10 flex items-center gap-x-6">
