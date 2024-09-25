@@ -23,6 +23,7 @@ import { woopiSchools } from './schema/woopi-schools'
 
 import { coaches } from './schema/coaches'
 import { nswEvents } from './schema/nsw-events'
+import { partnerships } from './schema/partnerships'
 import { sessionSchema } from './schema/sessions'
 import { testimonials } from './schema/testimonials'
 import { faqs } from './schema/faqs'
@@ -64,7 +65,7 @@ export default config({
         'woopiPopupClinics',
       ],
       Collections: ['coaches', 'testimonials', 'nswEvents'],
-      Pages: ['homepage', 'coachesPage', 'faqs', 'nswEventsPage', 'contacts', 'registerPage'],
+      Pages: ['homepage', 'coachesPage', 'faqs', 'nswEventsPage', 'partnerships', 'contacts', 'registerPage'],
     },
   },
   singletons: {
@@ -83,6 +84,7 @@ export default config({
     woopiHolidayCamps,
     woopiPopupClinics,
     nswEventsPage,
+    partnerships,
     contacts,
     registerPage,
   },

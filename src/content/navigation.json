@@ -79,6 +79,7 @@
   },
   "links": [
     { "name": "Coaches", "href": "/coaches" },
-    { "name": "NSW Events", "href": "/nsw-events" }
+    { "name": "NSW Events", "href": "/nsw-events" },
+    { "name": "Partnerships", "href": "/partnerships" }
   ]
 }
