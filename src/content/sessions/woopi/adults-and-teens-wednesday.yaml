@@ -9,4 +9,5 @@ capacity: 25
 enrolments: 15
 description: A second speed and aguility session for adults and teenagers in Woopi
 price: $5.50
-bookingFormUrl: https://forms.gle/odYKYVqS96oLe3dF9
+bookingFormUrl: >-
+  https://docs.google.com/forms/d/e/1FAIpQLSdqj8q2HdkbXSQQzQEVNwZNrfwP4xN2bTWkQioRdsAtZ66d7w/viewform?usp=dialog
