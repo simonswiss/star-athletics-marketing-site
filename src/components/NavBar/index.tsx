@@ -10,9 +10,43 @@ import { twMerge } from 'tailwind-merge'
 import { Logo } from '@/components/Logo'
 import { RegionPopover } from './region-popover'
 import { RegionMobileDropdown } from './region-mobile-dropdown'
-import navigation from '@/content/navigation.json'
 
-export default function Example() {
+type NavigationData = {
+  sydney: {
+    name: string
+    items: {
+      name: string
+      description: string
+      href: string
+      icon: string
+    }[]
+    callsToAction: {
+      name: string
+      href: string
+      icon: string
+    }[]
+  }
+  woopi: {
+    name: string
+    items: {
+      name: string
+      description: string
+      href: string
+      icon: string
+    }[]
+    callsToAction: {
+      name: string
+      href: string
+      icon: string
+    }[]
+  }
+  links: readonly {
+    readonly name: string
+    readonly href: string
+  }[]
+}
+
+export default function Example({ navigation }: { navigation: NavigationData }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
 

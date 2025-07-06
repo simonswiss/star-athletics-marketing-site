@@ -1,0 +1,21 @@
+name: Sydney
+items:
+  - name: One-on-One Coaching
+    page: one-on-one
+    description: Personal sessions, tailored to your goals
+    icon: StarIcon
+  - name: Holiday Camps
+    page: holiday-camps
+    description: Stay fit and entertained during the holidays
+    icon: PhotoIcon
+  - name: Popup Clinics
+    page: popup-clinics
+    description: Temporary and targetted training sessions
+    icon: BoltIcon
+callsToAction:
+  - name: Meet The Coach
+    href: /coaches/kirsten
+    icon: FaceSmileIcon
+  - name: View All Sessions
+    href: /sydney/sessions
+    icon: ListBulletIcon

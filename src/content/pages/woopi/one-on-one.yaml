@@ -1,0 +1,8 @@
+title: Woopi One-on-One Sessions
+heroImage: /images/woopi-one-on-one/image.JPG
+booking:
+  discriminant: true
+  value:
+    eventSlug: star-athletics/one-on-one
+    label: Book via Cal.com
+    display: button
