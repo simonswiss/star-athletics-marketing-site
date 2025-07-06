@@ -5,13 +5,16 @@ import { DocumentRenderer } from '@keystatic/core/renderer'
 
 import { reader } from '@/app/keystatic/reader'
 
-import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+import { extractTextFromDocument, sharedOpenGraphMetadata } from '@/lib/shared-metadata'
 
 export async function generateMetadata() {
-  const pageData = await reader.singletons.partnershipsPage.readOrThrow()
+  const pageData = await reader.singletons.partnershipsPage.readOrThrow({
+    resolveLinkedFiles: true,
+  })
 
   const metaTitleAndDescription = {
     title: pageData.title,
+    description: extractTextFromDocument(pageData.introText),
   }
 
   return {

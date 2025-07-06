@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { reader } from '@/app/keystatic/reader'
+import { extractTextFromDocument, sharedOpenGraphMetadata } from './shared-metadata'
 
 type PageCollection = 'sydneyPages' | 'woopiPages' | 'generalPages'
 
@@ -28,11 +29,8 @@ export async function generatePageMetadata(
     }
   }
 
-  // Extract description from first paragraph, like other pages
-  const firstParagraph = page.content[0]?.children?.[0]
-  const description = (
-    firstParagraph && 'text' in firstParagraph ? firstParagraph.text : page.title
-  ) as string
+  // Extract description from document content
+  const description = extractTextFromDocument(page.content)
 
   return {
     title: page.title,
@@ -40,6 +38,7 @@ export async function generatePageMetadata(
     openGraph: {
       title: page.title,
       description,
+      ...sharedOpenGraphMetadata,
     },
   }
 }

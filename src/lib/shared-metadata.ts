@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { decode } from 'he'
 
 const seoImagePath = '/images/seo-image.png'
 
@@ -26,10 +27,15 @@ export function extractTextFromDocument(document: any[], maxLength = 300): strin
 
   const fullText = document.map(extractTextFromElement).join(' ')
 
-  // Trim to maxLength, but try to end at a sentence boundary
-  if (fullText.length <= maxLength) return fullText
+  // Properly decode HTML entities and normalize whitespace
+  const cleanText = decode(fullText)
+    .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+    .trim()
 
-  const truncated = fullText.substring(0, maxLength)
+  // Trim to maxLength, but try to end at a sentence boundary
+  if (cleanText.length <= maxLength) return cleanText
+
+  const truncated = cleanText.substring(0, maxLength)
   const lastSentenceEnd = Math.max(
     truncated.lastIndexOf('.'),
     truncated.lastIndexOf('!'),

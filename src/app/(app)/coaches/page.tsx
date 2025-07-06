@@ -6,13 +6,16 @@ import { ShieldCheckIcon } from '@heroicons/react/24/outline'
 
 import { reader } from '@/app/keystatic/reader'
 
-import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+import { sharedOpenGraphMetadata, extractTextFromDocument } from '@/lib/shared-metadata'
 
 export async function generateMetadata() {
-  const pageData = await reader.singletons.coachesPage.readOrThrow()
+  const pageData = await reader.singletons.coachesPage.readOrThrow({
+    resolveLinkedFiles: true,
+  })
 
   const metaTitleAndDescription = {
     title: pageData.title,
+    description: extractTextFromDocument(pageData.introText),
   }
 
   return {
