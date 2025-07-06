@@ -89,7 +89,7 @@ export async function Session({ slug, region }: { slug: string; region: string }
           <div className="mt-6">
             <CalComBooking
               booking={{
-                eventSlug: session.calComBooking,
+                calComSlug: session.calComBooking,
                 label: 'Book via Cal.com',
                 display: 'button',
               }}

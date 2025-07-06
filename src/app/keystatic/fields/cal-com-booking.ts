@@ -2,7 +2,7 @@ import { fields } from '@keystatic/core'
 
 export const calComBooking = fields.object(
   {
-    eventSlug: fields.text({
+    calComSlug: fields.text({
       label: 'Event Slug',
       description: 'The full Cal.com event slug (e.g. star-athletics/one-on-one).',
       validation: { isRequired: true },

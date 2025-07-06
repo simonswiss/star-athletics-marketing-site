@@ -2,6 +2,6 @@ title: Team Relay Training
 booking:
   discriminant: true
   value:
-    eventSlug: star-athletics/team-relay
+    calComSlug: star-athletics/team-relay
     label: Book with Cal.com
     display: calendar
