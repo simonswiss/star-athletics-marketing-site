@@ -20,6 +20,7 @@ import { woopiOneOnOne } from './schema/woopi-one-on-one'
 import { woopiHolidayCamps } from './schema/woopi-holiday-camps'
 import { woopiPopupClinics } from './schema/woopi-popup-clinics'
 import { woopiSchools } from './schema/woopi-schools'
+import { woopiTeamRelay } from './schema/woopi-team-relay'
 
 import { coaches } from './schema/coaches'
 import { nswEvents } from './schema/nsw-events'
@@ -63,9 +64,18 @@ export default config({
         'woopiOneOnOne',
         'woopiHolidayCamps',
         'woopiPopupClinics',
+        'woopiTeamRelay',
       ],
       Collections: ['coaches', 'testimonials', 'nswEvents'],
-      Pages: ['homepage', 'coachesPage', 'faqs', 'nswEventsPage', 'partnerships', 'contacts', 'registerPage'],
+      Pages: [
+        'homepage',
+        'coachesPage',
+        'faqs',
+        'nswEventsPage',
+        'partnerships',
+        'contacts',
+        'registerPage',
+      ],
     },
   },
   singletons: {
@@ -83,6 +93,7 @@ export default config({
     woopiOneOnOne,
     woopiHolidayCamps,
     woopiPopupClinics,
+    woopiTeamRelay,
     nswEventsPage,
     partnerships,
     contacts,

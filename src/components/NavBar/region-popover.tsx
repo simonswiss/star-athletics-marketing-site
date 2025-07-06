@@ -15,6 +15,7 @@ import {
   FaceSmileIcon,
   MapIcon,
   BoltIcon,
+  UserGroupIcon,
 } from '@heroicons/react/24/outline'
 
 import {
@@ -41,6 +42,7 @@ const iconsLookup: Record<string, typeof ArrowPathIcon> = {
   MapIcon,
   ChatBubbleOvalLeftIcon,
   BoltIcon,
+  UserGroupIcon,
 }
 
 type ItemProps = {
