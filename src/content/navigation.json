@@ -66,6 +66,12 @@
         "icon": "PhotoIcon"
       },
       {
+        "name": "Schools",
+        "description": "School carnivals, before/after school programs and more.",
+        "href": "/woopi/schools",
+        "icon": "AcademicCapIcon"
+      },
+      {
         "name": "Popup Clinics",
         "description": "Temporary and targetted training sessions",
         "href": "/woopi/popup-clinics",
