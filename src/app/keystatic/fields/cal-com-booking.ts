@@ -4,7 +4,7 @@ export const calComBooking = fields.object(
   {
     eventString: fields.text({
       label: 'Event String',
-      description: 'The event text string (like "one-on-one") to make bookable.',
+      description: 'The event slug (URL segment) to make bookable.',
     }),
     label: fields.text({ label: 'Label', description: 'The label to display on the button' }),
     display: fields.select({

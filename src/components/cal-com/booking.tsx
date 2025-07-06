@@ -30,7 +30,7 @@ export function CalComBooking({ booking }: Props) {
         },
       })
     })()
-  }, [])
+  }, [eventString])
 
   if (display === 'calendar') {
     return (

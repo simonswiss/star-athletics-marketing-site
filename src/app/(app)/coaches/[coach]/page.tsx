@@ -7,11 +7,8 @@ import { twMerge } from 'tailwind-merge'
 
 import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
 
-export async function generateMetadata({
-  params: { coach: coachSlug },
-}: {
-  params: { coach: string }
-}) {
+export async function generateMetadata({ params }: { params: Promise<{ coach: string }> }) {
+  const { coach: coachSlug } = await params
   const coach = await reader.collections.coaches.readOrThrow(coachSlug, {
     resolveLinkedFiles: true,
   })
@@ -38,11 +35,8 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Example({
-  params: { coach: coachSlug },
-}: {
-  params: { coach: string }
-}) {
+export default async function Example({ params }: { params: Promise<{ coach: string }> }) {
+  const { coach: coachSlug } = await params
   const coach = await reader.collections.coaches.readOrThrow(coachSlug, {
     resolveLinkedFiles: true,
   })
