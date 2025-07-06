@@ -34,6 +34,7 @@ export default config({
   ui: {
     brand: {
       name: 'Star Athletics',
+      // @ts-expect-error
       mark: () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="34" height="24" fill="none">
           <path

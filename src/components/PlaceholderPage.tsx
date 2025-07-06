@@ -5,7 +5,7 @@ import keystaticConfig from '@/app/keystatic/keystatic.config'
 import { CalComBooking } from './cal-com/booking'
 
 type Props = {
-  data: EntryWithResolvedLinkedFiles<(typeof keystaticConfig)['singletons']['sydneyHolidayCamps']>
+  data: EntryWithResolvedLinkedFiles<(typeof keystaticConfig)['singletons']['woopiTeamRelay']>
 }
 
 export async function PlaceholderPage({ data }: Props) {
@@ -19,6 +19,7 @@ export async function PlaceholderPage({ data }: Props) {
           document={data.document}
           renderers={{
             block: {
+              // @ts-expect-error
               image: (props: { src: string; alt: string }) => (
                 <Image
                   src={props.src}
