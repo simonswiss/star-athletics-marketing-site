@@ -4,8 +4,27 @@ import { EntryWithResolvedLinkedFiles } from '@keystatic/core/reader'
 import keystaticConfig from '@/app/keystatic/keystatic.config'
 import { CalComBooking } from './cal-com/booking'
 
+// Base simple page schema (without booking)
+type SimplePageWithoutBooking = EntryWithResolvedLinkedFiles<
+  typeof keystaticConfig.singletons.sydneyPopupClinics
+>
+
+// Simple page schema with booking
+type SimplePageWithBooking = EntryWithResolvedLinkedFiles<
+  typeof keystaticConfig.singletons.sydneyHolidayCamps
+>
+
+// Extract the calComBooking type from a schema that has it
+// Use a utility type to extract from the union type that includes calComBooking
+type CalComBookingType = Extract<SimplePageWithBooking, { calComBooking: any }>['calComBooking']
+
+// Combined type that handles both pages with and without booking
+type SimplePageData = SimplePageWithoutBooking & {
+  calComBooking?: CalComBookingType
+}
+
 type Props = {
-  data: EntryWithResolvedLinkedFiles<(typeof keystaticConfig)['singletons']['woopiTeamRelay']>
+  data: SimplePageData
 }
 
 export async function PlaceholderPage({ data }: Props) {
