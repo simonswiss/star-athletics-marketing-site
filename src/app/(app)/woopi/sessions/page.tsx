@@ -2,6 +2,7 @@ import { reader } from '@/app/keystatic/reader'
 import { DocumentRenderer } from '@keystatic/core/renderer'
 
 import { Sessions } from '@/components/sessions'
+import { CalComSessions } from '@/components/cal-com/sessions'
 
 import { sharedOpenGraphMetadata, extractTextFromDocument } from '@/lib/shared-metadata'
 
@@ -26,6 +27,7 @@ export async function generateMetadata() {
 
 export default async function WoopiSessions() {
   const data = await reader.singletons.woopiSessionsPage.readOrThrow({ resolveLinkedFiles: true })
+
   return (
     <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -37,8 +39,14 @@ export default async function WoopiSessions() {
             <DocumentRenderer document={data.leadText} />
           </div>
         </div>
+
+        {/* Keystatic Sessions */}
         {/* @ts-expect-error Server Component */}
         <Sessions region="woopi" />
+
+        {/* Cal.com Sessions */}
+        {/* @ts-expect-error Server Component */}
+        <CalComSessions region="woopi" />
       </div>
     </div>
   )
