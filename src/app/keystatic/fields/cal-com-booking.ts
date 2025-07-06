@@ -2,11 +2,16 @@ import { fields } from '@keystatic/core'
 
 export const calComBooking = fields.object(
   {
-    eventString: fields.text({
-      label: 'Event String',
-      description: 'The event slug (URL segment) to make bookable.',
+    eventSlug: fields.text({
+      label: 'Event Slug',
+      description: 'The full Cal.com event slug (e.g. star-athletics/one-on-one).',
+      validation: { isRequired: true },
     }),
-    label: fields.text({ label: 'Label', description: 'The label to display on the button' }),
+    label: fields.text({
+      label: 'Label',
+      description: 'The label to display on the button or above the calendar.',
+      validation: { isRequired: true },
+    }),
     display: fields.select({
       label: 'Calendar display type',
       options: [

@@ -8,7 +8,6 @@ export default async function Footer() {
       { name: 'Sydney', href: '/sydney' },
       { name: 'Woopi', href: '/woopi' },
       { name: 'Coaches', href: '/coaches' },
-      { name: 'NSW Events', href: '/nsw-events' },
       { name: 'FAQ', href: '/faq' },
     ],
     social: [

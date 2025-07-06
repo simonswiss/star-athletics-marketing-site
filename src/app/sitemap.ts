@@ -18,8 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: 'https://www.star-athletics.com.au/register', lastModified: new Date() },
     // FAQ
     { url: 'https://www.star-athletics.com.au/faq', lastModified: new Date() },
-    // NSW Events
-    { url: 'https://www.star-athletics.com.au/nsw-events', lastModified: new Date() },
+
     // Coaches
     { url: 'https://www.star-athletics.com.au/coaches', lastModified: new Date() },
     ...coachesUrls,

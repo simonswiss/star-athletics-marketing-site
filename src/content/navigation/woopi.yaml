@@ -1,0 +1,29 @@
+name: Woopi
+items:
+  - name: One-on-One Coaching
+    page: one-on-one
+    description: Personal sessions, tailored to your goals
+    icon: StarIcon
+  - name: Holiday Camps
+    page: holiday-camps
+    description: Stay fit and entertained during the holidays
+    icon: PhotoIcon
+  - name: Schools
+    page: schools
+    description: School carnivals, before/after school programs and more.
+    icon: AcademicCapIcon
+  - name: Popup Clinics
+    page: popup-clinics
+    description: Temporary and targetted training sessions
+    icon: BoltIcon
+  - name: Team Relay
+    page: team-relay
+    description: Relay training for the whole relay team
+    icon: UserGroupIcon
+callsToAction:
+  - name: View All Sessions
+    href: /woopi/sessions
+    icon: ListBulletIcon
+  - name: Meet The Coach
+    href: /coaches/heather
+    icon: FaceSmileIcon

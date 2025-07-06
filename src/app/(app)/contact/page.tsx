@@ -1,7 +1,7 @@
 import { reader } from '@/app/keystatic/reader'
 import { Contact } from '@/components/Contact'
 
-import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+import { sharedOpenGraphMetadata, extractTextFromDocument } from '@/lib/shared-metadata'
 
 export async function generateMetadata() {
   const pageData = await reader.singletons.contacts.readOrThrow({
@@ -10,7 +10,7 @@ export async function generateMetadata() {
 
   const metaTitleAndDescription = {
     title: pageData.title,
-    description: pageData.document[0].children[0].text,
+    description: extractTextFromDocument(pageData.document),
   }
 
   return {

@@ -1,18 +1,20 @@
 import Image from 'next/image'
-import { reader } from '@/app/keystatic/reader'
+import Link from 'next/link'
+import { twMerge } from 'tailwind-merge'
 import { DocumentRenderer } from '@keystatic/core/renderer'
-import { NswEvents } from '@/components/nsw-events'
 
-import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+import { reader } from '@/app/keystatic/reader'
+
+import { extractTextFromDocument, sharedOpenGraphMetadata } from '@/lib/shared-metadata'
 
 export async function generateMetadata() {
-  const pageData = await reader.singletons.partnerships.readOrThrow({
+  const pageData = await reader.singletons.partnershipsPage.readOrThrow({
     resolveLinkedFiles: true,
   })
 
   const metaTitleAndDescription = {
     title: pageData.title,
-    description: pageData.document[0].children[0].text,
+    description: extractTextFromDocument(pageData.introText),
   }
 
   return {
@@ -24,49 +26,95 @@ export async function generateMetadata() {
   }
 }
 
-export default async function Example() {
-  const data = await reader.singletons.partnerships.readOrThrow({ resolveLinkedFiles: true })
+export default async function PartnershipsPage() {
+  const partnershipsPage = await reader.singletons.partnershipsPage.readOrThrow({
+    resolveLinkedFiles: true,
+  })
+
+  // Get the partnership slugs from the relationships
+  const partnershipSlugs = partnershipsPage.partnerships
+  if (!partnershipSlugs || partnershipSlugs.length === 0) {
+    throw new Error('No partnerships found — please add in CMS')
+  }
+
+  // Fetch each partnership by slug
+  const partnerships = await Promise.all(
+    partnershipSlugs.map(async (slug) => {
+      const partnership = await reader.collections.partnerships.readOrThrow(slug, {
+        resolveLinkedFiles: true,
+      })
+      return { slug, entry: partnership }
+    })
+  )
+
   return (
-    <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {data.image ? (
-          <div className="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-16 sm:gap-y-24 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-            <div className="lg:pr-4">
-              {data.image && (
+    <div className="bg-white py-24 md:py-32">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-12 gap-y-20 px-6 lg:px-8 xl:grid-cols-5">
+        <div className="max-w-2xl xl:col-span-2">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            {partnershipsPage.title}
+          </h2>
+          <div className="prose prose-purple mt-6 text-gray-600">
+            <DocumentRenderer document={partnershipsPage.introText} />
+          </div>
+        </div>
+        <ul role="list" className="-mt-12 space-y-12 divide-y divide-gray-200 xl:col-span-3">
+          {partnerships.map((partnership) => (
+            <li
+              key={partnership.slug}
+              className="flex flex-col items-start gap-10 pt-12 sm:flex-row"
+            >
+              {partnership.entry?.logo && (
                 <Image
-                  src={data.image}
-                  alt={data.title}
-                  className="rounded-lg shadow-lg"
-                  height={800}
-                  width={800}
+                  className="w-52"
+                  src={partnership.entry.logo}
+                  width={400}
+                  height={400}
+                  alt=""
                 />
               )}
-            </div>
-            <div>
-              <div className="text-base leading-7 text-gray-700 lg:max-w-lg">
-                <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  {data.title}
-                </h1>
-                <div className="prose mt-6 max-w-xl">
-                  <DocumentRenderer document={data.document} />
+              <div className="max-w-xl flex-auto">
+                <h3 className="text-lg font-semibold leading-8 tracking-tight text-gray-900">
+                  <Link className="hover:underline" href={`/partnerships/${partnership.slug}`}>
+                    {partnership.entry?.name}
+                  </Link>
+                </h3>
+
+                <div className="prose prose-purple mt-4 text-base leading-7 text-gray-600">
+                  {partnership.entry?.introText && (
+                    <DocumentRenderer document={partnership.entry.introText} />
+                  )}
                 </div>
+
+                {partnership.entry?.perks && partnership.entry.perks.length > 0 && (
+                  <div className="prose mt-6">
+                    <h3 className="text-lg font-semibold leading-8 tracking-tight text-gray-900">
+                      Member Benefits:
+                    </h3>
+                    <ul>
+                      {partnership.entry.perks.map((perk, index) => (
+                        <li key={index} className="list-disc">
+                          {perk}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {partnership.entry?.website && (
+                  <Link
+                    href={partnership.entry.website}
+                    className={twMerge(
+                      'mt-6 block text-base font-semibold leading-7 hover:underline'
+                    )}
+                  >
+                    Visit {partnership.entry?.name} website <span aria-hidden="true">→</span>
+                  </Link>
+                )}
               </div>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <div className="text-base leading-7 text-gray-700 lg:max-w-5xl">
-              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                {data.title}
-              </h1>
-              <div className="prose mt-6 max-w-xl">
-                <DocumentRenderer document={data.document} />
-              </div>
-            </div>
-          </div>
-        )}
-        {/* @ts-expect-error Server Component */}
-        <NswEvents />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )
