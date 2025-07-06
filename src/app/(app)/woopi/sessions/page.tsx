@@ -3,7 +3,7 @@ import { DocumentRenderer } from '@keystatic/core/renderer'
 
 import { Sessions } from '@/components/sessions'
 
-import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+import { sharedOpenGraphMetadata, extractTextFromDocument } from '@/lib/shared-metadata'
 
 export async function generateMetadata() {
   const pageData = await reader.singletons.woopiSessionsPage.readOrThrow({
@@ -12,7 +12,7 @@ export async function generateMetadata() {
 
   const metaTitleAndDescription = {
     title: pageData.title,
-    description: pageData.leadText[0].children[0].text,
+    description: extractTextFromDocument(pageData.leadText),
   }
 
   return {
