@@ -10,7 +10,7 @@ export const sessionSchema = {
   status: fields.select({
     label: 'Status',
     options: [
-      { label: 'Open for registgration', value: 'open' },
+      { label: 'Open for registration', value: 'open' },
       { label: 'Waitlist ', value: 'waitlist' },
       { label: 'Closed', value: 'closed' },
     ],
@@ -44,5 +44,12 @@ export const sessionSchema = {
   }),
   description: fields.text({ label: 'Description', multiline: true }),
   price: fields.text({ label: 'Price' }),
-  bookingFormUrl: fields.url({ label: 'Booking Form URL' }),
+  bookingFormUrl: fields.url({
+    label: 'Booking Form URL',
+    description: 'A link to your own booking form. Leave blank if not applicable.',
+  }),
+  calComBooking: fields.text({
+    label: 'Cal.com Booking slug',
+    description: 'The slug of the Cal.com event for this session. Leave blank if not applicable.',
+  }),
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import Cal, { getCalApi } from '@calcom/embed-react'
+import clsx from 'clsx'
 import { useEffect } from 'react'
 
 type Props = {
@@ -11,8 +12,15 @@ type Props = {
   }
 }
 
+const brandColors = {
+  sydney: '#0ea5e9',
+  woopi: '#9333ea',
+}
+
 export function CalComBooking({ booking }: Props) {
   const { eventSlug, label, display = 'button' } = booking
+
+  const isWoopi = eventSlug.startsWith('star-athletics/')
 
   useEffect(() => {
     ;(async function () {
@@ -23,7 +31,7 @@ export function CalComBooking({ booking }: Props) {
         theme: 'light',
         cssVarsPerTheme: {
           light: {
-            'cal-brand': '#9333ea',
+            'cal-brand': isWoopi ? brandColors.woopi : brandColors.sydney,
           },
           dark: {
             'cal-brand': '#fafafa',
@@ -31,7 +39,7 @@ export function CalComBooking({ booking }: Props) {
         },
       })
     })()
-  }, [eventSlug])
+  }, [eventSlug, isWoopi])
 
   if (display === 'calendar') {
     return (
@@ -52,7 +60,12 @@ export function CalComBooking({ booking }: Props) {
       data-cal-namespace={eventSlug}
       data-cal-link={eventSlug}
       data-cal-config='{"layout":"month_view"}'
-      className="rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
+      className={clsx(
+        'rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+        isWoopi
+          ? 'bg-purple-600 hover:bg-purple-500 focus-visible:outline-purple-600'
+          : 'bg-sky-500 hover:bg-sky-400 focus-visible:outline-sky-500'
+      )}
     >
       {label}
     </button>

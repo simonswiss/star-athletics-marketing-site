@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { ClockIcon, MapIcon, BanknotesIcon } from '@heroicons/react/24/outline'
 
 import { reader } from '@/app/keystatic/reader'
+import { CalComBooking } from '../cal-com/booking'
 
 export async function Session({ slug, region }: { slug: string; region: string }) {
   const collection =
@@ -81,6 +82,19 @@ export async function Session({ slug, region }: { slug: string; region: string }
 
         {session.status === 'closed' && (
           <p className="mt-6 text-sm font-semibold leading-6 text-red-500">Registrations closed</p>
+        )}
+
+        {/* Cal.com booking widget */}
+        {session.calComBooking && (
+          <div className="mt-6">
+            <CalComBooking
+              booking={{
+                eventSlug: session.calComBooking,
+                label: 'Book via Cal.com',
+                display: 'button',
+              }}
+            />
+          </div>
         )}
       </dd>
     </div>
