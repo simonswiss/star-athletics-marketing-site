@@ -37,7 +37,6 @@ export default async function SydneySessions() {
             <DocumentRenderer document={data.leadText} />
           </div>
         </div>
-        {/* @ts-expect-error Server Component */}
         <Sessions region="sydney" />
       </div>
     </div>

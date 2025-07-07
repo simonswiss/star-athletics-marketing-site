@@ -17,7 +17,6 @@ export async function Sessions({ region }: { region: string }) {
     <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
       <dl className="grid max-w-xl grid-cols-1 gap-x-16 gap-y-20 lg:max-w-none lg:grid-cols-3">
         {sortedSessions.map((session) => (
-          // @ts-expect-error
           <Session key={session.slug} slug={session.slug} region={region} />
         ))}
       </dl>
