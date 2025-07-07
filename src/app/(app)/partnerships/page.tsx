@@ -108,7 +108,7 @@ export default async function PartnershipsPage() {
                       'mt-6 block text-base font-semibold leading-7 hover:underline'
                     )}
                   >
-                    Visit {partnership.entry?.name} website <span aria-hidden="true">→</span>
+                    {partnership.entry?.name} website <span aria-hidden="true">→</span>
                   </Link>
                 )}
               </div>
