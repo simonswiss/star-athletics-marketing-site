@@ -57,7 +57,7 @@ export default function Features() {
             <Image
               src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
               alt="Product screenshot"
-              className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+              className="w-3xl max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-228"
               width={2432}
               height={1442}
             />

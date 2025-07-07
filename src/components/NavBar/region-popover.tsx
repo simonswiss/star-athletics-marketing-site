@@ -65,7 +65,7 @@ export function RegionPopover({ region }: { region: ItemProps }) {
     <Popover className="relative">
       <Popover.Button
         className={twMerge(
-          'flex items-center gap-x-1 text-sm font-semibold leading-6 focus:outline-none focus:ring focus:ring-offset-2',
+          'flex items-center gap-x-1 text-sm font-semibold leading-6 focus:outline-hidden focus:ring-3 focus:ring-offset-2',
           region.name === 'Sydney'
             ? 'text-sky-800 ring-sky-200'
             : ' text-purple-800 ring-purple-200'

@@ -31,7 +31,7 @@ export function RegionOverview({ data }: { data: Props }) {
               <Link
                 href={`${pathname}/sessions`}
                 className={twMerge(
-                  'rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+                  'rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs  focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2',
                   pathname?.includes('sydney')
                     ? 'bg-sky-500 hover:bg-sky-400 focus-visible:outline-sky-500'
                     : 'bg-purple-500 hover:bg-purple-400 focus-visible:outline-purple-500'
@@ -50,11 +50,11 @@ export function RegionOverview({ data }: { data: Props }) {
                   width={800}
                   src={data.images[0].url}
                   alt={data.images[0].altText}
-                  className="aspect-[7/5] w-[37rem] max-w-none rounded-2xl bg-gray-50 object-cover"
+                  className="aspect-7/5 w-148 max-w-none rounded-2xl bg-gray-50 object-cover"
                 />
               </div>
             )}
-            <div className="contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-[37rem] lg:items-start lg:justify-end lg:gap-x-8">
+            <div className="contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-148 lg:items-start lg:justify-end lg:gap-x-8">
               {data.images[1] && (
                 <div className="order-first flex w-64 flex-none justify-end self-end lg:w-auto">
                   <Image
@@ -62,7 +62,7 @@ export function RegionOverview({ data }: { data: Props }) {
                     width={800}
                     src={data.images[1].url}
                     alt={data.images[1].altText}
-                    className="aspect-[4/3] w-[24rem] max-w-none flex-none rounded-2xl bg-gray-50 object-cover"
+                    className="aspect-4/3 w-[24rem] max-w-none flex-none rounded-2xl bg-gray-50 object-cover"
                   />
                 </div>
               )}
@@ -73,7 +73,7 @@ export function RegionOverview({ data }: { data: Props }) {
                     width={800}
                     src={data.images[2].url}
                     alt={data.images[2].altText}
-                    className="aspect-[7/5] w-[37rem] max-w-none flex-none rounded-2xl bg-gray-50 object-cover"
+                    className="aspect-7/5 w-148 max-w-none flex-none rounded-2xl bg-gray-50 object-cover"
                   />
                 </div>
               )}
@@ -84,7 +84,7 @@ export function RegionOverview({ data }: { data: Props }) {
                     width={800}
                     src={data.images[3].url}
                     alt={data.images[3].altText}
-                    className="aspect-[4/3] w-[24rem] max-w-none rounded-2xl bg-gray-50 object-cover"
+                    className="aspect-4/3 w-[24rem] max-w-none rounded-2xl bg-gray-50 object-cover"
                   />
                 </div>
               )}

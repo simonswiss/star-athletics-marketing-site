@@ -26,7 +26,6 @@ export function DynamicPageComponent({ page }: DynamicPageProps) {
           document={content}
           renderers={{
             block: {
-              // @ts-expect-error
               image: (props: { src: string; alt: string }) => (
                 <Image
                   src={props.src}

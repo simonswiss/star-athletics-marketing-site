@@ -61,7 +61,7 @@ export function CalComBooking({ booking }: Props) {
       data-cal-link={calComSlug}
       data-cal-config='{"layout":"month_view"}'
       className={clsx(
-        'rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+        'rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-xs  focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2',
         isWoopi
           ? 'bg-purple-600 hover:bg-purple-500 focus-visible:outline-purple-600'
           : 'bg-sky-500 hover:bg-sky-400 focus-visible:outline-sky-500'

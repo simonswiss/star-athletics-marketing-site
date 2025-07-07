@@ -30,11 +30,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} grid min-h-screen grid-rows-[auto,1fr,auto]`}>
-        {/* @ts-expect-error Server Component */}
+      <body className={`${inter.className} grid min-h-screen grid-rows-[auto_1fr_auto]`}>
         <NavBar />
         <main className="max-w-full overflow-x-hidden">{children}</main>
-        {/* @ts-expect-error Server Component */}
         <Footer />
 
         <Script

@@ -37,7 +37,6 @@ export default async function WoopiSessions() {
             <DocumentRenderer document={data.leadText} />
           </div>
         </div>
-        {/* @ts-expect-error Server Component */}
         <Sessions region="woopi" />
       </div>
     </div>
