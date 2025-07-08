@@ -3,9 +3,10 @@ import { singleton, fields } from '@keystatic/core'
 export const contacts = singleton({
   label: 'Contact Details',
   path: 'src/content/contacts',
+  format: { contentField: 'document' },
   schema: {
     title: fields.text({ label: 'Title' }),
-    document: fields.document({ label: 'Lead Text', formatting: true, links: true }),
+    document: fields.mdx({ label: 'Lead Text' }),
     general: fields.object({
       email: fields.text({
         label: 'General Enquiries Email',

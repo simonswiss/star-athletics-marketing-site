@@ -1,7 +1,5 @@
-import { twMerge } from 'tailwind-merge'
-
 import { reader } from '@/app/keystatic/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 
 export async function Contact() {
   const contacts = await reader.singletons.contacts.readOrThrow({ resolveLinkedFiles: true })
@@ -42,7 +40,7 @@ export async function Contact() {
             <div>
               <h2 className="text-3xl font-bold tracking-tight text-gray-900">{contacts.title}</h2>
               <div className="prose mt-4 leading-7 text-gray-600">
-                <DocumentRenderer document={contacts.document} />
+                <MdxRenderer content={contacts.document} />
               </div>
 
               {/* Social media */}

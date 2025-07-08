@@ -12,13 +12,13 @@ function createPageSchema(region: 'sydney' | 'woopi' | 'general') {
       directory: `public/images/pages/${region}`,
       publicPath: `/images/pages/${region}/`,
     }),
-    content: fields.document({
+    content: fields.mdx({
       label: 'Page Content',
-      formatting: true,
-      links: true,
-      images: {
-        directory: `public/images/pages/${region}`,
-        publicPath: `/images/pages/${region}/`,
+      options: {
+        image: {
+          directory: `public/images/pages/${region}`,
+          publicPath: `/images/pages/${region}/`,
+        },
       },
     }),
     booking: fields.conditional(
@@ -39,6 +39,7 @@ export const sydneyPages = collection({
   label: 'Custom Sydney Pages',
   path: 'src/content/pages/sydney/**',
   slugField: 'title',
+  format: { contentField: 'content' },
   schema: createPageSchema('sydney'),
 })
 
@@ -47,6 +48,7 @@ export const woopiPages = collection({
   label: 'Custom Woopi Pages',
   path: 'src/content/pages/woopi/**',
   slugField: 'title',
+  format: { contentField: 'content' },
   schema: createPageSchema('woopi'),
 })
 
@@ -55,6 +57,7 @@ export const generalPages = collection({
   label: 'Custom Pages',
   path: 'src/content/pages/general/**',
   slugField: 'title',
+  format: { contentField: 'content' },
   schema: createPageSchema('general'),
 })
 
@@ -63,5 +66,6 @@ export const dynamicPages = collection({
   label: 'Pages (Legacy)',
   path: 'src/content/pages/**',
   slugField: 'title',
+  format: { contentField: 'content' },
   schema: createPageSchema('general'),
 })

@@ -1,7 +1,6 @@
-import { reader } from '@/app/keystatic/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
-
+import { MdxRenderer } from '@/components/MdxRenderer'
 import { Sessions } from '@/components/sessions'
+import { reader } from '@/app/keystatic/reader'
 
 import { sharedOpenGraphMetadata, extractTextFromDocument } from '@/lib/shared-metadata'
 
@@ -12,7 +11,7 @@ export async function generateMetadata() {
 
   const metaTitleAndDescription = {
     title: pageData.title,
-    description: extractTextFromDocument(pageData.leadText),
+    description: extractTextFromDocument(pageData.leadText, 160),
   }
 
   return {
@@ -25,7 +24,10 @@ export async function generateMetadata() {
 }
 
 export default async function SydneySessions() {
-  const data = await reader.singletons.sydneySessionsPage.readOrThrow({ resolveLinkedFiles: true })
+  const data = await reader.singletons.sydneySessionsPage.readOrThrow({
+    resolveLinkedFiles: true,
+  })
+
   return (
     <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -34,10 +36,10 @@ export default async function SydneySessions() {
             {data.title}
           </h2>
           <div className="prose mt-6 text-lg leading-8 text-gray-600">
-            <DocumentRenderer document={data.leadText} />
+            <MdxRenderer content={data.leadText} />
           </div>
         </div>
-        <Sessions region="sydney" />
+        <Sessions region="sydney" columns={2} />
       </div>
     </div>
   )
