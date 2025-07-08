@@ -3,12 +3,13 @@ import { ClockIcon, MapIcon, BanknotesIcon } from '@heroicons/react/24/outline'
 
 import { reader } from '@/app/keystatic/reader'
 import { CalComBooking } from '../cal-com/booking'
+import { MdxRenderer } from '../MdxRenderer'
 
 export async function Session({ slug, region }: { slug: string; region: string }) {
   const collection =
     region === 'sydney' ? reader.collections.sydneySessions : reader.collections.woopiSessions
 
-  const session = await collection.readOrThrow(slug)
+  const session = await collection.readOrThrow(slug, { resolveLinkedFiles: true })
 
   const spotsLeft = session.capacity - session.enrolments
   let availabilityClasses = 'bg-green-100 text-green-600'
@@ -52,7 +53,9 @@ export async function Session({ slug, region }: { slug: string; region: string }
             <span>({session.capacity} total)</span>
           </span>
         </div>
-        <p className="mt-4 flex-auto">{session.description}</p>
+        <div className="mt-4 flex-auto space-y-6">
+          <MdxRenderer content={session.description} />
+        </div>
 
         {session.status === 'open' && session.bookingFormUrl && (
           <p className="mt-6">

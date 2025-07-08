@@ -24,13 +24,13 @@ export function createSimplePageSchema(options: PageSchemaOptions) {
       directory: `public/images/${options.imageDirectory}`,
       publicPath: `/images/${options.imageDirectory}/`,
     }),
-    document: fields.document({
+    document: fields.mdx({
       label: 'Lead Text',
-      formatting: true,
-      links: true,
-      images: {
-        directory: `public/images/${options.imageDirectory}`,
-        publicPath: `/images/${options.imageDirectory}/`,
+      options: {
+        image: {
+          directory: `public/images/${options.imageDirectory}`,
+          publicPath: `/images/${options.imageDirectory}/`,
+        },
       },
     }),
   }
@@ -41,6 +41,7 @@ export function createSimplePageSchema(options: PageSchemaOptions) {
   return singleton({
     label: options.label,
     path: options.path,
+    format: { contentField: 'document' },
     schema,
   })
 }
@@ -52,10 +53,11 @@ export function createLandingPageSchema(options: LandingPageSchemaOptions) {
   return singleton({
     label: options.label,
     path: options.path,
+    format: { contentField: 'introText' },
     schema: {
       title: fields.text({ label: 'Title' }),
       leadText: fields.text({ label: 'Lead Text', multiline: true }),
-      introText: fields.document({ label: 'Intro Text', formatting: true, links: true }),
+      introText: fields.mdx({ label: 'Intro Text' }),
       buttonText: fields.text({ label: 'Button Text' }),
       images: fields.array(
         fields.object({
@@ -86,9 +88,10 @@ export function createSessionsPageSchema(options: PageSchemaOptions) {
   return singleton({
     label: options.label,
     path: options.path,
+    format: { contentField: 'leadText' },
     schema: {
       title: fields.text({ label: 'Title' }),
-      leadText: fields.document({ label: 'Lead Text', formatting: true, links: true }),
+      leadText: fields.mdx({ label: 'Lead Text' }),
       image: fields.image({
         label: 'Image',
         directory: `public/images/${options.imageDirectory}`,

@@ -4,6 +4,7 @@ export const coaches = collection({
   label: 'Coaches',
   path: 'src/content/coaches/*',
   slugField: 'name',
+  format: { contentField: 'bio' },
   schema: {
     name: fields.slug({ name: { label: 'Name' } }),
     role: fields.text({ label: 'Role' }),
@@ -14,7 +15,7 @@ export const coaches = collection({
       publicPath: '/images/coaches/',
     }),
     shortIntro: fields.text({ label: 'Short Intro', multiline: true }),
-    bio: fields.document({ label: 'Bio', formatting: true, links: true }),
+    bio: fields.mdx({ label: 'Bio' }),
     qualifications: fields.array(fields.text({ label: 'Qualification' }), {
       label: 'Qualifications',
       itemLabel: (props) => props.value,

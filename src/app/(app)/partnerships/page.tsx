@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 
 import { reader } from '@/app/keystatic/reader'
 
-import { extractTextFromDocument, sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+import { sharedOpenGraphMetadata, extractTextFromDocument } from '@/lib/shared-metadata'
 
 export async function generateMetadata() {
   const pageData = await reader.singletons.partnershipsPage.readOrThrow({
@@ -14,7 +14,7 @@ export async function generateMetadata() {
 
   const metaTitleAndDescription = {
     title: pageData.title,
-    description: extractTextFromDocument(pageData.introText),
+    description: extractTextFromDocument(pageData.introText, 160),
   }
 
   return {
@@ -55,7 +55,7 @@ export default async function PartnershipsPage() {
             {partnershipsPage.title}
           </h2>
           <div className="prose prose-purple mt-6 text-gray-600">
-            <DocumentRenderer document={partnershipsPage.introText} />
+            <MdxRenderer content={partnershipsPage.introText} />
           </div>
         </div>
         <ul role="list" className="-mt-12 space-y-12 divide-y divide-gray-200 xl:col-span-3">
@@ -82,7 +82,7 @@ export default async function PartnershipsPage() {
 
                 <div className="prose prose-purple mt-4 text-base leading-7 text-gray-600">
                   {partnership.entry?.introText && (
-                    <DocumentRenderer document={partnership.entry.introText} />
+                    <MdxRenderer content={partnership.entry.introText} />
                   )}
                 </div>
 

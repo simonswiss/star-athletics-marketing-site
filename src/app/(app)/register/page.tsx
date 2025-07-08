@@ -1,4 +1,4 @@
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 
 import { reader } from '@/app/keystatic/reader'
 
@@ -11,7 +11,7 @@ export async function generateMetadata() {
 
   const metaTitleAndDescription = {
     title: pageData.title,
-    description: extractTextFromDocument(pageData.document),
+    description: extractTextFromDocument(pageData.document, 160),
   }
 
   return {
@@ -33,7 +33,7 @@ export default async function RegisterPage() {
             {data.title}
           </h1>
           <div className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-            <DocumentRenderer document={data.document} />
+            <MdxRenderer content={data.document} />
           </div>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a

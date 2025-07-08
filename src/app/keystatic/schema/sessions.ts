@@ -42,7 +42,7 @@ export const sessionSchema = {
     defaultValue: 0,
     validation: { isRequired: true, min: 0, max: 100 },
   }),
-  description: fields.text({ label: 'Description', multiline: true }),
+  description: fields.mdx({ label: 'Description' }),
   price: fields.text({ label: 'Price' }),
   bookingFormUrl: fields.url({
     label: 'Booking Form URL',

@@ -1,4 +1,4 @@
-import { config, collection, fields, singleton } from '@keystatic/core'
+import { config, collection } from '@keystatic/core'
 import React from 'react'
 
 import { storage } from './storage'
@@ -23,7 +23,7 @@ export default config({
   ui: {
     brand: {
       name: 'Star Athletics',
-      mark: StarAthleticsLogo as any,
+      mark: StarAthleticsLogo,
     },
     navigation: {
       Sydney: [
@@ -67,12 +67,14 @@ export default config({
       label: 'Sydney Sessions (Collection)',
       path: 'src/content/sessions/sydney/*',
       slugField: 'name',
+      format: { contentField: 'description' },
       schema: sessionSchema,
     }),
     woopiSessions: collection({
       label: 'Woopi Sessions (Collection)',
       path: 'src/content/sessions/woopi/*',
       slugField: 'name',
+      format: { contentField: 'description' },
       schema: sessionSchema,
     }),
     coaches,
@@ -84,7 +86,7 @@ export default config({
 // ------------------------------
 // Logo Mark
 // ------------------------------
-function StarAthleticsLogo() {
+function StarAthleticsLogo(_: { colorScheme: 'light' | 'dark' }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="34" height="24" fill="none">
       <path

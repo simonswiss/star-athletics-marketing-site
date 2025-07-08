@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 import { ShieldCheckIcon } from '@heroicons/react/24/outline'
 
 import { reader } from '@/app/keystatic/reader'
@@ -15,7 +15,7 @@ export async function generateMetadata() {
 
   const metaTitleAndDescription = {
     title: pageData.title,
-    description: extractTextFromDocument(pageData.introText),
+    description: extractTextFromDocument(pageData.introText, 160),
   }
 
   return {
@@ -30,7 +30,7 @@ export async function generateMetadata() {
 export default async function Example() {
   const coachesPage = await reader.singletons.coachesPage.readOrThrow({ resolveLinkedFiles: true })
   const coaches = await reader.collections.coaches.all({ resolveLinkedFiles: true })
-  if (!coaches) throw new Error('No coaches found — please add in CMS')
+  if (!coaches) throw new Error('No coaches found — please add in CMS')
 
   return (
     <div className="bg-white py-24 md:py-32">
@@ -40,7 +40,7 @@ export default async function Example() {
             {coachesPage.title}
           </h2>
           <div className="prose prose-purple mt-6 text-gray-600">
-            <DocumentRenderer document={coachesPage.introText} />
+            <MdxRenderer content={coachesPage.introText} />
           </div>
         </div>
         <ul role="list" className="divide-y divide-gray-200 xl:col-span-3">

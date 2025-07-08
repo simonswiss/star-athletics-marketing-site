@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { EntryWithResolvedLinkedFiles } from '@keystatic/core/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 import { twMerge } from 'tailwind-merge'
 import { usePathname } from 'next/navigation'
 
@@ -25,7 +25,7 @@ export function RegionOverview({ data }: { data: Props }) {
             </h2>
             <p className="mt-6 text-xl leading-8 text-gray-600">{data.leadText}</p>
             <div className="prose mt-6">
-              <DocumentRenderer document={data.introText} />
+              <MdxRenderer content={data.introText} />
             </div>
             <div className="mt-10 flex">
               <Link

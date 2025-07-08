@@ -1,4 +1,5 @@
 import { reader } from '@/app/keystatic/reader'
+import { MdxRenderer } from '@/components/MdxRenderer'
 
 import Component from './component'
 
@@ -29,7 +30,14 @@ export async function generateMetadata() {
 
 async function getData() {
   const faqs = await reader.singletons.faqs.readOrThrow({ resolveLinkedFiles: true })
-  return faqs.questions
+
+  // Process MDX answers on the server and return FAQ objects with rendered answers
+  const processedFaqs = faqs.questions.map((faq) => ({
+    question: faq.question,
+    renderedAnswer: <MdxRenderer content={faq.answer} />,
+  }))
+
+  return processedFaqs
 }
 
 export default async function Example() {

@@ -7,7 +7,7 @@ export const faqs = singleton({
     questions: fields.array(
       fields.object({
         question: fields.text({ label: 'Question' }),
-        answer: fields.document({ label: 'Answer', formatting: true, links: true }),
+        answer: fields.mdx.inline({ label: 'Answer' }),
       }),
       {
         label: 'Question',

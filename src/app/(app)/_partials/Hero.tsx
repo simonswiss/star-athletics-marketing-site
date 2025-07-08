@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { reader } from '@/app/keystatic/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 
 export default async function Hero() {
   const data = await reader.singletons.homepage.read({ resolveLinkedFiles: true })
@@ -65,7 +65,7 @@ export default async function Hero() {
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                 Fun-filled athletics in{' '}
                 <Link href="/sydney" className="text-sky-500 hover:underline">
-                  Sydney’s Northern Beaches
+                  Sydney's Northern Beaches
                 </Link>{' '}
                 and{' '}
                 <Link href="/woopi" className="text-purple-500 hover:underline">
@@ -74,7 +74,7 @@ export default async function Hero() {
                 .
               </h1>
               <div className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                <DocumentRenderer document={data.heroIntroText} />
+                <MdxRenderer content={data.heroIntroText} />
               </div>
 
               <div className="mt-10 flex items-center gap-x-6">

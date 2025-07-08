@@ -1,4 +1,4 @@
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 import { CalComBooking } from '@/components/cal-com/booking'
 import Image from 'next/image'
 
@@ -7,11 +7,13 @@ interface DynamicPageProps {
     title: string
     metaDescription?: string
     heroImage?: string | null
-    content: any
-    booking: {
-      discriminant: boolean
-      value: any
-    }
+    content: string
+    booking:
+      | {
+          discriminant: true
+          value: { calComSlug: string; label: string; display: 'button' | 'calendar' }
+        }
+      | { discriminant: false; value: null }
   }
 }
 
@@ -22,24 +24,9 @@ export function DynamicPageComponent({ page }: DynamicPageProps) {
     <div className="text-base leading-7 text-gray-700">
       <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{title}</h1>
       <div className="prose mt-6 max-w-xl">
-        <DocumentRenderer
-          document={content}
-          renderers={{
-            block: {
-              image: (props: { src: string; alt: string }) => (
-                <Image
-                  src={props.src}
-                  alt={props.alt}
-                  width={800}
-                  height={600}
-                  className="h-auto w-full rounded-lg shadow-lg"
-                />
-              ),
-            },
-          }}
-        />
+        <MdxRenderer content={content} />
       </div>
-      {booking.discriminant && (
+      {booking.discriminant && booking.value && (
         <div className="mt-8">
           <CalComBooking booking={booking.value} />
         </div>

@@ -9,23 +9,48 @@ export const sharedOpenGraphMetadata: Metadata['openGraph'] = {
   images: [{ url: seoImagePath, width: 1200, height: 630, alt: 'Star Athletics' }],
 }
 
-// Extract plain text from Keystatic document for SEO descriptions
-export function extractTextFromDocument(document: any[], maxLength = 300): string {
-  if (!document || !Array.isArray(document)) return ''
-
-  function extractTextFromElement(element: any): string {
-    if (typeof element === 'string') return element
-
-    if (element.text) return element.text
-
-    if (element.children && Array.isArray(element.children)) {
-      return element.children.map(extractTextFromElement).join('')
+// Extract plain text from Keystatic content for SEO descriptions
+type DocumentElement =
+  | {
+      text?: string
+      children?: DocumentElement[]
     }
+  | string
 
-    return ''
+// Helper function for extracting text from legacy document elements
+function extractTextFromElement(element: DocumentElement): string {
+  if (typeof element === 'string') return element
+
+  if (element.text) return element.text
+
+  if (element.children && Array.isArray(element.children)) {
+    return element.children.map(extractTextFromElement).join('')
   }
 
-  const fullText = document.map(extractTextFromElement).join(' ')
+  return ''
+}
+
+// Updated to handle both MDX strings and legacy document arrays
+export function extractTextFromDocument(
+  content: string | DocumentElement[],
+  maxLength = 300
+): string {
+  let fullText: string
+
+  // Handle MDX strings (new format)
+  if (typeof content === 'string') {
+    fullText = content
+      .replace(/[#*_`[\]()]/g, '') // Remove markdown formatting
+      .replace(/\n+/g, ' ') // Replace line breaks with spaces
+  }
+  // Handle legacy document arrays (old format)
+  else if (Array.isArray(content)) {
+    fullText = content.map(extractTextFromElement).join(' ')
+  }
+  // Fallback for invalid input
+  else {
+    return ''
+  }
 
   // Properly decode HTML entities and normalize whitespace
   const cleanText = decode(fullText)

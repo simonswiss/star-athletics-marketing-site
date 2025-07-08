@@ -1,8 +1,4 @@
-import {
-  createSimplePageSchema,
-  createLandingPageSchema,
-  createSessionsPageSchema,
-} from './page-schemas'
+import { createLandingPageSchema, createSessionsPageSchema } from './page-schemas'
 
 // Landing Pages
 export const sydneyPage = createLandingPageSchema({
