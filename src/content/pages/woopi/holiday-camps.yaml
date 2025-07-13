@@ -1,4 +1,8 @@
 title: Woopi Holiday Camps
 heroImage: /images/pages/woopi/holiday-camps/heroImage.png
 booking:
-  discriminant: false
+  discriminant: true
+  value:
+    calComSlug: star-athletics
+    label: holiday
+    display: button
