@@ -5,9 +5,8 @@ day: Wednesday
 startTime: 6am
 endTime: 7 am
 location: Wiilgulga Sports Complex
-capacity: 25
-enrolments: 15
+capacity: 35
+enrolments: 16
 description: A second speed and aguility session for adults and teenagers in Woopi
-price: $5.50
-bookingFormUrl: >-
-  https://docs.google.com/forms/d/e/1FAIpQLSdqj8q2HdkbXSQQzQEVNwZNrfwP4xN2bTWkQioRdsAtZ66d7w/viewform?usp=dialog
+price: '6'
+calComBooking: star-athletics/group-sessions
