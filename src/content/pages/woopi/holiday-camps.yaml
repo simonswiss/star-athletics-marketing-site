@@ -4,5 +4,5 @@ booking:
   discriminant: true
   value:
     calComSlug: star-athletics
-    label: holiday
+    label: 'register '
     display: button
