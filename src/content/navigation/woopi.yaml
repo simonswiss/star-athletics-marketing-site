@@ -1,4 +1,4 @@
-name: Woopi
+name: Mid North Coast
 items:
   - name: One-on-One Coaching
     page: one-on-one
@@ -8,16 +8,12 @@ items:
     page: holiday-camps
     description: Stay fit and entertained during the holidays
     icon: PhotoIcon
-  - name: Schools
-    page: schools
-    description: School carnivals, before/after school programs and more.
-    icon: AcademicCapIcon
   - name: Popup Clinics
     page: popup-clinics
     description: Temporary and targetted training sessions
     icon: BoltIcon
   - name: Team Relay
-    page: team-relay
+    page: team-relay-training
     description: Relay training for the whole relay team
     icon: UserGroupIcon
 callsToAction:
