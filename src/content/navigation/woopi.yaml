@@ -13,7 +13,7 @@ items:
     description: Temporary and targetted training sessions
     icon: BoltIcon
   - name: Team Relay
-    page: team-relay
+    page: team-relay-training
     description: Relay training for the whole relay team
     icon: UserGroupIcon
 callsToAction:
