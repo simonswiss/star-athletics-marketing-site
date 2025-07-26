@@ -6,7 +6,7 @@ export default async function Footer() {
   const navigation = {
     main: [
       { name: 'Sydney', href: '/sydney' },
-      { name: 'Woopi', href: '/woopi' },
+      { name: 'Mid-North Coast', href: '/woopi' },
       { name: 'Coaches', href: '/coaches' },
       { name: 'FAQ', href: '/faq' },
     ],

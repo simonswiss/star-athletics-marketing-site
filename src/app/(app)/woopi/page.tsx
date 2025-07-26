@@ -1,5 +1,6 @@
 import { reader } from '@/app/keystatic/reader'
 import { RegionOverview } from '@/components/RegionOverview'
+import { MdxRenderer } from '@/components/MdxRenderer'
 
 import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
 
@@ -22,5 +23,6 @@ export async function generateMetadata() {
 
 export default async function Example() {
   const data = await reader.singletons.woopiPage.readOrThrow({ resolveLinkedFiles: true })
-  return <RegionOverview data={data} />
+  const renderedContent = <MdxRenderer content={data.introText} />
+  return <RegionOverview data={data} renderedContent={renderedContent} />
 }

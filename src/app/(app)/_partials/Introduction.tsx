@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { reader } from '@/app/keystatic/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 
 export default async function Introduction() {
   const data = await reader.singletons.homepage.read({ resolveLinkedFiles: true })
@@ -84,7 +84,7 @@ export default async function Introduction() {
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div className="lg:pr-4">
               <div className="max-w-xl space-y-8 text-base leading-7 text-gray-700 lg:max-w-lg">
-                <DocumentRenderer document={data.introductionText} />
+                <MdxRenderer content={data.introductionText} />
               </div>
             </div>
           </div>

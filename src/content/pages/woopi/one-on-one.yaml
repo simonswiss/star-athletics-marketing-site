@@ -1,8 +1,0 @@
-title: One-on-One Sessions
-heroImage: /images/pages/woopi/one-on-one/heroImage.JPG
-booking:
-  discriminant: true
-  value:
-    calComSlug: star-athletics/one-on-one
-    label: Book via Cal.com
-    display: button

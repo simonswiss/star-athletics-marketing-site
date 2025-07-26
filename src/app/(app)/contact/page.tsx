@@ -10,7 +10,7 @@ export async function generateMetadata() {
 
   const metaTitleAndDescription = {
     title: pageData.title,
-    description: extractTextFromDocument(pageData.document),
+    description: extractTextFromDocument(pageData.document, 160),
   }
 
   return {

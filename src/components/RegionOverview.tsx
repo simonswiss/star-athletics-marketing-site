@@ -3,9 +3,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { EntryWithResolvedLinkedFiles } from '@keystatic/core/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
 import { twMerge } from 'tailwind-merge'
 import { usePathname } from 'next/navigation'
+import type { ReactNode } from 'react'
 
 import keystaticConfig from '@/app/keystatic/keystatic.config'
 
@@ -13,7 +13,12 @@ type Props = EntryWithResolvedLinkedFiles<
   (typeof keystaticConfig)['singletons']['woopiPage' | 'sydneyPage']
 >
 
-export function RegionOverview({ data }: { data: Props }) {
+interface RegionOverviewProps {
+  data: Props
+  renderedContent: ReactNode
+}
+
+export function RegionOverview({ data, renderedContent }: RegionOverviewProps) {
   const pathname = usePathname()
   return (
     <div className="overflow-hidden bg-white py-32">
@@ -25,7 +30,7 @@ export function RegionOverview({ data }: { data: Props }) {
             </h2>
             <p className="mt-6 text-xl leading-8 text-gray-600">{data.leadText}</p>
             <div className="prose mt-6">
-              <DocumentRenderer document={data.introText} />
+              {renderedContent}
             </div>
             <div className="mt-10 flex">
               <Link

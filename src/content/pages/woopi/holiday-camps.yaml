@@ -1,8 +1,0 @@
-title: Mid North Coast Holiday Camps
-heroImage: /images/pages/woopi/holiday-camps/heroImage.png
-booking:
-  discriminant: true
-  value:
-    calComSlug: star-athletics
-    label: 'register '
-    display: button

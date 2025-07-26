@@ -1,26 +1,28 @@
 'use client'
-import keystaticConfig from '@/app/keystatic/keystatic.config'
 import { Disclosure } from '@headlessui/react'
 import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline'
 
-import type { EntryWithResolvedLinkedFiles } from '@keystatic/core/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+// Updated interface to expect pre-rendered React elements
+export interface FaqItem {
+  readonly question: string
+  readonly renderedAnswer: React.ReactElement
+}
 
-export default function Component({
-  faqs,
-}: {
-  faqs: EntryWithResolvedLinkedFiles<(typeof keystaticConfig)['singletons']['faqs']>['questions']
-}) {
+interface FaqComponentProps {
+  faqs: readonly FaqItem[]
+}
+
+export default function Component({ faqs }: FaqComponentProps) {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
-        <div className="mx-auto max-w-4xl divide-y divide-gray-900/10">
-          <h2 className="text-2xl font-bold leading-10 tracking-tight text-gray-900">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
             Frequently asked questions
           </h2>
-          <dl className="mt-10 space-y-6 divide-y divide-gray-900/10">
-            {faqs.map((faq) => (
-              <Disclosure as="div" key={faq.question} className="pt-6">
+          <dl className="mt-16 divide-y divide-gray-900/10">
+            {faqs.map((faq, index) => (
+              <Disclosure as="div" key={index} className="py-6 first:pt-0">
                 {({ open }) => (
                   <>
                     <dt>
@@ -36,8 +38,8 @@ export default function Component({
                       </Disclosure.Button>
                     </dt>
                     <Disclosure.Panel as="dd" className="mt-2 pr-12">
-                      <div className="text-base leading-7 text-gray-600">
-                        <DocumentRenderer document={faq.answer} />
+                      <div className="text-base leading-7 text-gray-600 space-y-4">
+                        {faq.renderedAnswer}
                       </div>
                     </Disclosure.Panel>
                   </>

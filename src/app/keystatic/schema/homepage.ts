@@ -3,13 +3,10 @@ import { singleton, fields } from '@keystatic/core'
 export const homepage = singleton({
   label: 'Homepage',
   path: 'src/content/homepage',
+  format: { contentField: 'introductionText' },
   schema: {
-    heroIntroText: fields.document({
+    heroIntroText: fields.mdx.inline({
       label: 'Hero Intro Text',
-      formatting: {
-        inlineMarks: true,
-      },
-      links: true,
     }),
     heroImages: fields.array(
       fields.object({
@@ -48,12 +45,8 @@ export const homepage = singleton({
     }),
     introductionTitle: fields.text({ label: 'Introduction Title' }),
     introductionLeadText: fields.text({ label: 'Introduction Lead Text', multiline: true }),
-    introductionText: fields.document({
+    introductionText: fields.mdx({
       label: 'Introduction Main Text',
-      formatting: {
-        inlineMarks: true,
-      },
-      links: true,
     }),
     primaryTestimonial: fields.relationship({
       label: 'Featured Testimonial',

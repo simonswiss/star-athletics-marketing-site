@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ShieldCheckIcon } from '@heroicons/react/24/outline'
 import { reader } from '@/app/keystatic/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 import { twMerge } from 'tailwind-merge'
 
 import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
@@ -89,7 +89,7 @@ export default async function Example({ params }: { params: Promise<{ coach: str
               </h1>
               <p className="mt-4 text-xl text-gray-600">{coach.shortIntro}</p>
               <div className="prose mt-6 max-w-xl">
-                <DocumentRenderer document={coach.bio} />
+                <MdxRenderer content={coach.bio} />
               </div>
             </div>
             <div className="mt-10 flex">

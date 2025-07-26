@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { reader } from '@/app/keystatic/reader'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { MdxRenderer } from '@/components/MdxRenderer'
 
 export default async function Hero() {
   const data = await reader.singletons.homepage.read({ resolveLinkedFiles: true })
@@ -65,16 +65,16 @@ export default async function Hero() {
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                 Fun-filled athletics in{' '}
                 <Link href="/sydney" className="text-sky-500 hover:underline">
-                  Sydney’s Northern Beaches
+                  Sydney's Northern Beaches
                 </Link>{' '}
                 and{' '}
                 <Link href="/woopi" className="text-purple-500 hover:underline">
-                  Mid-North Coast Woopi
+                  Mid-North Coast
                 </Link>
                 .
               </h1>
               <div className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                <DocumentRenderer document={data.heroIntroText} />
+                <MdxRenderer content={data.heroIntroText} />
               </div>
 
               <div className="mt-10 flex items-center gap-x-6">
@@ -88,7 +88,7 @@ export default async function Hero() {
                   href="/woopi/sessions"
                   className="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                 >
-                  Woopi sessions
+                  Mid-North Coast sessions
                 </Link>
                 {/* <Link href="/coaches" className="text-sm font-semibold leading-6 text-gray-900">
                   Meet the coaches <span aria-hidden="true">→</span>
