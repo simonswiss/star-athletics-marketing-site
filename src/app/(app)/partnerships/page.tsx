@@ -58,11 +58,11 @@ export default async function PartnershipsPage() {
             <MdxRenderer content={partnershipsPage.introText} />
           </div>
         </div>
-        <ul role="list" className="-mt-12 space-y-12 divide-y divide-gray-200 xl:col-span-3">
+        <ul role="list" className="-mt-12 divide-y divide-gray-200 xl:col-span-3">
           {partnerships.map((partnership) => (
             <li
               key={partnership.slug}
-              className="flex flex-col items-start gap-10 pt-12 sm:flex-row"
+              className="flex flex-col items-start gap-10 py-12 first:pt-0 sm:flex-row"
             >
               {partnership.entry?.logo && (
                 <Image

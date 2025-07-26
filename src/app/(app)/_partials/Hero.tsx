@@ -69,7 +69,7 @@ export default async function Hero() {
                 </Link>{' '}
                 and{' '}
                 <Link href="/woopi" className="text-purple-500 hover:underline">
-                  Mid-North Coast Woopi
+                  Mid-North Coast
                 </Link>
                 .
               </h1>
@@ -88,7 +88,7 @@ export default async function Hero() {
                   href="/woopi/sessions"
                   className="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                 >
-                  Woopi sessions
+                  Mid-North Coast sessions
                 </Link>
                 {/* <Link href="/coaches" className="text-sm font-semibold leading-6 text-gray-900">
                   Meet the coaches <span aria-hidden="true">→</span>
