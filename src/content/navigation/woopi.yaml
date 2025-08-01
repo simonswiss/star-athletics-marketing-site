@@ -3,9 +3,8 @@ items:
   - name: Sporting Schools
     page: sporting-schools
     description: >-
-      As a sporting schools provider of Athletics, we are teaming up with
-      experienced coaches of the region  to bring quality coaching to your
-      students
+      As a sporting schools provider of Athletics, we've teamed up with
+      experienced coaches  to bring quality sessions to your students
     icon: MapIcon
   - name: Holiday Camps
     page: holiday-camps
