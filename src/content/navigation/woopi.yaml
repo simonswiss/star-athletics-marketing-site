@@ -1,21 +1,5 @@
 name: Mid North Coast
 items:
-  - name: One-on-One Coaching
-    page: one-on-one
-    description: Personal sessions, tailored to your goals
-    icon: StarIcon
-  - name: Holiday Camps
-    page: holiday-camps
-    description: Stay fit and entertained during the holidays
-    icon: PhotoIcon
-  - name: Popup Clinics
-    page: popup-clinics
-    description: Temporary and targetted training sessions
-    icon: BoltIcon
-  - name: Team Relay
-    page: team-relay-training
-    description: Relay training for the whole relay team
-    icon: UserGroupIcon
   - name: Sporting Schools
     page: sporting-schools
     description: >-
@@ -23,6 +7,22 @@ items:
       experienced coaches of the region  to bring quality coaching to your
       students
     icon: MapIcon
+  - name: Holiday Camps
+    page: holiday-camps
+    description: Stay fit and entertained during the holidays
+    icon: PhotoIcon
+  - name: One-on-One Coaching
+    page: one-on-one
+    description: Personal sessions, tailored to your goals
+    icon: StarIcon
+  - name: Team Relay
+    page: team-relay-training
+    description: Relay training for the whole relay team
+    icon: UserGroupIcon
+  - name: Popup Clinics
+    page: popup-clinics
+    description: Temporary and targetted training sessions
+    icon: BoltIcon
 callsToAction:
   - name: View All Sessions
     href: /woopi/sessions
