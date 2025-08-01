@@ -18,7 +18,9 @@ items:
     icon: StarIcon
   - name: Team Relay
     page: team-relay-training
-    description: Relay training for the whole relay team
+    description: >-
+      Relay training for the whole relay team, quick batton change overs,
+      possitioning and timing
     icon: UserGroupIcon
   - name: Popup Clinics
     page: popup-clinics
