@@ -16,6 +16,13 @@ items:
     page: team-relay-training
     description: Relay training for the whole relay team
     icon: UserGroupIcon
+  - name: Sporting Schools
+    page: sporting-schools
+    description: >-
+      As a sporting schools provider of Athletics, we are teaming up with
+      experienced coaches of the region  to bring quality coaching to your
+      students
+    icon: MapIcon
 callsToAction:
   - name: View All Sessions
     href: /woopi/sessions
