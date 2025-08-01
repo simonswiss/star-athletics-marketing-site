@@ -8,11 +8,13 @@ items:
     icon: MapIcon
   - name: Holiday Camps
     page: holiday-camps
-    description: Stay fit and entertained during the holidays
+    description: Stay fit and entertained during the holidays with our extended sessions
     icon: PhotoIcon
   - name: One-on-One Coaching
     page: one-on-one
-    description: Personal sessions, tailored to your goals
+    description: >-
+      Personal sessions, tailored to your goals. Take a quieter approach to
+      training and get that individual attention you deserve
     icon: StarIcon
   - name: Team Relay
     page: team-relay-training
