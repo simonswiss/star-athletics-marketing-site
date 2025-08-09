@@ -67,7 +67,7 @@ export default async function Hero() {
                 <Link href="/sydney" className="text-sky-500 hover:underline">
                   Sydney's Northern Beaches
                 </Link>{' '}
-                and{' '}
+                and the{' '}
                 <Link href="/woopi" className="text-purple-500 hover:underline">
                   Mid-North Coast
                 </Link>
