@@ -26,6 +26,10 @@ items:
       As a sporting schools provider of Athletics, we've teamed up with
       experienced coaches  to bring quality sessions to your students
     icon: MapIcon
+  - name: Star-Schools Multisport Program
+    page: star-schools-multisport-progam
+    description: 'The first outsourced PE lesson in the region. '
+    icon: MapIcon
 callsToAction:
   - name: View All Sessions
     href: /woopi/sessions
