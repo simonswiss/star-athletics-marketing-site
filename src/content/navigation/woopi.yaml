@@ -1,15 +1,5 @@
 name: Mid North Coast
 items:
-  - name: Sporting Schools
-    page: sporting-schools
-    description: >-
-      As a sporting schools provider of Athletics, we've teamed up with
-      experienced coaches  to bring quality sessions to your students
-    icon: MapIcon
-  - name: Holiday Camps
-    page: holiday-camps
-    description: Stay fit and entertained during the holidays with our extended sessions
-    icon: PhotoIcon
   - name: One-on-One Coaching
     page: one-on-one
     description: >-
@@ -22,10 +12,20 @@ items:
       Relay training for the whole relay team, quick batton change overs,
       possitioning and timing
     icon: UserGroupIcon
+  - name: Holiday Camps
+    page: holiday-camps
+    description: Stay fit and entertained during the holidays with our extended sessions
+    icon: PhotoIcon
   - name: Popup Clinics
     page: popup-clinics
     description: Temporary and targetted training sessions
     icon: BoltIcon
+  - name: Sporting Schools
+    page: sporting-schools
+    description: >-
+      As a sporting schools provider of Athletics, we've teamed up with
+      experienced coaches  to bring quality sessions to your students
+    icon: MapIcon
 callsToAction:
   - name: View All Sessions
     href: /woopi/sessions
