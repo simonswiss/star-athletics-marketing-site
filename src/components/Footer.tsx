@@ -9,6 +9,7 @@ export default async function Footer() {
       { name: 'Mid-North Coast', href: '/woopi' },
       { name: 'Coaches', href: '/coaches' },
       { name: 'FAQ', href: '/faq' },
+      { name: 'Portal', href: 'https://portal.star-athletics.com.au' },
     ],
     social: [
       {
