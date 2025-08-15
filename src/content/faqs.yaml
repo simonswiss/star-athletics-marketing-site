@@ -60,25 +60,3 @@ questions:
       Payment is required upfront for the term. If your childs starts part way
       through a term then we will just invoice you for the number of remaining
       sessions in that term. Easy peasy!
-  - question: Where can I buy a T-Shirt
-    answer: >
-
-
-      \<script async
-
-      src="https\://js.stripe.com/v3/buy-button.js">
-
-      \</script>
-
-
-      \<stripe-buy-button
-
-      buy-button-id="buy\_btn\_1RwKrlRvwh9XtEnfwPn6R66w"
-
-      publishable-key="pk\_live\_51RhMlaRvwh9XtEnfLjyLN9PcLalcp0LzEMQOdwNQK7aviUQf7d9w6TzjKeVtP5jIG2lVMXc4JBoeMzuS4R4ziVMD00LML1Ht7Y"
-
-
-      >
-
-
-      \</stripe-buy-button>
