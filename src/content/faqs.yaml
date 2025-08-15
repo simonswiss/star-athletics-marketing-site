@@ -1,12 +1,21 @@
 questions:
   - question: What happens on a rainy day?
-    answer: |
-      We can't guarantee you'll stay dry, so remember to bring a change of clothes (or maybe a snorkel?). And on those stormy days, when lightning strikes like a scene from a superhero movie, we'll conveniently hide under a shelter for strength, technique, and core stability exercises.
+    answer: >
+      We can't guarantee you'll stay dry, so remember to bring a change of
+      clothes (or maybe a snorkel?). And on those stormy days, when lightning
+      strikes like a scene from a superhero movie, we'll conveniently hide under
+      a shelter for strength, technique, and core stability exercises.
 
-      Who needs sunshine and clear skies, right? Join us for an experience where we'll test your limits, defy the elements, and have a seriously good time!
+
+      Who needs sunshine and clear skies, right? Join us for an experience where
+      we'll test your limits, defy the elements, and have a seriously good time!
   - question: Can we get a refund if my child doesn't like it?
-    answer: |
-      Experience our "trial before you buy" approach, where each child can participate in the first session before committing to the term. We're confident that once you see the value we bring, you'll be eager to sign up for the full term.
+    answer: >
+      Experience our "trial before you buy" approach, where each child can
+      participate in the first session before committing to the term. We're
+      confident that once you see the value we bring, you'll be eager to sign up
+      for the full term.
+
 
       We're so confident in our program that we doubt you'll ever need a refund.
   - question: What happens if my child is sick?
@@ -17,23 +26,59 @@ questions:
 
       Be warned, make up sessions clear at the end of each term.
   - question: 'Do you take Active Kids Vouchers? '
-    answer: |
+    answer: >
       YES!
 
-      Let us know when you use the sign up form and we will arrange the $100 deduction on your child's' fees.
-  - question: What if my kid isn't a 'runner'?
-    answer: |
-      If your child isn't already a runner or athlete, no worries! Our sessions are designed to welcome children of all backgrounds and abilities. Whether they're a seasoned runner or new to the sport, our inclusive program ensures that every child feels comfortable and supported. With Heather and Kirsten, we'll guide and inspire your child to discover the joy and benefits of running - just check out our Google Review and testimonials!
 
-      Join us and watch as your child surprises themselves with newfound confidence and a passion for the sport.
+      Let us know when you use the sign up form and we will arrange the $100
+      deduction on your child's' fees.
+  - question: What if my kid isn't a 'runner'?
+    answer: >
+      If your child isn't already a runner or athlete, no worries! Our sessions
+      are designed to welcome children of all backgrounds and abilities. Whether
+      they're a seasoned runner or new to the sport, our inclusive program
+      ensures that every child feels comfortable and supported. With Heather and
+      Kirsten, we'll guide and inspire your child to discover the joy and
+      benefits of running - just check out our Google Review and testimonials!
+
+
+      Join us and watch as your child surprises themselves with newfound
+      confidence and a passion for the sport.
   - question: Do you have sibling discounts?
-    answer: |
-      Yes, we sure do for our After School Sessions! Contact the coach to find out exactly the amount.
+    answer: >
+      Yes, we sure do for our After School Sessions! Contact the coach to find
+      out exactly the amount.
   - question: Is it cheaper if I attend more sessions during the week?
     answer: |
       Sure is, contact the coach to work this out!
   - question: How do I pay?
-    answer: |
-      We will send you an invoice upon registration and you can pay by cash, direct deposit or PayPal.
+    answer: >
+      We will send you an invoice upon registration and you can pay by cash,
+      direct deposit or PayPal.
 
-      Payment is required upfront for the term. If your childs starts part way through a term then we will just invoice you for the number of remaining sessions in that term. Easy peasy!
+
+      Payment is required upfront for the term. If your childs starts part way
+      through a term then we will just invoice you for the number of remaining
+      sessions in that term. Easy peasy!
+  - question: Where can I buy a T-Shirt
+    answer: >
+
+
+      \<script async
+
+      src="https\://js.stripe.com/v3/buy-button.js">
+
+      \</script>
+
+
+      \<stripe-buy-button
+
+      buy-button-id="buy\_btn\_1RwKrlRvwh9XtEnfwPn6R66w"
+
+      publishable-key="pk\_live\_51RhMlaRvwh9XtEnfLjyLN9PcLalcp0LzEMQOdwNQK7aviUQf7d9w6TzjKeVtP5jIG2lVMXc4JBoeMzuS4R4ziVMD00LML1Ht7Y"
+
+
+      >
+
+
+      \</stripe-buy-button>
