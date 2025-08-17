@@ -25,5 +25,10 @@ export const coaches = collection({
       description: 'The order (lower number first) in which the coach will appear in the list.',
       validation: { isRequired: true },
     }),
+    sessionsSlug: fields.text({
+      label: 'Sessions Slug',
+      description:
+        'The slug of the sessions page for this coach. Leave blank to hide the sessions link.',
+    }),
   },
 })

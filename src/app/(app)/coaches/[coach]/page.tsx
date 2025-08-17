@@ -94,10 +94,10 @@ export default async function Example({ params }: { params: Promise<{ coach: str
             </div>
             <div className="mt-10 flex">
               <Link
-                href={`/${coach.region.toLowerCase()}/sessions`}
+                href={`/${coach.sessionsSlug}/sessions`}
                 className={twMerge(
                   'text-base font-semibold leading-7 hover:underline',
-                  coach.region === 'Sydney' ? 'text-sky-500' : 'text-purple-600'
+                  coach.sessionsSlug === 'sydney' ? 'text-sky-500' : 'text-purple-600'
                 )}
               >
                 View {coach.name}&apos;s sessions in {coach.region}{' '}
