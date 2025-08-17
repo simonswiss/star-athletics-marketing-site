@@ -20,5 +20,10 @@ export const coaches = collection({
       label: 'Qualifications',
       itemLabel: (props) => props.value,
     }),
+    sortIndex: fields.number({
+      label: 'Sort Index',
+      description: 'The order (lower number first) in which the coach will appear in the list.',
+      validation: { isRequired: true },
+    }),
   },
 })

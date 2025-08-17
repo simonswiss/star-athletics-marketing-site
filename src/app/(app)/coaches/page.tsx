@@ -32,6 +32,8 @@ export default async function Example() {
   const coaches = await reader.collections.coaches.all({ resolveLinkedFiles: true })
   if (!coaches) throw new Error('No coaches found — please add in CMS')
 
+  const sortedCoaches = coaches.sort((a, b) => a.entry.sortIndex - b.entry.sortIndex)
+
   return (
     <div className="bg-white py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-12 gap-y-20 px-6 lg:px-8 xl:grid-cols-5">
@@ -44,7 +46,7 @@ export default async function Example() {
           </div>
         </div>
         <ul role="list" className="divide-y divide-gray-200 xl:col-span-3">
-          {coaches.map((coach) => (
+          {sortedCoaches.map((coach) => (
             <li
               key={coach.entry.name}
               className="flex flex-col items-start gap-10 py-12 first:pt-0 sm:flex-row"
