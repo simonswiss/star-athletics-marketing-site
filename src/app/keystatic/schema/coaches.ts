@@ -28,7 +28,7 @@ export const coaches = collection({
     sessionsSlug: fields.text({
       label: 'Sessions Slug',
       description:
-        'The slug of the sessions page for this coach. Leave blank to hide the sessions link.',
+        'The slug of the sessions page for this coach This MUST match the session regions (`sydney` or `woopi`). Leave blank to hide the sessions link.',
     }),
   },
 })
