@@ -15,27 +15,43 @@ export const contacts = singleton({
         label: 'General Enquiries Phone',
       }),
     }),
-    sydney: fields.object({
-      email: fields.text({
-        label: 'Sydney Email',
-      }),
-      phone: fields.text({
-        label: 'Sydney Phone',
-      }),
-    }),
-    woopi: fields.object({
-      email: fields.text({
-        label: 'Woopi Email',
-      }),
-      phone: fields.text({
-        label: 'Woopi Phone',
-      }),
-    }),
-    facebook: fields.text({
-      label: 'Facebook URL',
-    }),
-    instagram: fields.text({
-      label: 'Instagram URL',
-    }),
+    sydney: fields.object(
+      {
+        email: fields.text({
+          label: 'Email',
+        }),
+        phone: fields.text({
+          label: 'Phone',
+        }),
+        facebook: fields.text({
+          label: 'Facebook URL',
+        }),
+        instagram: fields.text({
+          label: 'Instagram URL',
+        }),
+      },
+      {
+        label: 'Sydney Region',
+      }
+    ),
+    woopi: fields.object(
+      {
+        email: fields.text({
+          label: 'Email',
+        }),
+        phone: fields.text({
+          label: 'Phone',
+        }),
+        facebook: fields.text({
+          label: 'Facebook URL',
+        }),
+        instagram: fields.text({
+          label: 'Instagram URL',
+        }),
+      },
+      {
+        label: 'Woopi Region',
+      }
+    ),
   },
 })
