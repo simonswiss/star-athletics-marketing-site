@@ -12,6 +12,12 @@ items:
     page: popup-clinics
     description: Temporary and targetted training sessions
     icon: BoltIcon
+  - name: Group Strength Classes
+    page: group-strength-classes
+    description: >-
+      Exercise Physiologist & Physiotherapist led classes to build strength,
+      improve technique, and stay injury-free.
+    icon: MapIcon
 callsToAction:
   - name: Meet The Coach
     href: /coaches/kirsten
