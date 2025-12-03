@@ -8,9 +8,9 @@ items:
     page: holiday-camps
     description: Stay fit and entertained during the holidays
     icon: PhotoIcon
-  - name: Popup Clinics
+  - name: Pop-up Clinics
     page: popup-clinics
-    description: Temporary and targetted training sessions
+    description: Temporary and targeted training sessions
     icon: BoltIcon
   - name: Group Strength Classes
     page: group-strength-classes
