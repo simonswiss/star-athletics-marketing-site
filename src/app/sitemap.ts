@@ -1,38 +1,41 @@
 import { MetadataRoute } from 'next'
 
 import { reader } from './keystatic/reader'
+import { siteUrl } from '@/lib/shared-metadata'
+
+function url(path = '') {
+  return `${siteUrl}${path}`
+}
+
+function sitemapEntry(path = ''): MetadataRoute.Sitemap[number] {
+  return {
+    url: url(path),
+    lastModified: new Date(),
+  }
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const coaches = await reader.collections.coaches.list()
-  const coachesUrls = coaches.map((coach) => ({
-    url: `https://www.star-athletics.com.au/coaches/${coach}`,
-    lastModified: new Date(),
-  }))
+  const [coaches, generalPages, sydneyPages, woopiPages] = await Promise.all([
+    reader.collections.coaches.list(),
+    reader.collections.generalPages.list(),
+    reader.collections.sydneyPages.list(),
+    reader.collections.woopiPages.list(),
+  ])
 
   return [
-    // Homepage
-    { url: 'https://www.star-athletics.com.au', lastModified: new Date() },
-    // Contact
-    { url: 'https://www.star-athletics.com.au/contact', lastModified: new Date() },
-    // Register
-    { url: 'https://www.star-athletics.com.au/register', lastModified: new Date() },
-    // FAQ
-    { url: 'https://www.star-athletics.com.au/faq', lastModified: new Date() },
-
-    // Coaches
-    { url: 'https://www.star-athletics.com.au/coaches', lastModified: new Date() },
-    ...coachesUrls,
-    // Sydney pages
-    { url: 'https://www.star-athletics.com.au/sydney', lastModified: new Date() },
-    { url: 'https://www.star-athletics.com.au/sydney/sessions', lastModified: new Date() },
-    { url: 'https://www.star-athletics.com.au/sydney/one-on-one', lastModified: new Date() },
-    { url: 'https://www.star-athletics.com.au/sydney/holiday-camps', lastModified: new Date() },
-    { url: 'https://www.star-athletics.com.au/sydney/popup-clinics', lastModified: new Date() },
-    // Woopi pages
-    { url: 'https://www.star-athletics.com.au/woopi', lastModified: new Date() },
-    { url: 'https://www.star-athletics.com.au/woopi/sessions', lastModified: new Date() },
-    { url: 'https://www.star-athletics.com.au/woopi/one-on-one', lastModified: new Date() },
-    { url: 'https://www.star-athletics.com.au/woopi/holiday-camps', lastModified: new Date() },
-    { url: 'https://www.star-athletics.com.au/woopi/popup-clinics', lastModified: new Date() },
+    sitemapEntry(),
+    sitemapEntry('/contact'),
+    sitemapEntry('/register'),
+    sitemapEntry('/faq'),
+    sitemapEntry('/coaches'),
+    sitemapEntry('/partnerships'),
+    sitemapEntry('/sydney'),
+    sitemapEntry('/sydney/sessions'),
+    sitemapEntry('/woopi'),
+    sitemapEntry('/woopi/sessions'),
+    ...coaches.map((coach) => sitemapEntry(`/coaches/${coach}`)),
+    ...generalPages.map((slug) => sitemapEntry(`/${slug}`)),
+    ...sydneyPages.map((slug) => sitemapEntry(`/sydney/${slug}`)),
+    ...woopiPages.map((slug) => sitemapEntry(`/woopi/${slug}`)),
   ]
 }
