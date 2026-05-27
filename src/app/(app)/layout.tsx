@@ -5,7 +5,7 @@ import Script from 'next/script'
 import NavBar from '@/components/NavBar/navbar-wrapper'
 import Footer from '@/components/Footer'
 
-import { sharedOpenGraphMetadata } from '@/lib/shared-metadata'
+import { sharedOpenGraphMetadata, siteUrl } from '@/lib/shared-metadata'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,12 +14,15 @@ const description =
   "Fun-filled athletics in Sydney's Northern Beaches and Woolgoolga on the Mid-North Coast"
 
 export const metadata = {
-  metadataBase: new URL('https://star-athletics.com.au/'),
+  metadataBase: new URL(siteUrl),
   title: {
     template: `%s | ${title}`,
     default: title,
   },
   description,
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title,
     description,
