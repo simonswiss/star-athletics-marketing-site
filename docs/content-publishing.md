@@ -58,7 +58,9 @@ saved commit revision; background reads are shared across navigation and refresh
 on focus and every 30 seconds while visible. No publishing bar appears for an
 empty batch. Review always fetches the latest batch before publication. Conflicted saves cannot escape
 into a different branch. Upgrade this patch deliberately and run the tests when
-updating Keystatic; installing with npm will not apply it.
+updating Keystatic; installing with npm will not apply it. The Webpack cache
+version includes the patch hash, so Vercel cannot reuse a compiled package from
+an older patch at the same Keystatic version.
 
 ## Image optimization
 
