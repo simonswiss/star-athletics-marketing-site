@@ -1,13 +1,21 @@
 diff --git a/dist/declarations/src/config.d.ts b/dist/declarations/src/config.d.ts
-index cd5057dbbc0ef2e81ba0734ada85c549247a197f..533e6ca04b2adf83514cd3c8613172b07f2ed233 100644
+index cd5057dbbc0ef2e81ba0734ada85c549247a197f..873842db79846755f38928ba0614dcca5fc63af7 100644
 --- a/dist/declarations/src/config.d.ts	
 +++ b/dist/declarations/src/config.d.ts
-@@ -46,6 +46,8 @@ type BrandMark = (props: {
+@@ -1,5 +1,5 @@
+ import { ColorScheme } from '@keystar/ui/types';
+-import { ReactElement } from 'react';
++import { ReactElement, ReactNode, ComponentType } from 'react';
+ import { ComponentSchema, FormField, SlugFormField } from "./form/api.js";
+ import type { Locale } from "./app/l10n/locales.js";
+ import { RepoConfig } from "./app/repo-config.js";
+@@ -46,6 +46,9 @@ type BrandMark = (props: {
  }) => ReactElement;
  export declare const NAVIGATION_DIVIDER_KEY = "---";
  type UserInterface<Collections, Singletons> = {
 +    /** Star Athletics: lock all CMS edits to a shared draft branch. */
 +    draftBranch?: string;
++    draftPublishing?: ComponentType<{ children: ReactNode; revision: string; repositoryReady: boolean; labels: Record<string, string> }>;
      brand?: {
          mark?: BrandMark;
          name: string;
@@ -56,7 +64,7 @@ index 233c8ca00c98b9ceec745b211cb5057911c2bf2d..bb287ab9e97324bc3c3f498bd27f2878
    const branches = useBranches();
    const currentBranch = useCurrentBranch();
 diff --git a/dist/keystatic-core-ui.js b/dist/keystatic-core-ui.js
-index 2f8809b7a3292d0c35cd7617b561195fec49f083..cd9a0278d1dbfa28fa41962115eae83a0739c6d8 100644
+index 2f8809b7a3292d0c35cd7617b561195fec49f083..7228230a49613d7d51f4369470f2120e60273f03 100644
 --- a/dist/keystatic-core-ui.js	
 +++ b/dist/keystatic-core-ui.js
 @@ -1927,6 +1927,9 @@ function useUpsertItem(args) {
@@ -111,16 +119,41 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..cd9a0278d1dbfa28fa41962115eae83a
    const $ = c(30);
    const repoInfo = useRepoInfo();
    const currentBranch = useCurrentBranch();
-@@ -6238,7 +6255,7 @@ const MainPanelLayout = props => {
+@@ -6201,6 +6218,10 @@ function UserInfo(t0) {
+ }
+ 
+ const MainPanelLayout = props => {
++  const config = useConfig();
++  const revision = useBaseCommit();
++  const repositoryReady = !!useRepoInfo();
++  const Publishing = config.ui?.draftPublishing;
+   const $ = c(13);
+   const isBelowDesktop = useMediaQuery(breakpointQueries.below.desktop);
+   const sidebarState = useSidebar();
+@@ -6238,7 +6259,7 @@ const MainPanelLayout = props => {
        defaultSize: 260,
        minSize: 180,
        maxSize: 400,
 -      height: "100vh",
-+      UNSAFE_style: { height: "var(--keystatic-editor-height, 100vh)" },
++      UNSAFE_style: { flex: 1, minHeight: 0, height: Publishing ? undefined : "100vh" },
        children: [t1, t2]
      });
      $[5] = t0;
-@@ -6724,7 +6741,7 @@ function SingletonPageInner(props) {
+@@ -6261,7 +6282,12 @@ const MainPanelLayout = props => {
+   } else {
+     t4 = $[12];
+   }
+-  return t4;
++  return Publishing ? jsx(Publishing, {
++    revision,
++    repositoryReady,
++    labels: Object.fromEntries(Object.values(config.singletons || {}).map(singleton => [singleton.path, singleton.label])),
++    children: t4
++  }) : t4;
+ };
+ 
+ function BranchNotFound(props) {
+@@ -6724,7 +6750,7 @@ function SingletonPageInner(props) {
      t19 = $[57];
    }
    const t20 = props.updateResult.kind === "loading";
@@ -129,16 +162,7 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..cd9a0278d1dbfa28fa41962115eae83a
    let t22;
    if ($[58] !== t20 || $[59] !== t21) {
      t22 = /*#__PURE__*/jsx(Button, {
-@@ -7936,7 +7953,7 @@ function KeystaticCloudAuthCallback({
-   return /*#__PURE__*/jsx(Flex, {
-     justifyContent: "center",
-     alignItems: "center",
--    height: "100vh",
-+    UNSAFE_style: { height: "var(--keystatic-editor-height, 100vh)" },
-     children: /*#__PURE__*/jsx(ProgressCircle, {
-       size: "large",
-       isIndeterminate: true,
-@@ -7999,7 +8016,7 @@ function RedirectToBranch(props) {
+@@ -7999,7 +8025,7 @@ function RedirectToBranch(props) {
          }
        }
        if (data !== null && data !== void 0 && (_data$repository = data.repository) !== null && _data$repository !== void 0 && _data$repository.defaultBranchRef) {
@@ -147,7 +171,7 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..cd9a0278d1dbfa28fa41962115eae83a
        }
        if (props.config.storage.kind === "github" && !(data !== null && data !== void 0 && (_data$repository2 = data.repository) !== null && _data$repository2 !== void 0 && _data$repository2.id) && (error === null || error === void 0 || (_error$graphQLErrors = error.graphQLErrors) === null || _error$graphQLErrors === void 0 || (_error$graphQLErrors = _error$graphQLErrors[0]) === null || _error$graphQLErrors === void 0 || (_error$graphQLErrors = _error$graphQLErrors.originalError) === null || _error$graphQLErrors === void 0 ? void 0 : _error$graphQLErrors.type) === "NOT_FOUND" || (error === null || error === void 0 || (_error$graphQLErrors2 = error.graphQLErrors) === null || _error$graphQLErrors2 === void 0 || (_error$graphQLErrors2 = _error$graphQLErrors2[0]) === null || _error$graphQLErrors2 === void 0 || (_error$graphQLErrors2 = _error$graphQLErrors2.originalError) === null || _error$graphQLErrors2 === void 0 ? void 0 : _error$graphQLErrors2.type) === "FORBIDDEN") {
          window.location.href = "/api/keystatic/github/repo-not-found";
-@@ -8159,7 +8176,7 @@ function PageInner(t0) {
+@@ -8159,7 +8185,7 @@ function PageInner(t0) {
        }
        return t3;
      }
@@ -156,21 +180,3 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..cd9a0278d1dbfa28fa41962115eae83a
      basePath = `/keystatic/branch/${encodeURIComponent(branch)}`;
      let t3;
      if ($[20] !== params) {
-@@ -8316,7 +8333,7 @@ function AuthWrapper(props) {
-         t5 = /*#__PURE__*/jsx(Flex, {
-           justifyContent: "center",
-           alignItems: "center",
--          height: "100vh",
-+          UNSAFE_style: { height: "var(--keystatic-editor-height, 100vh)" },
-           children: /*#__PURE__*/jsxs(Button, {
-             href: t2,
-             target: "_top",
-@@ -8356,7 +8373,7 @@ function AuthWrapper(props) {
-         t4 = /*#__PURE__*/jsx(Flex, {
-           justifyContent: "center",
-           alignItems: "center",
--          height: "100vh",
-+          UNSAFE_style: { height: "var(--keystatic-editor-height, 100vh)" },
-           children: /*#__PURE__*/jsx(Button, {
-             onPress: t2,
-             children: t3

@@ -1,21 +1,20 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState, type ReactNode } from 'react'
+import { Button, ButtonGroup } from '@keystar/ui/button'
+import { Dialog, DialogContainer } from '@keystar/ui/dialog'
+import { Box, Flex } from '@keystar/ui/layout'
+import { Content } from '@keystar/ui/slots'
+import { Heading, Text } from '@keystar/ui/typography'
+import { Notice } from '@keystar/ui/notice'
+import { toastQueue } from '@keystar/ui/toast'
 import type { PublishingStatus } from '@/lib/publishing/github'
-import styles from './publishing.module.css'
 
-function changeLabel(filename: string) {
-  return filename
-    .replace(/^src\/content\//, '')
-    .replace(/^public\/images\//, 'images/')
-    .replace(/(?:-[a-f0-9]{12})?\.[^.]+$/, '')
-    .split('/')
-    .map((part) =>
-      part
-        .replace(/[-_]/g, ' ')
-        .replace(/^./, (letter) => letter.toUpperCase()),
-    )
-    .join(' / ')
+type PublishingProps = {
+  children: ReactNode
+  revision: string
+  repositoryReady: boolean
+  labels: Record<string, string>
 }
 
 export async function publishingRequest(body?: object) {
@@ -32,7 +31,6 @@ export async function publishingRequest(body?: object) {
     )
   let response = await send()
   if (response.status === 401) {
-    // Reuse Keystatic's existing session refresh; no extra API token is required.
     const refresh = await fetch('/api/keystatic/github/refresh-token', {
       method: 'POST',
     })
@@ -46,52 +44,150 @@ export async function publishingRequest(body?: object) {
   return result
 }
 
-export function PublishingPanel() {
+// Navigation can remount the editor. Keep background reads shared for the current
+// saved revision; a new native GitHub commit always invalidates this cache.
+let cached:
+  | { revision: string; status: PublishingStatus; at: number }
+  | undefined
+let pending:
+  | { revision: string; promise: Promise<PublishingStatus> }
+  | undefined
+let preparing: Promise<unknown> | undefined
+function readStatus(
+  revision: string,
+  force = false,
+): Promise<PublishingStatus> {
+  if (pending?.revision === revision) {
+    // A review or post-publish read must run after an older background request.
+    return force
+      ? pending.promise
+          .catch(() => undefined)
+          .then(() => readStatus(revision, true))
+      : pending.promise
+  }
+  if (
+    !force &&
+    cached?.revision === revision &&
+    Date.now() - cached.at < 30_000
+  )
+    return Promise.resolve(cached.status)
+  const promise = publishingRequest()
+    .then((status: PublishingStatus) => {
+      cached = { revision, status, at: Date.now() }
+      return status
+    })
+    .finally(() => {
+      if (pending?.promise === promise) pending = undefined
+    })
+  pending = { revision, promise }
+  return promise
+}
+
+function changeLabel(filename: string, labels: Record<string, string>) {
+  const entryPath = filename.replace(/\.(mdx?|ya?ml|json)$/, '')
+  return (
+    labels[entryPath] ??
+    filename
+      .replace(/^src\/content\//, '')
+      .replace(/^public\/images\//, 'Images / ')
+      .replace(/(?:-[a-f0-9]{12})?\.[^.]+$/, '')
+      .split('/')
+      .map((part) =>
+        part
+          .replace(/[-_]/g, ' ')
+          .replace(/^./, (letter) => letter.toUpperCase()),
+      )
+      .join(' / ')
+  )
+}
+
+export function PublishingShell({
+  children,
+  revision,
+  repositoryReady,
+  labels,
+}: PublishingProps) {
+  const [status, setStatus] = useState<PublishingStatus | null>(() =>
+    cached?.revision === revision ? cached.status : null,
+  )
   const [dirty, setDirty] = useState(false)
   const [review, setReview] = useState<PublishingStatus | null>(null)
   const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState(
-    'Save your edits as drafts, then publish the finished batch.',
-  )
   const [error, setError] = useState('')
-  const dialog = useRef<HTMLDialogElement>(null)
-  const toolbar = useRef<HTMLElement>(null)
+  const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
     const onDirty = (event: Event) =>
       setDirty(Boolean((event as CustomEvent<boolean>).detail))
     window.addEventListener('keystatic:dirty', onDirty)
-    const resize = new ResizeObserver(([entry]) => {
-      document.documentElement.style.setProperty(
-        '--keystatic-editor-height',
-        `calc(100dvh - ${entry.target.getBoundingClientRect().height}px)`,
-      )
-    })
-    if (toolbar.current) resize.observe(toolbar.current)
-    return () => {
-      window.removeEventListener('keystatic:dirty', onDirty)
-      resize.disconnect()
-    }
+    return () => window.removeEventListener('keystatic:dirty', onDirty)
   }, [])
+
+  useEffect(() => {
+    if (!repositoryReady) return
+    let active = true
+    if (!revision) {
+      // Only first-time setup needs to create a branch. Existing drafts open
+      // immediately, without a prepare/merge request on every navigation.
+      preparing ??= publishingRequest({ action: 'prepare' }).finally(() => {
+        preparing = undefined
+      })
+      preparing
+        .then(() => {
+          if (active) window.location.reload()
+        })
+        .catch((error) => {
+          if (active) setError(error.message)
+        })
+      return () => {
+        active = false
+      }
+    }
+    const refresh = (force = false) =>
+      readStatus(revision, force)
+        .then((value) => {
+          if (active) {
+            setStatus(value)
+            setError('')
+          }
+        })
+        .catch((error) => {
+          if (active) setError(error.message)
+        })
+    void refresh()
+    const onFocus = () => {
+      void refresh(true)
+    }
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') onFocus()
+    }
+    window.addEventListener('focus', onFocus)
+    document.addEventListener('visibilitychange', onVisible)
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === 'visible') void refresh(true)
+    }, 30_000)
+    return () => {
+      active = false
+      clearInterval(timer)
+      window.removeEventListener('focus', onFocus)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [revision, repositoryReady, attempt])
 
   const openReview = useCallback(async () => {
     if (dirty || busy) return
     setBusy(true)
     setError('')
     try {
-      const status: PublishingStatus = await publishingRequest()
-      if (!status.files.length) {
-        setMessage('All saved changes have been published.')
-        return
-      }
-      setReview(status)
-      dialog.current?.showModal()
+      const latest = await readStatus(revision, true)
+      setStatus(latest)
+      if (latest.files.length) setReview(latest)
     } catch (error) {
       setError((error as Error).message)
     } finally {
       setBusy(false)
     }
-  }, [dirty, busy])
+  }, [dirty, busy, revision])
 
   async function publish() {
     if (!review || dirty || busy) return
@@ -103,11 +199,16 @@ export function PublishingPanel() {
         draftSha: review.draftSha,
         publishedSha: review.publishedSha,
       })
-      dialog.current?.close()
       setReview(null)
-      setMessage(
-        'Batch published. The live site will update when the deployment finishes.',
+      setStatus(null)
+      cached = undefined
+      toastQueue.positive(
+        'Changes published. The site will update when the deployment finishes.',
       )
+      // A failed status refresh must not leave a successfully published batch
+      // open in the dialog. Concurrent saves are picked up by this fresh read.
+      const latest = await readStatus(revision, true)
+      setStatus(latest)
     } catch (error) {
       setError((error as Error).message)
     } finally {
@@ -115,79 +216,122 @@ export function PublishingPanel() {
     }
   }
 
+  const count = status?.files.length ?? 0
   return (
-    <>
-      <header className={styles.toolbar} ref={toolbar}>
-        <div>
-          <strong>Content drafts</strong>
-          <p role="status">
-            {dirty
-              ? 'You have unsaved edits. Save draft before publishing.'
-              : message}
-          </p>
-          {error && !review && (
-            <p role="alert" className={styles.error}>
-              {error}
-            </p>
-          )}
-        </div>
-        <button
-          className={styles.primary}
-          disabled={dirty || busy}
-          onClick={openReview}
+    <Flex direction="column" height="100vh">
+      {count > 0 && (
+        <Flex
+          alignItems="center"
+          justifyContent="space-between"
+          wrap
+          gap="medium"
+          padding="medium"
+          borderBottom="muted"
+          backgroundColor="surface"
         >
-          {busy && !review ? 'Checking changes…' : 'Review & publish'}
-        </button>
-      </header>
-      <dialog
-        ref={dialog}
-        className={styles.dialog}
-        onCancel={(event) => {
-          if (busy) event.preventDefault()
-          else {
+          <Text role="status">
+            {dirty
+              ? 'Save your current edits before publishing.'
+              : `${count} saved ${count === 1 ? 'change' : 'changes'} ready to publish`}
+          </Text>
+          <Button
+            prominence="high"
+            isDisabled={dirty || busy}
+            onPress={openReview}
+          >
+            {busy && !review ? 'Checking changes…' : 'Review & publish'}
+          </Button>
+        </Flex>
+      )}
+      {error && !review && (
+        <Box padding="medium">
+          <Notice tone="critical">
+            <Text>{error}</Text>
+            <Button onPress={() => setAttempt((value) => value + 1)}>
+              Try again
+            </Button>
+          </Notice>
+        </Box>
+      )}
+      {!revision && repositoryReady ? (
+        <Box padding="large">
+          <Text>Preparing your first draft…</Text>
+        </Box>
+      ) : (
+        children
+      )}
+      <DialogContainer
+        onDismiss={() => {
+          if (!busy) {
             setReview(null)
             setError('')
           }
         }}
+        isKeyboardDismissDisabled={busy}
       >
-        <h2>Publish saved changes</h2>
-        <p>
-          This publishes all saved drafts from the team. The live site updates
-          after the deployment finishes.
-        </p>
-        <ul className={styles.changes}>
-          {review?.files.map((file) => (
-            <li key={file.filename}>
-              <span>{changeLabel(file.filename)}</span>
-              <small>{file.status}</small>
-            </li>
-          ))}
-        </ul>
-        {error && (
-          <p role="alert" className={styles.error}>
-            {error}
-          </p>
+        {review && (
+          <Dialog size="medium">
+            <Heading>Publish saved changes</Heading>
+            <Content>
+              <Flex direction="column" gap="large">
+                <Text>
+                  This publishes all saved changes from the team. The site
+                  updates after the deployment finishes.
+                </Text>
+                <Flex
+                  elementType="ul"
+                  direction="column"
+                  gap="medium"
+                  aria-label="Saved changes"
+                >
+                  {review.files.map((file) => (
+                    <Flex
+                      elementType="li"
+                      direction="column"
+                      gap="small"
+                      key={file.filename}
+                    >
+                      <Text weight="medium">
+                        {changeLabel(file.filename, labels)}
+                      </Text>
+                      <Text color="neutralSecondary" size="small">
+                        {file.status === 'added'
+                          ? 'Added'
+                          : file.status === 'removed'
+                            ? 'Removed'
+                            : 'Updated'}
+                      </Text>
+                    </Flex>
+                  ))}
+                </Flex>
+                {error && (
+                  <Notice tone="critical">
+                    <Text>{error}</Text>
+                  </Notice>
+                )}
+              </Flex>
+            </Content>
+            <ButtonGroup>
+              <Button
+                isDisabled={busy}
+                onPress={() => {
+                  setReview(null)
+                  setError('')
+                }}
+              >
+                Keep editing
+              </Button>
+              <Button
+                prominence="high"
+                isDisabled={busy || dirty}
+                onPress={publish}
+              >
+                {busy ? 'Publishing…' : 'Publish changes'}
+              </Button>
+            </ButtonGroup>
+          </Dialog>
         )}
-        <div className={styles.actions}>
-          <button
-            disabled={busy}
-            onClick={() => {
-              dialog.current?.close()
-              setReview(null)
-              setError('')
-            }}
-          >
-            Keep editing
-          </button>
-          <button
-            className={styles.primary}
-            disabled={busy || dirty}
-            onClick={publish}
-          >
-            {busy ? 'Publishing…' : 'Publish changes'}
-          </button>
-        </div>
-      </dialog>
-    </>
+      </DialogContainer>
+    </Flex>
   )
 }

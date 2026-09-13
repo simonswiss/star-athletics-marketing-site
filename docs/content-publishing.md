@@ -10,8 +10,8 @@ deployment. Unsaved edits must be saved first. Publishing is not an indication
 that the deployment has finished.
 
 The draft branch is created automatically when an authenticated editor first
-opens Keystatic. Opening the editor also merges current published changes into
-the draft, without resetting its history. The API uses the editor's existing
+opens Keystatic, if it does not exist yet. Existing branches open immediately;
+there is no blocking preparation or merge on page navigation. The API uses the editor's existing
 Keystatic GitHub session and requires repository write permission. No new token
 or Vercel deploy hook is needed.
 
@@ -51,7 +51,12 @@ The exact package version is pinned. `pnpm-workspace.yaml` applies
 `patches/@keystatic__core@0.6.9.patch`. The small patch adds `ui.draftBranch`, locks
 the editor's branch context (including direct URLs), removes branch-management
 controls, labels saves as drafts, reports unsaved editor state to the publishing
-toolbar and makes the editor height fit below it. Conflicted saves cannot escape
+controls and adds a publishing slot inside Keystatic's existing Keystar provider.
+The client-only slot uses native layout, buttons, notices, dialogs and toasts,
+including Keystatic's chosen light/dark theme. Its status follows the native
+saved commit revision; background reads are shared across navigation and refresh
+on focus and every 30 seconds while visible. No publishing bar appears for an
+empty batch. Review always fetches the latest batch before publication. Conflicted saves cannot escape
 into a different branch. Upgrade this patch deliberately and run the tests when
 updating Keystatic; installing with npm will not apply it.
 

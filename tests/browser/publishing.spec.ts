@@ -39,12 +39,28 @@ function fixtureTree(content: string) {
   }
 }
 
-async function mockEditor(page: Page, conflict = false) {
+async function mockEditor(
+  page: Page,
+  {
+    conflict = false,
+    initialPending = true,
+    holdStatus,
+    draftExists = true,
+  }: {
+    conflict?: boolean
+    initialPending?: boolean
+    holdStatus?: Promise<void>
+    draftExists?: boolean
+  } = {},
+) {
   page.on('pageerror', (error) =>
     console.error('Browser error:', error.message),
   )
   const commits: { branch: { branchName: string } }[] = []
   const publishes: object[] = []
+  const requests: string[] = []
+  let hasSavedChanges = initialPending
+  let branchExists = draftExists
   let savedBody = body
   let savedTree = fixtureTree(body)
   await page.context().addCookies([
@@ -59,7 +75,10 @@ async function mockEditor(page: Page, conflict = false) {
     const request = route.request()
     const input =
       request.method() === 'POST' ? request.postDataJSON() : undefined
+    requests.push(input?.action ?? 'status')
+    if (input?.action === 'prepare') branchExists = true
     if (input?.action === 'publish') {
+      if (!conflict) hasSavedChanges = false
       publishes.push(input)
       return route.fulfill({
         status: conflict ? 409 : 200,
@@ -71,11 +90,14 @@ async function mockEditor(page: Page, conflict = false) {
           : { published: true, sha: 'd'.repeat(40) },
       })
     }
+    if (holdStatus) await holdStatus
     return route.fulfill({
       json: {
-        draftSha: draft,
+        draftSha: commits.length ? 'e'.repeat(40) : draft,
         publishedSha: main,
-        files: [{ filename: 'src/content/contacts.mdx', status: 'modified' }],
+        files: hasSavedChanges
+          ? [{ filename: 'src/content/contacts.mdx', status: 'modified' }]
+          : [],
       },
     })
   })
@@ -96,6 +118,7 @@ async function mockEditor(page: Page, conflict = false) {
       })
       if (query.includes('mutation CreateCommit')) {
         commits.push(variables.input)
+        hasSavedChanges = true
         savedBody = Buffer.from(
           variables.input.fileChanges.additions[0].contents,
           'base64',
@@ -122,7 +145,9 @@ async function mockEditor(page: Page, conflict = false) {
         defaultBranchRef: ref('main'),
         refs: {
           __typename: 'RefConnection',
-          nodes: [ref('main'), ref('content-drafts')],
+          nodes: branchExists
+            ? [ref('main'), ref('content-drafts')]
+            : [ref('main')],
           pageInfo: {
             __typename: 'PageInfo',
             hasNextPage: false,
@@ -167,62 +192,179 @@ async function mockEditor(page: Page, conflict = false) {
       return route.fulfill({ body: savedBody, contentType: 'text/plain' })
     throw new Error(`Unexpected GitHub request: ${url.pathname}`)
   })
-  return { commits, publishes }
+  return { commits, publishes, requests }
 }
 
-test('saved drafts can be reviewed and published as one batch', async ({
+test('review shows native entry labels, publishes once, then disappears', async ({
   page,
 }) => {
   const { publishes } = await mockEditor(page)
   await page.goto('/keystatic')
+  await expect(page.getByRole('status')).toContainText(
+    '1 saved change ready to publish',
+  )
   await page.getByRole('button', { name: 'Review & publish' }).click()
-  await expect(page.getByRole('dialog')).toBeVisible()
-  await expect(page.getByText('Contacts', { exact: true })).toBeVisible()
-  await page
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toBeVisible()
+  await expect(
+    dialog.getByText('Contact Details', { exact: true }),
+  ).toBeVisible()
+  await dialog
     .getByRole('button', { name: 'Publish changes', exact: true })
     .click()
-  await expect(page.getByRole('dialog')).not.toBeVisible()
+  await expect(dialog).not.toBeVisible()
   await expect(
-    page.getByRole('status').filter({ hasText: 'Batch published' }),
+    page.getByRole('button', { name: 'Review & publish' }),
+  ).toHaveCount(0)
+  await expect(
+    page.getByText(
+      'Changes published. The site will update when the deployment finishes.',
+    ),
   ).toBeVisible()
   expect(publishes).toEqual([
     { action: 'publish', draftSha: draft, publishedSha: main },
   ])
 })
 
-test('a stale batch stays open with a useful error', async ({ page }) => {
-  await mockEditor(page, true)
+test('a stale review stays open with a useful error', async ({ page }) => {
+  await mockEditor(page, { conflict: true })
   await page.goto('/keystatic')
   await page.getByRole('button', { name: 'Review & publish' }).click()
   await page
     .getByRole('button', { name: 'Publish changes', exact: true })
     .click()
-  await expect(page.getByRole('dialog')).toBeVisible()
-  await expect(page.getByRole('dialog').getByRole('alert')).toContainText(
+  await expect(page.getByRole('dialog')).toContainText(
     'Review the latest batch',
   )
 })
 
-test('unsaved editor state prevents publishing', async ({ page }) => {
+test('unsaved editor changes disable publishing an existing batch', async ({
+  page,
+}) => {
   await mockEditor(page)
-  await page.goto('/keystatic')
-  await expect(
-    page.getByRole('button', { name: 'Review & publish' }),
-  ).toBeVisible()
-  await page.evaluate(() =>
-    window.dispatchEvent(new CustomEvent('keystatic:dirty', { detail: true })),
-  )
+  await page.goto('/keystatic/branch/content-drafts/singleton/contacts')
+  await page.getByLabel('Title', { exact: true }).fill('Unsaved title')
   await expect(
     page.getByRole('button', { name: 'Review & publish' }),
   ).toBeDisabled()
-  await expect(
-    page
-      .getByRole('status')
-      .filter({ hasText: 'Save draft before publishing' }),
-  ).toBeVisible()
+  await expect(page.getByRole('status')).toContainText(
+    'Save your current edits before publishing.',
+  )
 })
 
-test('small screens keep publishing controls accessible', async ({ page }) => {
+test('an empty batch has no banner and a slow status request never blocks the editor', async ({
+  page,
+}) => {
+  let release!: () => void
+  const holdStatus = new Promise<void>((resolve) => {
+    release = resolve
+  })
+  const { requests } = await mockEditor(page, {
+    initialPending: false,
+    holdStatus,
+  })
+  await page.goto('/keystatic/branch/content-drafts/singleton/contacts')
+  try {
+    await expect(page.getByLabel('Title', { exact: true })).toHaveValue(
+      'Contact us',
+    )
+    await expect(
+      page.getByRole('button', { name: 'Save draft', exact: true }),
+    ).toBeVisible()
+    await expect(
+      page.getByRole('button', { name: 'Review & publish' }),
+    ).toHaveCount(0)
+    expect(requests).not.toContain('prepare')
+  } finally {
+    release()
+  }
+  await expect(
+    page.getByText(/Opening your content drafts|Preparing your first draft/),
+  ).toHaveCount(0)
+})
+
+test('a native save reveals the new batch and navigation does not re-prepare it', async ({
+  page,
+}, testInfo) => {
+  const { commits, publishes, requests } = await mockEditor(page, {
+    initialPending: false,
+  })
+  const errors: string[] = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  await page.goto('/keystatic/branch/main/singleton/contacts')
+  await expect(page.getByLabel('Title', { exact: true })).toHaveValue(
+    'Contact us',
+  )
+  await expect(
+    page.getByRole('button', { name: 'Review & publish' }),
+  ).toHaveCount(0)
+  await page
+    .getByLabel('Title', { exact: true })
+    .fill('Updated contact details')
+  await page.getByRole('button', { name: 'Save draft', exact: true }).click()
+  await expect.poll(() => commits.length).toBe(1)
+  expect(commits[0].branch.branchName).toBe('content-drafts')
+  await expect(page.getByRole('status')).toContainText(
+    '1 saved change ready to publish',
+  )
+  await expect(
+    page.getByRole('button', { name: 'Review & publish' }),
+  ).toBeEnabled()
+  await page.getByRole('link', { name: 'Dashboard', exact: true }).click()
+  await page
+    .getByRole('link', { name: 'Contact Details', exact: true })
+    .first()
+    .click()
+  await expect(page.getByLabel('Title', { exact: true })).toHaveValue(
+    'Updated contact details',
+  )
+  expect(requests).not.toContain('prepare')
+  await page.screenshot({
+    animations: 'disabled',
+    path: testInfo.outputPath('draft-editor.png'),
+  })
+  expect(publishes).toEqual([])
+  expect(errors).toEqual([])
+})
+
+for (const theme of ['light', 'dark']) {
+  test(`native review follows the ${theme} editor theme`, async ({
+    page,
+  }, testInfo) => {
+    await page.addInitScript(
+      (theme) => localStorage.setItem('keystatic-color-scheme', theme),
+      theme,
+    )
+    await mockEditor(page)
+    await page.goto('/keystatic/branch/content-drafts/singleton/contacts')
+    await expect(page.getByLabel('Title', { exact: true })).toBeVisible()
+    await page.getByRole('button', { name: 'Review & publish' }).click()
+    const dialog = page.getByRole('dialog')
+    await expect(
+      dialog.getByRole('heading', { name: 'Publish saved changes' }),
+    ).toBeVisible()
+    const color = await dialog
+      .getByRole('heading')
+      .evaluate((element) => getComputedStyle(element).color)
+    const channels = color
+      .match(/[\d.]+/g)!
+      .slice(0, 3)
+      .map(Number)
+    expect(channels.reduce((sum, value) => sum + value, 0) / 3)[
+      theme === 'dark' ? 'toBeGreaterThan' : 'toBeLessThan'
+    ](128)
+    await page.screenshot({
+      animations: 'disabled',
+      path: testInfo.outputPath(`review-${theme}.png`),
+    })
+    await page.keyboard.press('Escape')
+    await expect(dialog).not.toBeVisible()
+  })
+}
+
+test('small screens keep the native publishing dialog accessible', async ({
+  page,
+}, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await mockEditor(page)
   await page.goto('/keystatic')
@@ -235,31 +377,27 @@ test('small screens keep publishing controls accessible', async ({ page }) => {
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true)
+  await page.screenshot({
+    animations: 'disabled',
+    path: testInfo.outputPath('review-mobile.png'),
+  })
 })
 
-test('editing a direct main-branch URL still saves only to drafts', async ({
+test('only a missing draft branch runs first-time preparation', async ({
   page,
-}, testInfo) => {
-  const { commits, publishes } = await mockEditor(page)
-  const errors: string[] = []
-  page.on('pageerror', (error) => errors.push(error.message))
-  await page.goto('/keystatic/branch/main/singleton/contacts')
+}) => {
+  const { requests } = await mockEditor(page, {
+    initialPending: false,
+    draftExists: false,
+  })
+  await page.goto('/keystatic/branch/content-drafts/singleton/contacts')
   await expect(page.getByLabel('Title', { exact: true })).toHaveValue(
     'Contact us',
   )
-  await page
-    .getByLabel('Title', { exact: true })
-    .fill('Updated contact details')
+  expect(requests.filter((action) => action === 'prepare')).toHaveLength(1)
+  await page.getByRole('link', { name: 'Dashboard', exact: true }).click()
   await expect(
-    page.getByRole('button', { name: 'Review & publish' }),
-  ).toBeDisabled()
-  await page.getByRole('button', { name: 'Save draft', exact: true }).click()
-  await expect.poll(() => commits.length).toBe(1)
-  expect(commits[0].branch.branchName).toBe('content-drafts')
-  await expect(
-    page.getByRole('button', { name: 'Review & publish' }),
-  ).toBeEnabled()
-  await page.screenshot({ path: testInfo.outputPath('draft-editor.png') })
-  expect(publishes).toEqual([])
-  expect(errors).toEqual([])
+    page.getByRole('heading', { name: 'Dashboard', exact: true }),
+  ).toBeVisible()
+  expect(requests.filter((action) => action === 'prepare')).toHaveLength(1)
 })
