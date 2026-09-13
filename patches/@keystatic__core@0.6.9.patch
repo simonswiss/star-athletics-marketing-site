@@ -1,0 +1,176 @@
+diff --git a/dist/declarations/src/config.d.ts b/dist/declarations/src/config.d.ts
+index cd5057dbbc0ef2e81ba0734ada85c549247a197f..533e6ca04b2adf83514cd3c8613172b07f2ed233 100644
+--- a/dist/declarations/src/config.d.ts	
++++ b/dist/declarations/src/config.d.ts
+@@ -46,6 +46,8 @@ type BrandMark = (props: {
+ }) => ReactElement;
+ export declare const NAVIGATION_DIVIDER_KEY = "---";
+ type UserInterface<Collections, Singletons> = {
++    /** Star Athletics: lock all CMS edits to a shared draft branch. */
++    draftBranch?: string;
+     brand?: {
+         mark?: BrandMark;
+         name: string;
+diff --git a/dist/index-3c244051.js b/dist/index-3c244051.js
+index 233c8ca00c98b9ceec745b211cb5057911c2bf2d..bb287ab9e97324bc3c3f498bd27f2878b719f3a3 100644
+--- a/dist/index-3c244051.js	
++++ b/dist/index-3c244051.js
+@@ -326,7 +326,7 @@ const strings = {
+     "clear": `Clear`,
+     "collection": `Collection`,
+     "collections": `Collections`,
+-    "create": `Create`,
++    "create": `Save draft`,
+     "createPullRequest": `Create pull request`,
+     "currentBranch": `Current branch`,
+     "dashboard": `Dashboard`,
+@@ -338,7 +338,7 @@ const strings = {
+     "newBranch": `New branch…`,
+     "otherBranches": `Other branches`,
+     "pullRequests": `Pull requests`,
+-    "save": `Save`,
++    "save": `Save draft`,
+     "search": `Search`,
+     "singleton": `Singleton`,
+     "singletons": `Singletons`,
+@@ -1433,6 +1433,10 @@ function ZapLogo() {
+ }
+ 
+ function BranchPicker() {
++  const config = useConfig();
++  return config.ui?.draftBranch ? null : jsx(UnlockedBranchPicker, {});
++}
++function UnlockedBranchPicker() {
+   const branches = useBranches();
+   const repoInfo = useRepoInfo();
+   const currentBranch = useCurrentBranch();
+@@ -2389,6 +2393,10 @@ function useAssociatedPullRequest() {
+   return (_prResult$data = prResult.data) !== null && _prResult$data !== void 0 && _prResult$data.node && prResult.data.node.__typename === "Ref" ? (_prResult$data$node$a = (_prResult$data$node$a2 = prResult.data.node.associatedPullRequests) === null || _prResult$data$node$a2 === void 0 || (_prResult$data$node$a2 = _prResult$data$node$a2.nodes) === null || _prResult$data$node$a2 === void 0 || (_prResult$data$node$a2 = _prResult$data$node$a2[0]) === null || _prResult$data$node$a2 === void 0 ? void 0 : _prResult$data$node$a2.number) !== null && _prResult$data$node$a !== void 0 ? _prResult$data$node$a : false : undefined;
+ }
+ function GitMenu() {
++  const config = useConfig();
++  return config.ui?.draftBranch ? null : jsx(UnlockedGitMenu, {});
++}
++function UnlockedGitMenu() {
+   const $ = c(84);
+   const branches = useBranches();
+   const currentBranch = useCurrentBranch();
+diff --git a/dist/keystatic-core-ui.js b/dist/keystatic-core-ui.js
+index 2f8809b7a3292d0c35cd7617b561195fec49f083..cd9a0278d1dbfa28fa41962115eae83a0739c6d8 100644
+--- a/dist/keystatic-core-ui.js	
++++ b/dist/keystatic-core-ui.js
+@@ -1927,6 +1927,9 @@ function useUpsertItem(args) {
+           branchName: (_override$branch = override === null || override === void 0 ? void 0 : override.branch) !== null && _override$branch !== void 0 ? _override$branch : currentBranch,
+           repositoryNameWithOwner: `${repoInfo.owner}/${repoInfo.name}`
+         };
++        if (args.config.ui?.draftBranch && branch.branchName !== args.config.ui.draftBranch) {
++          throw new Error('Save this entry to the shared content draft. Reload the editor to continue.');
++        }
+         const runMutation = expectedHeadOid => mutate({
+           input: {
+             branch,
+@@ -1946,6 +1949,9 @@ function useUpsertItem(args) {
+         let result = await runMutation((_override$sha = override === null || override === void 0 ? void 0 : override.sha) !== null && _override$sha !== void 0 ? _override$sha : baseCommit);
+         const gqlError = (_result$error = result.error) === null || _result$error === void 0 || (_result$error = _result$error.graphQLErrors[0]) === null || _result$error === void 0 ? void 0 : _result$error.originalError;
+         if (gqlError && ('type' in gqlError && gqlError.type === 'BRANCH_PROTECTION_RULE_VIOLATION' || /repository rule violations/i.test((_gqlError$message = gqlError.message) !== null && _gqlError$message !== void 0 ? _gqlError$message : ''))) {
++          if (args.config.ui?.draftBranch) {
++            throw new Error('The draft branch requires a pull request. Ask a developer to update its branch rules.');
++          }
+           setState({
+             kind: 'needs-new-branch',
+             reason: 'Changes must be made via pull request to this branch. Create a new branch to save changes.'
+@@ -1970,6 +1976,9 @@ function useUpsertItem(args) {
+             if (treeKey === args.currentLocalTreeKey) {
+               result = await runMutation(refData.data.repository.ref.target.oid);
+             } else {
++              if (args.config.ui?.draftBranch) {
++                throw new Error('Another editor changed this entry. Copy your unsaved text, then reopen the entry and combine the changes before saving.');
++              }
+               setState({
+                 kind: 'needs-new-branch',
+                 reason: 'This entry has been updated since it was opened. Create a new branch to save changes.'
+@@ -2230,6 +2239,10 @@ function useHasChanged(args) {
+   if (typeof hasChangedState === "boolean" && hasChangedState !== hasChanged) {
+     setHasChanged(hasChangedState);
+   }
++  useEffect(() => {
++    window.dispatchEvent(new CustomEvent("keystatic:dirty", { detail: hasChangedState !== false }));
++    return () => window.dispatchEvent(new CustomEvent("keystatic:dirty", { detail: false }));
++  }, [hasChangedState]);
+   return hasChanged;
+ }
+ 
+@@ -5726,6 +5739,10 @@ function useLocalizedString() {
+ }
+ 
+ function BranchSection() {
++  const config = useConfig();
++  return config.ui?.draftBranch ? null : jsx(UnlockedBranchSection, {});
++}
++function UnlockedBranchSection() {
+   const $ = c(30);
+   const repoInfo = useRepoInfo();
+   const currentBranch = useCurrentBranch();
+@@ -6238,7 +6255,7 @@ const MainPanelLayout = props => {
+       defaultSize: 260,
+       minSize: 180,
+       maxSize: 400,
+-      height: "100vh",
++      UNSAFE_style: { height: "var(--keystatic-editor-height, 100vh)" },
+       children: [t1, t2]
+     });
+     $[5] = t0;
+@@ -6724,7 +6741,7 @@ function SingletonPageInner(props) {
+     t19 = $[57];
+   }
+   const t20 = props.updateResult.kind === "loading";
+-  const t21 = isCreating ? "Create" : "Save";
++  const t21 = "Save draft";
+   let t22;
+   if ($[58] !== t20 || $[59] !== t21) {
+     t22 = /*#__PURE__*/jsx(Button, {
+@@ -7936,7 +7953,7 @@ function KeystaticCloudAuthCallback({
+   return /*#__PURE__*/jsx(Flex, {
+     justifyContent: "center",
+     alignItems: "center",
+-    height: "100vh",
++    UNSAFE_style: { height: "var(--keystatic-editor-height, 100vh)" },
+     children: /*#__PURE__*/jsx(ProgressCircle, {
+       size: "large",
+       isIndeterminate: true,
+@@ -7999,7 +8016,7 @@ function RedirectToBranch(props) {
+         }
+       }
+       if (data !== null && data !== void 0 && (_data$repository = data.repository) !== null && _data$repository !== void 0 && _data$repository.defaultBranchRef) {
+-        push(`/keystatic/branch/${encodeURIComponent(data.repository.defaultBranchRef.name)}`);
++        push(`/keystatic/branch/${encodeURIComponent(props.config.ui?.draftBranch ?? data.repository.defaultBranchRef.name)}`);
+       }
+       if (props.config.storage.kind === "github" && !(data !== null && data !== void 0 && (_data$repository2 = data.repository) !== null && _data$repository2 !== void 0 && _data$repository2.id) && (error === null || error === void 0 || (_error$graphQLErrors = error.graphQLErrors) === null || _error$graphQLErrors === void 0 || (_error$graphQLErrors = _error$graphQLErrors[0]) === null || _error$graphQLErrors === void 0 || (_error$graphQLErrors = _error$graphQLErrors.originalError) === null || _error$graphQLErrors === void 0 ? void 0 : _error$graphQLErrors.type) === "NOT_FOUND" || (error === null || error === void 0 || (_error$graphQLErrors2 = error.graphQLErrors) === null || _error$graphQLErrors2 === void 0 || (_error$graphQLErrors2 = _error$graphQLErrors2[0]) === null || _error$graphQLErrors2 === void 0 || (_error$graphQLErrors2 = _error$graphQLErrors2.originalError) === null || _error$graphQLErrors2 === void 0 ? void 0 : _error$graphQLErrors2.type) === "FORBIDDEN") {
+         window.location.href = "/api/keystatic/github/repo-not-found";
+@@ -8159,7 +8176,7 @@ function PageInner(t0) {
+       }
+       return t3;
+     }
+-    branch = params[1];
++    branch = config.ui?.draftBranch ?? params[1];
+     basePath = `/keystatic/branch/${encodeURIComponent(branch)}`;
+     let t3;
+     if ($[20] !== params) {
+@@ -8316,7 +8333,7 @@ function AuthWrapper(props) {
+         t5 = /*#__PURE__*/jsx(Flex, {
+           justifyContent: "center",
+           alignItems: "center",
+-          height: "100vh",
++          UNSAFE_style: { height: "var(--keystatic-editor-height, 100vh)" },
+           children: /*#__PURE__*/jsxs(Button, {
+             href: t2,
+             target: "_top",
+@@ -8356,7 +8373,7 @@ function AuthWrapper(props) {
+         t4 = /*#__PURE__*/jsx(Flex, {
+           justifyContent: "center",
+           alignItems: "center",
+-          height: "100vh",
++          UNSAFE_style: { height: "var(--keystatic-editor-height, 100vh)" },
+           children: /*#__PURE__*/jsx(Button, {
+             onPress: t2,
+             children: t3

@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { decode } from 'he'
 
 export const siteUrl = 'https://www.star-athletics.com.au'
-const seoImagePath = '/images/seo-image.png'
+const seoImagePath = '/images/seo-image-747dbf7f7bf4.webp'
 
 export const sharedOpenGraphMetadata: Metadata['openGraph'] = {
   locale: 'en_AU',

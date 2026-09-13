@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+/.pnpm-store/
+/test-results/
+/playwright-report/
 /.pnp
 .pnp.js
 
