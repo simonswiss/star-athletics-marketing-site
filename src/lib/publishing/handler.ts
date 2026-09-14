@@ -35,6 +35,12 @@ export async function handlePublishing(
       githubFetch,
     )
     await publisher.authorize()
+    if (request.method === 'POST') {
+      throw new PublishingError(
+        'Publishing is paused while drafts are separated by editor. Your saved changes are safe. Please reload the editor shortly.',
+        503,
+      )
+    }
     if (request.method === 'GET') return json(await publisher.status())
     let body: { action?: string; draftSha?: string; publishedSha?: string }
     try {
