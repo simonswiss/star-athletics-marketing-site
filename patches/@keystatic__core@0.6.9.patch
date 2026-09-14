@@ -1,5 +1,5 @@
 diff --git a/dist/declarations/src/config.d.ts b/dist/declarations/src/config.d.ts
-index cd5057dbbc0ef2e81ba0734ada85c549247a197f..873842db79846755f38928ba0614dcca5fc63af7 100644
+index cd5057dbbc0ef2e81ba0734ada85c549247a197f..ac93c7cd037f26dbb9f7b233fcfd9434353365c9 100644
 --- a/dist/declarations/src/config.d.ts	
 +++ b/dist/declarations/src/config.d.ts
 @@ -1,5 +1,5 @@
@@ -9,13 +9,14 @@ index cd5057dbbc0ef2e81ba0734ada85c549247a197f..873842db79846755f38928ba0614dcca
  import { ComponentSchema, FormField, SlugFormField } from "./form/api.js";
  import type { Locale } from "./app/l10n/locales.js";
  import { RepoConfig } from "./app/repo-config.js";
-@@ -46,6 +46,9 @@ type BrandMark = (props: {
+@@ -46,6 +46,10 @@ type BrandMark = (props: {
  }) => ReactElement;
  export declare const NAVIGATION_DIVIDER_KEY = "---";
  type UserInterface<Collections, Singletons> = {
-+    /** Star Athletics: lock all CMS edits to a shared draft branch. */
++    /** Star Athletics: lock all CMS edits to the authenticated editor's draft branch. */
 +    draftBranch?: string;
-+    draftPublishing?: ComponentType<{ children: ReactNode; revision: string; repositoryReady: boolean; labels: Record<string, string> }>;
++    draftBranchPerUser?: string;
++    draftPublishing?: ComponentType<{ children: ReactNode; revision: string; branch: string; repositoryReady: boolean; labels: Record<string, string> }>;
      brand?: {
          mark?: BrandMark;
          name: string;
@@ -64,7 +65,7 @@ index 233c8ca00c98b9ceec745b211cb5057911c2bf2d..bb287ab9e97324bc3c3f498bd27f2878
    const branches = useBranches();
    const currentBranch = useCurrentBranch();
 diff --git a/dist/keystatic-core-ui.js b/dist/keystatic-core-ui.js
-index 2f8809b7a3292d0c35cd7617b561195fec49f083..7228230a49613d7d51f4369470f2120e60273f03 100644
+index 2f8809b7a3292d0c35cd7617b561195fec49f083..6146d9ad91e124c84012d61b893a7603f9384673 100644
 --- a/dist/keystatic-core-ui.js	
 +++ b/dist/keystatic-core-ui.js
 @@ -1927,6 +1927,9 @@ function useUpsertItem(args) {
@@ -72,7 +73,7 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..7228230a49613d7d51f4369470f2120e
            repositoryNameWithOwner: `${repoInfo.owner}/${repoInfo.name}`
          };
 +        if (args.config.ui?.draftBranch && branch.branchName !== args.config.ui.draftBranch) {
-+          throw new Error('Save this entry to the shared content draft. Reload the editor to continue.');
++          throw new Error('Save this entry to your own content draft. Reload the editor to continue.');
 +        }
          const runMutation = expectedHeadOid => mutate({
            input: {
@@ -119,18 +120,19 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..7228230a49613d7d51f4369470f2120e
    const $ = c(30);
    const repoInfo = useRepoInfo();
    const currentBranch = useCurrentBranch();
-@@ -6201,6 +6218,10 @@ function UserInfo(t0) {
+@@ -6201,6 +6218,11 @@ function UserInfo(t0) {
  }
  
  const MainPanelLayout = props => {
 +  const config = useConfig();
 +  const revision = useBaseCommit();
++  const publishingBranch = useCurrentBranch();
 +  const repositoryReady = !!useRepoInfo();
 +  const Publishing = config.ui?.draftPublishing;
    const $ = c(13);
    const isBelowDesktop = useMediaQuery(breakpointQueries.below.desktop);
    const sidebarState = useSidebar();
-@@ -6238,7 +6259,7 @@ const MainPanelLayout = props => {
+@@ -6238,7 +6260,7 @@ const MainPanelLayout = props => {
        defaultSize: 260,
        minSize: 180,
        maxSize: 400,
@@ -139,13 +141,14 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..7228230a49613d7d51f4369470f2120e
        children: [t1, t2]
      });
      $[5] = t0;
-@@ -6261,7 +6282,12 @@ const MainPanelLayout = props => {
+@@ -6261,7 +6283,13 @@ const MainPanelLayout = props => {
    } else {
      t4 = $[12];
    }
 -  return t4;
 +  return Publishing ? jsx(Publishing, {
 +    revision,
++    branch: publishingBranch,
 +    repositoryReady,
 +    labels: Object.fromEntries(Object.values(config.singletons || {}).map(singleton => [singleton.path, singleton.label])),
 +    children: t4
@@ -153,7 +156,7 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..7228230a49613d7d51f4369470f2120e
  };
  
  function BranchNotFound(props) {
-@@ -6724,7 +6750,7 @@ function SingletonPageInner(props) {
+@@ -6724,7 +6752,7 @@ function SingletonPageInner(props) {
      t19 = $[57];
    }
    const t20 = props.updateResult.kind === "loading";
@@ -162,7 +165,7 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..7228230a49613d7d51f4369470f2120e
    let t22;
    if ($[58] !== t20 || $[59] !== t21) {
      t22 = /*#__PURE__*/jsx(Button, {
-@@ -7999,7 +8025,7 @@ function RedirectToBranch(props) {
+@@ -7999,7 +8027,7 @@ function RedirectToBranch(props) {
          }
        }
        if (data !== null && data !== void 0 && (_data$repository = data.repository) !== null && _data$repository !== void 0 && _data$repository.defaultBranchRef) {
@@ -171,7 +174,51 @@ index 2f8809b7a3292d0c35cd7617b561195fec49f083..7228230a49613d7d51f4369470f2120e
        }
        if (props.config.storage.kind === "github" && !(data !== null && data !== void 0 && (_data$repository2 = data.repository) !== null && _data$repository2 !== void 0 && _data$repository2.id) && (error === null || error === void 0 || (_error$graphQLErrors = error.graphQLErrors) === null || _error$graphQLErrors === void 0 || (_error$graphQLErrors = _error$graphQLErrors[0]) === null || _error$graphQLErrors === void 0 || (_error$graphQLErrors = _error$graphQLErrors.originalError) === null || _error$graphQLErrors === void 0 ? void 0 : _error$graphQLErrors.type) === "NOT_FOUND" || (error === null || error === void 0 || (_error$graphQLErrors2 = error.graphQLErrors) === null || _error$graphQLErrors2 === void 0 || (_error$graphQLErrors2 = _error$graphQLErrors2[0]) === null || _error$graphQLErrors2 === void 0 || (_error$graphQLErrors2 = _error$graphQLErrors2.originalError) === null || _error$graphQLErrors2 === void 0 ? void 0 : _error$graphQLErrors2.type) === "FORBIDDEN") {
          window.location.href = "/api/keystatic/github/repo-not-found";
-@@ -8159,7 +8185,7 @@ function PageInner(t0) {
+@@ -8019,7 +8047,33 @@ function RedirectToBranch(props) {
+   useEffect(t0, t1);
+   return null;
+ }
+-function PageInner(t0) {
++// Resolve the personal branch inside Keystatic's existing authenticated shell.
++// The server independently derives the same branch from the token's user ID.
++function PageInner(props) {
++  if (isGitHubConfig(props.config) && props.config.ui?.draftBranchPerUser) {
++    return jsx(AuthWrapper, {
++      config: props.config,
++      children: jsx(GitHubAppShellDataProvider, {
++        config: props.config,
++        children: jsx(PersonalDraftPage, props)
++      })
++    });
++  }
++  return jsx(ResolvedPageInner, props);
++}
++function PersonalDraftPage(props) {
++  const { data, error } = useContext(GitHubAppShellDataContext);
++  const id = data?.viewer?.databaseId;
++  const config = useMemo(() => ({
++    ...props.config,
++    ui: { ...props.config.ui, draftBranch: `${props.config.ui.draftBranchPerUser}${id}` }
++  }), [props.config, id]);
++  if (!Number.isSafeInteger(id) || id <= 0) {
++    return error ? jsx(Text, { children: 'Your editor identity could not be loaded. Reload Keystatic to sign in again.' }) : jsx(ProgressCircle, { isIndeterminate: true, 'aria-label': 'Loading Keystatic' });
++  }
++  return jsx(ResolvedPageInner, { ...props, config, draftIdentityReady: true });
++}
++function ResolvedPageInner(t0) {
+   var _config$cloud;
+   const $ = c(37);
+   const {
+@@ -8083,7 +8137,7 @@ function PageInner(t0) {
+     } else {
+       t2 = $[7];
+     }
+-    wrapper = t2;
++    wrapper = t0.draftIdentityReady ? origWrapper : t2;
+     if (params.length === 0) {
+       let t3;
+       if ($[8] !== config) {
+@@ -8159,7 +8213,7 @@ function PageInner(t0) {
        }
        return t3;
      }

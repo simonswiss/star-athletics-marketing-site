@@ -1,60 +1,62 @@
-'use client'
+"use client";
 
-import { useCallback, useEffect, useState, type ReactNode } from 'react'
-import { Button, ButtonGroup } from '@keystar/ui/button'
-import { Dialog, DialogContainer } from '@keystar/ui/dialog'
-import { Box, Flex } from '@keystar/ui/layout'
-import { Content } from '@keystar/ui/slots'
-import { Heading, Text } from '@keystar/ui/typography'
-import { Notice } from '@keystar/ui/notice'
-import { TextLink } from '@keystar/ui/link'
-import { ChangePreview } from './change-preview'
-import { toastQueue } from '@keystar/ui/toast'
-import type { PublishingStatus } from '@/lib/publishing/github'
+import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { Button, ButtonGroup } from "@keystar/ui/button";
+import { Dialog, DialogContainer } from "@keystar/ui/dialog";
+import { Box, Flex } from "@keystar/ui/layout";
+import { Content } from "@keystar/ui/slots";
+import { Heading, Text } from "@keystar/ui/typography";
+import { Notice } from "@keystar/ui/notice";
+import { TextLink } from "@keystar/ui/link";
+import { ChangePreview } from "./change-preview";
+import { toastQueue } from "@keystar/ui/toast";
+import { PUBLISHING_VERSION } from "@/lib/publishing/config";
+import type { PublishingStatus } from "@/lib/publishing/github";
 
 type PublishingProps = {
-  children: ReactNode
-  revision: string
-  repositoryReady: boolean
-  labels: Record<string, string>
-}
+  children: ReactNode;
+  revision: string;
+  branch: string;
+  repositoryReady: boolean;
+  labels: Record<string, string>;
+};
 
 export async function publishingRequest(body?: object) {
   const send = () =>
     fetch(
-      '/api/publishing',
+      "/api/publishing",
       body
         ? {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...body, version: PUBLISHING_VERSION }),
           }
-        : { cache: 'no-store' },
-    )
-  let response = await send()
+        : { cache: "no-store" },
+    );
+  let response = await send();
   if (response.status === 401) {
-    const refresh = await fetch('/api/keystatic/github/refresh-token', {
-      method: 'POST',
-    })
-    if (refresh.ok) response = await send()
+    const refresh = await fetch("/api/keystatic/github/refresh-token", {
+      method: "POST",
+    });
+    if (refresh.ok) response = await send();
   }
-  const result = await response.json()
+  const result = await response.json();
   if (!response.ok)
-    throw Object.assign(new Error(result.error ?? 'Please try again.'), {
+    throw Object.assign(new Error(result.error ?? "Please try again."), {
       status: response.status,
-    })
-  return result
+    });
+  return result;
 }
 
 // Navigation can remount the editor. Keep background reads shared for the current
 // saved revision; a new native GitHub commit always invalidates this cache.
 let cached:
   | { revision: string; status: PublishingStatus; at: number }
-  | undefined
+  | undefined;
 let pending:
   | { revision: string; promise: Promise<PublishingStatus> }
-  | undefined
-let preparing: Promise<unknown> | undefined
+  | undefined;
+let preparing: Promise<unknown> | undefined;
 function readStatus(
   revision: string,
   force = false,
@@ -65,160 +67,162 @@ function readStatus(
       ? pending.promise
           .catch(() => undefined)
           .then(() => readStatus(revision, true))
-      : pending.promise
+      : pending.promise;
   }
   if (
     !force &&
     cached?.revision === revision &&
     Date.now() - cached.at < 30_000
   )
-    return Promise.resolve(cached.status)
+    return Promise.resolve(cached.status);
   const promise = publishingRequest()
     .then((status: PublishingStatus) => {
-      cached = { revision, status, at: Date.now() }
-      return status
+      cached = { revision, status, at: Date.now() };
+      return status;
     })
     .finally(() => {
-      if (pending?.promise === promise) pending = undefined
-    })
-  pending = { revision, promise }
-  return promise
+      if (pending?.promise === promise) pending = undefined;
+    });
+  pending = { revision, promise };
+  return promise;
 }
 
 function changeLabel(filename: string, labels: Record<string, string>) {
-  const entryPath = filename.replace(/\.(mdx?|ya?ml|json)$/, '')
+  const entryPath = filename.replace(/\.(mdx?|ya?ml|json)$/, "");
   return (
     labels[entryPath] ??
     filename
-      .replace(/^src\/content\//, '')
-      .replace(/^public\/images\//, 'Images / ')
-      .replace(/(?:-[a-f0-9]{12})?\.[^.]+$/, '')
-      .split('/')
+      .replace(/^src\/content\//, "")
+      .replace(/^public\/images\//, "Images / ")
+      .replace(/(?:-[a-f0-9]{12})?\.[^.]+$/, "")
+      .split("/")
       .map((part) =>
         part
-          .replace(/[-_]/g, ' ')
+          .replace(/[-_]/g, " ")
           .replace(/^./, (letter) => letter.toUpperCase()),
       )
-      .join(' / ')
-  )
+      .join(" / ")
+  );
 }
 
 export function PublishingShell({
   children,
-  revision,
+  revision: commit,
+  branch,
   repositoryReady,
   labels,
 }: PublishingProps) {
+  const revision = commit ? `${branch}:${commit}` : "";
   const [status, setStatus] = useState<PublishingStatus | null>(() =>
     cached?.revision === revision ? cached.status : null,
-  )
-  const [dirty, setDirty] = useState(false)
-  const [review, setReview] = useState<PublishingStatus | null>(null)
-  const [busy, setBusy] = useState(false)
-  const [error, setError] = useState('')
-  const [attempt, setAttempt] = useState(0)
+  );
+  const [dirty, setDirty] = useState(false);
+  const [review, setReview] = useState<PublishingStatus | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     const onDirty = (event: Event) =>
-      setDirty(Boolean((event as CustomEvent<boolean>).detail))
-    window.addEventListener('keystatic:dirty', onDirty)
-    return () => window.removeEventListener('keystatic:dirty', onDirty)
-  }, [])
+      setDirty(Boolean((event as CustomEvent<boolean>).detail));
+    window.addEventListener("keystatic:dirty", onDirty);
+    return () => window.removeEventListener("keystatic:dirty", onDirty);
+  }, []);
 
   useEffect(() => {
-    if (!repositoryReady) return
-    let active = true
+    if (!repositoryReady) return;
+    let active = true;
     if (!revision) {
       // Only first-time setup needs to create a branch. Existing drafts open
       // immediately, without a prepare/merge request on every navigation.
-      preparing ??= publishingRequest({ action: 'prepare' }).finally(() => {
-        preparing = undefined
-      })
+      preparing ??= publishingRequest({ action: "prepare" }).finally(() => {
+        preparing = undefined;
+      });
       preparing
         .then(() => {
-          if (active) window.location.reload()
+          if (active) window.location.reload();
         })
         .catch((error) => {
-          if (active) setError(error.message)
-        })
+          if (active) setError(error.message);
+        });
       return () => {
-        active = false
-      }
+        active = false;
+      };
     }
     const refresh = (force = false) =>
       readStatus(revision, force)
         .then((value) => {
           if (active) {
-            setStatus(value)
-            setError('')
+            setStatus(value);
+            setError("");
           }
         })
         .catch((error) => {
-          if (active) setError(error.message)
-        })
-    void refresh()
+          if (active) setError(error.message);
+        });
+    void refresh();
     const onFocus = () => {
-      void refresh(true)
-    }
+      void refresh(true);
+    };
     const onVisible = () => {
-      if (document.visibilityState === 'visible') onFocus()
-    }
-    window.addEventListener('focus', onFocus)
-    document.addEventListener('visibilitychange', onVisible)
+      if (document.visibilityState === "visible") onFocus();
+    };
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVisible);
     const timer = window.setInterval(() => {
-      if (document.visibilityState === 'visible') void refresh(true)
-    }, 30_000)
+      if (document.visibilityState === "visible") void refresh(true);
+    }, 30_000);
     return () => {
-      active = false
-      clearInterval(timer)
-      window.removeEventListener('focus', onFocus)
-      document.removeEventListener('visibilitychange', onVisible)
-    }
-  }, [revision, repositoryReady, attempt])
+      active = false;
+      clearInterval(timer);
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [revision, repositoryReady, attempt]);
 
   const openReview = useCallback(async () => {
-    if (dirty || busy) return
-    setBusy(true)
-    setError('')
+    if (dirty || busy) return;
+    setBusy(true);
+    setError("");
     try {
-      const latest = await readStatus(revision, true)
-      setStatus(latest)
-      if (latest.files.length) setReview(latest)
+      const latest = await readStatus(revision, true);
+      setStatus(latest);
+      if (latest.files.length) setReview(latest);
     } catch (error) {
-      setError((error as Error).message)
+      setError((error as Error).message);
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }, [dirty, busy, revision])
+  }, [dirty, busy, revision]);
 
   async function publish() {
-    if (!review || dirty || busy) return
-    setBusy(true)
-    setError('')
+    if (!review || dirty || busy) return;
+    setBusy(true);
+    setError("");
     try {
       await publishingRequest({
-        action: 'publish',
+        action: "publish",
         draftSha: review.draftSha,
         publishedSha: review.publishedSha,
-      })
-      setReview(null)
-      setStatus(null)
-      cached = undefined
+      });
+      setReview(null);
+      setStatus(null);
+      cached = undefined;
       toastQueue.positive(
-        'Changes published. The site will update when the deployment finishes.',
-      )
+        "Changes published. The site will update when the deployment finishes.",
+      );
       // A failed status refresh must not leave a successfully published batch
       // open in the dialog. Concurrent saves are picked up by this fresh read.
-      const latest = await readStatus(revision, true)
-      setStatus(latest)
+      const latest = await readStatus(revision, true);
+      setStatus(latest);
     } catch (error) {
-      setError((error as Error).message)
+      setError((error as Error).message);
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
   }
 
-  const count = status?.files.length ?? 0
+  const count = status?.files.length ?? 0;
   return (
     <Flex direction="column" height="100vh">
       {count > 0 && (
@@ -233,15 +237,15 @@ export function PublishingShell({
         >
           <Text role="status">
             {dirty
-              ? 'Save your current edits before publishing.'
-              : `${count} saved ${count === 1 ? 'change' : 'changes'} ready to publish`}
+              ? "Save your current edits before publishing."
+              : `You have ${count} saved ${count === 1 ? "change" : "changes"} ready to publish`}
           </Text>
           <Button
             prominence="high"
             isDisabled={dirty || busy}
             onPress={openReview}
           >
-            {busy && !review ? 'Checking changes…' : 'Review & publish'}
+            {busy && !review ? "Checking changes…" : "Review & publish"}
           </Button>
         </Flex>
       )}
@@ -265,20 +269,21 @@ export function PublishingShell({
       <DialogContainer
         onDismiss={() => {
           if (!busy) {
-            setReview(null)
-            setError('')
+            setReview(null);
+            setError("");
           }
         }}
         isKeyboardDismissDisabled={busy}
       >
         {review && (
           <Dialog size="large">
-            <Heading>Publish saved changes</Heading>
+            <Heading>Publish your saved changes</Heading>
             <Content>
               <Flex direction="column" gap="large">
                 <Text>
-                  This publishes all saved changes from the team. The site
-                  updates after the deployment finishes.
+                  This publishes only your saved changes. Other editors’ drafts
+                  stay unpublished. The site updates after the deployment
+                  finishes.
                 </Text>
                 <Flex
                   elementType="ul"
@@ -320,8 +325,8 @@ export function PublishingShell({
               <Button
                 isDisabled={busy}
                 onPress={() => {
-                  setReview(null)
-                  setError('')
+                  setReview(null);
+                  setError("");
                 }}
               >
                 Keep editing
@@ -331,12 +336,12 @@ export function PublishingShell({
                 isDisabled={busy || dirty}
                 onPress={publish}
               >
-                {busy ? 'Publishing…' : 'Publish changes'}
+                {busy ? "Publishing…" : "Publish changes"}
               </Button>
             </ButtonGroup>
           </Dialog>
         )}
       </DialogContainer>
     </Flex>
-  )
+  );
 }

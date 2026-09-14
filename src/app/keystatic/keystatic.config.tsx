@@ -2,7 +2,7 @@ import { config, collection } from '@keystatic/core'
 import React from 'react'
 
 import { storage } from './storage'
-import { DRAFT_BRANCH } from '@/lib/publishing/config'
+import { DRAFT_BRANCH_PREFIX } from '@/lib/publishing/config'
 
 import { homepage } from './schema/homepage'
 import { coachesPage } from './schema/coaches-page'
@@ -22,7 +22,7 @@ import { partnershipsPage, partnerships } from './schema/partnerships'
 export default config({
   storage,
   ui: {
-    draftBranch: storage.kind === 'github' ? DRAFT_BRANCH : undefined,
+    draftBranchPerUser: storage.kind === 'github' ? DRAFT_BRANCH_PREFIX : undefined,
     brand: {
       name: 'Star Athletics',
       mark: StarAthleticsLogo,

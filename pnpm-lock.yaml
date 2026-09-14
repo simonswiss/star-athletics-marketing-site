@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  '@keystatic/core@0.6.9': 8752edc5ad306c11bfc50830a71df1f4359f2804cc7256e377252b9491016390
+  '@keystatic/core@0.6.9': 367a29e461a653ff8f21420664366abdc1c2f2e17e46bc636bbee84fba1a2727
 
 importers:
 
@@ -25,10 +25,10 @@ importers:
         version: 0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6)
       '@keystatic/core':
         specifier: 0.6.9
-        version: 0.6.9(patch_hash=8752edc5ad306c11bfc50830a71df1f4359f2804cc7256e377252b9491016390)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6)
+        version: 0.6.9(patch_hash=367a29e461a653ff8f21420664366abdc1c2f2e17e46bc636bbee84fba1a2727)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6)
       '@keystatic/next':
         specifier: 5.0.5
-        version: 5.0.5(@keystatic/core@0.6.9(patch_hash=8752edc5ad306c11bfc50830a71df1f4359f2804cc7256e377252b9491016390)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+        version: 5.0.5(@keystatic/core@0.6.9(patch_hash=367a29e461a653ff8f21420664366abdc1c2f2e17e46bc636bbee84fba1a2727)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@mdx-js/mdx':
         specifier: ^3.1.0
         version: 3.1.1
@@ -3578,7 +3578,7 @@ snapshots:
     optionalDependencies:
       next: 15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
 
-  '@keystatic/core@0.6.9(patch_hash=8752edc5ad306c11bfc50830a71df1f4359f2804cc7256e377252b9491016390)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6)':
+  '@keystatic/core@0.6.9(patch_hash=367a29e461a653ff8f21420664366abdc1c2f2e17e46bc636bbee84fba1a2727)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.7
       '@braintree/sanitize-url': 6.0.4
@@ -3647,10 +3647,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@keystatic/next@5.0.5(@keystatic/core@0.6.9(patch_hash=8752edc5ad306c11bfc50830a71df1f4359f2804cc7256e377252b9491016390)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
+  '@keystatic/next@5.0.5(@keystatic/core@0.6.9(patch_hash=367a29e461a653ff8f21420664366abdc1c2f2e17e46bc636bbee84fba1a2727)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.7
-      '@keystatic/core': 0.6.9(patch_hash=8752edc5ad306c11bfc50830a71df1f4359f2804cc7256e377252b9491016390)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6)
+      '@keystatic/core': 0.6.9(patch_hash=367a29e461a653ff8f21420664366abdc1c2f2e17e46bc636bbee84fba1a2727)(@keystar/ui@0.10.0(next@15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6))(react-aria@3.50.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-stately@3.48.0(react@19.2.6))(react@19.2.6)
       '@types/react': 19.2.15
       chokidar: 3.6.0
       next: 15.5.18(@playwright/test@1.58.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)

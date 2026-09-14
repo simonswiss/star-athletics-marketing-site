@@ -2,23 +2,38 @@
 
 ## Editing and publishing
 
-In the deployed Keystatic editor, **Save draft** saves content to the shared
-`content-drafts` branch. Everyone edits the same draft batch. These saves do not
-deploy the site. **Review & publish** shows before/after text for saved changes; **Publish changes**
-merges the reviewed revision into `main`, which triggers the normal production
-deployment. Unsaved edits must be saved first. Publishing is not an indication
-that the deployment has finished.
+In the deployed Keystatic editor, **Save draft** saves to your own draft branch.
+**Review & publish** shows only your saved changes. **Publish changes** publishes
+that reviewed batch; other editors' drafts remain unpublished. Each editor must
+sign in with their own GitHub account. People sharing one GitHub login share one
+draft identity.
 
-The draft branch is created automatically when an authenticated editor first
-opens Keystatic, if it does not exist yet. Existing branches open immediately;
-there is no blocking preparation or merge on page navigation. The API uses the editor's existing
-Keystatic GitHub session and requires repository write permission. No new token
-or Vercel deploy hook is needed.
+Personal branches use `content-drafts-<GitHub numeric user ID>`. The API obtains
+that ID from GitHub using the authenticated token; it never accepts a branch or
+owner chosen by the browser. The editor uses the same ID from Keystatic's existing
+viewer query, so resolving ownership adds no separate client request. Direct URLs
+for `main`, the old shared branch, or another editor's branch still open only the
+signed-in editor's personal drafts.
 
-If another editor saves between review and publish, reopen the review to include
-the new batch. Saves made after publishing starts remain drafts for the next
-batch. Conflicts fail without overwriting either branch. A developer can resolve
-conflicts on `content-drafts`; never force-reset it while it contains edits.
+A personal branch is created from current `main` the first time its editor opens
+Keystatic. Existing branches open immediately, with status fetched in the
+background. Draft saves never deploy the site. Publication merges the exact
+reviewed personal revision into `main`, triggering one production deployment.
+Unsaved edits must be saved first; publishing does not mean deployment is finished.
+
+New saves in another tab or a changed production revision require a fresh review.
+Conflicts fail without overwriting either branch. A developer can merge current
+`main` into a personal branch to resolve conflicts or refresh its published content;
+never force-reset a branch containing drafts.
+
+### Migration from the retired shared batch
+
+The two unintended Woopi edits were restored on `main` and preserved separately
+on their owner's personal draft branch. The legacy `content-drafts` branch is
+retained as history and locked on GitHub, including for administrators, so stale
+editor tabs cannot save into the old shared batch. Reload Keystatic after rollout.
+The publishing API rejects older clients without protocol version 2; neither
+preparation nor publication can target the retired shared branch.
 
 Only changes under `src/content/` and `public/images/` can be published from the
 CMS. Application code changes need the normal developer workflow. Draft batches
@@ -29,7 +44,7 @@ comparison's file list at 300.
 
 - Keep Vercel's production branch set to `main`.
 - Deploy this implementation to `main` before editors use the new workflow.
-  The committed `vercel.json` disables automatic builds of `content-drafts`.
+  The committed `vercel.json` disables automatic builds of `content-drafts` and `content-drafts-*` ([Vercel branch-pattern documentation](https://vercel.com/docs/project-configuration/git-configuration)).
 - Keep the existing Keystatic GitHub app and repository environment variables.
   The app needs Contents write access (already used for saving).
 - GitHub rules requiring pull requests on `main` can block the Publish button.
@@ -48,13 +63,13 @@ the configuration API exposes no batch-publish feature. The older
 includes a prototype but is still labelled roadmap.
 
 The exact package version is pinned. `pnpm-workspace.yaml` applies
-`patches/@keystatic__core@0.6.9.patch`. The small patch adds `ui.draftBranch`, locks
+`patches/@keystatic__core@0.6.9.patch`. The patch adds `ui.draftBranchPerUser`, resolves `ui.draftBranch` inside the authenticated Keystatic shell, locks
 the editor's branch context (including direct URLs), removes branch-management
 controls, labels saves as drafts, reports unsaved editor state to the publishing
 controls and adds a publishing slot inside Keystatic's existing Keystar provider.
 The client-only slot uses native layout, buttons, notices, dialogs and toasts,
 including Keystatic's chosen light/dark theme. Its status follows the native
-saved commit revision; background reads are shared across navigation and refresh
+personal branch and saved commit revision; background reads are shared across navigation and refresh
 on focus and every 30 seconds while visible. No publishing bar appears for an
 empty batch. Review always fetches the latest batch before publication. Conflicted saves cannot escape
 into a different branch. Upgrade this patch deliberately and run the tests when
@@ -93,7 +108,7 @@ were retained because no smaller candidate met the quality policy.
 
 ## Verification
 
-- `pnpm test`: publishing authorization, branch preparation, review races,
+- `pnpm test`: publishing authorization, isolation between two editors, legacy-client rejection, branch preparation, review races,
   conflicts, code-change rejection, duplicate publishing, image alpha/reference
   preservation, optimizer idempotence and installed-patch checks.
 - `pnpm lint` and `pnpm tsc`: application checks.
