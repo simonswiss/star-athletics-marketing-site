@@ -95,8 +95,17 @@ async function mockEditor(
       json: {
         draftSha: commits.length ? 'e'.repeat(40) : draft,
         publishedSha: main,
+        comparisonUrl: `https://github.com/example/marketing-site/compare/${main}...${draft}`,
         files: hasSavedChanges
-          ? [{ filename: 'src/content/contacts.mdx', status: 'modified' }]
+          ? [
+              {
+                filename: 'src/content/contacts.mdx',
+                status: 'modified',
+                patch: '@@ -1 +1 @@\n-title: Contact us.\n+title: Contact us!',
+                additions: 1,
+                deletions: 1,
+              },
+            ]
           : [],
       },
     })
@@ -400,4 +409,24 @@ test('only a missing draft branch runs first-time preparation', async ({
     page.getByRole('heading', { name: 'Dashboard', exact: true }),
   ).toBeVisible()
   expect(requests.filter((action) => action === 'prepare')).toHaveLength(1)
+})
+
+test('review displays before and after copy and highlights the actual punctuation change', async ({
+  page,
+}) => {
+  await mockEditor(page)
+  await page.goto('/keystatic')
+  await page.getByRole('button', { name: 'Review & publish' }).click()
+  const dialog = page.getByRole('dialog')
+  await expect(dialog.getByText('Before', { exact: true })).toBeVisible()
+  await expect(dialog.getByText('After', { exact: true })).toBeVisible()
+  await expect(dialog.locator('del')).toHaveText('.')
+  await expect(dialog.locator('ins')).toHaveText('!')
+  await expect(dialog).not.toContainText('@@')
+  await expect(
+    dialog.getByRole('link', { name: 'Open full comparison on GitHub' }),
+  ).toHaveAttribute(
+    'href',
+    `https://github.com/example/marketing-site/compare/${main}...${draft}`,
+  )
 })

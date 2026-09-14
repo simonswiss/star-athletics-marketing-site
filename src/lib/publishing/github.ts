@@ -10,9 +10,12 @@ export class PublishingError extends Error {
 }
 
 type Ref = { object: { sha: string } }
-type ChangedFile = {
+export type ChangedFile = {
   filename: string
   previous_filename?: string
+  patch?: string
+  additions?: number
+  deletions?: number
   status: string
 }
 type Comparison = { status: string; files?: ChangedFile[] }
@@ -20,6 +23,7 @@ export type PublishingStatus = {
   draftSha: string | null
   publishedSha: string
   files: ChangedFile[]
+  comparisonUrl?: string
 }
 
 export function createPublisher(
@@ -121,6 +125,7 @@ export function createPublisher(
       publishedSha: published.object.sha,
       draftSha: draft.object.sha,
       files,
+      comparisonUrl: `https://github.com/${repository}/compare/${published.object.sha}...${draft.object.sha}`,
     }
   }
 

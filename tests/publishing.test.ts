@@ -179,3 +179,16 @@ test('conflicts report a recoverable error without resetting draft history', asy
   assert.match((await response.json()).error, /conflicts/)
   assert.equal(writes.length, 1)
 })
+
+test('review includes the Git patch and a comparison of the exact reviewed revisions', async () => {
+  const patch = '@@ -1 +1 @@\n-before\n+after'
+  const { call } = fixture({
+    files: [{ ...changed[0], patch, additions: 1, deletions: 1 }],
+  })
+  const result = await (await call()).json()
+  assert.equal(result.files[0].patch, patch)
+  assert.equal(
+    result.comparisonUrl,
+    `https://github.com/team/site/compare/${main}...${draft}`,
+  )
+})

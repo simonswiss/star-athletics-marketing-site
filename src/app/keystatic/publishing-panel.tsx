@@ -7,6 +7,8 @@ import { Box, Flex } from '@keystar/ui/layout'
 import { Content } from '@keystar/ui/slots'
 import { Heading, Text } from '@keystar/ui/typography'
 import { Notice } from '@keystar/ui/notice'
+import { TextLink } from '@keystar/ui/link'
+import { ChangePreview } from './change-preview'
 import { toastQueue } from '@keystar/ui/toast'
 import type { PublishingStatus } from '@/lib/publishing/github'
 
@@ -270,7 +272,7 @@ export function PublishingShell({
         isKeyboardDismissDisabled={busy}
       >
         {review && (
-          <Dialog size="medium">
+          <Dialog size="large">
             <Heading>Publish saved changes</Heading>
             <Content>
               <Flex direction="column" gap="large">
@@ -281,29 +283,32 @@ export function PublishingShell({
                 <Flex
                   elementType="ul"
                   direction="column"
-                  gap="medium"
+                  gap="xlarge"
                   aria-label="Saved changes"
                 >
                   {review.files.map((file) => (
                     <Flex
                       elementType="li"
                       direction="column"
-                      gap="small"
+                      gap="large"
                       key={file.filename}
                     >
                       <Text weight="medium">
                         {changeLabel(file.filename, labels)}
                       </Text>
-                      <Text color="neutralSecondary" size="small">
-                        {file.status === 'added'
-                          ? 'Added'
-                          : file.status === 'removed'
-                            ? 'Removed'
-                            : 'Updated'}
-                      </Text>
+                      <ChangePreview file={file} />
                     </Flex>
                   ))}
                 </Flex>
+                {review.comparisonUrl && (
+                  <TextLink
+                    href={review.comparisonUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open full comparison on GitHub
+                  </TextLink>
+                )}
                 {error && (
                   <Notice tone="critical">
                     <Text>{error}</Text>

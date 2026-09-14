@@ -4,7 +4,7 @@
 
 In the deployed Keystatic editor, **Save draft** saves content to the shared
 `content-drafts` branch. Everyone edits the same draft batch. These saves do not
-deploy the site. **Review & publish** lists saved changes; **Publish changes**
+deploy the site. **Review & publish** shows before/after text for saved changes; **Publish changes**
 merges the reviewed revision into `main`, which triggers the normal production
 deployment. Unsaved edits must be saved first. Publishing is not an indication
 that the deployment has finished.
@@ -105,3 +105,15 @@ were retained because no smaller candidate met the quality policy.
   Use `pnpm exec playwright install chromium` if a browser is not installed.
   The native-editor test verifies a direct `main` URL still commits only to
   drafts, and publishing unlocks after the save succeeds.
+
+## Reviewing copy changes
+
+The review uses GitHub's patch for the exact compared commit revisions. It shows
+changed blocks with Before and After labels and highlights the replaced text.
+Simple top-level YAML fields get readable names and unquoted values; MDX is
+displayed as text, never executed. Formatting-only changes are labelled as such.
+
+Each file previews up to four changed blocks and 2,000 characters per side.
+Incomplete GitHub patches and shortened previews are explicitly labelled, and
+the dialog links to the full GitHub comparison at the same immutable revisions.
+Images and other files without a text patch get a clear fallback message.
