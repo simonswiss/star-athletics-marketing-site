@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { parsePatch, replacementRange } from '../src/lib/publishing/diff'
+import { parsePatch, replacementRange, diffExcerpt } from '../src/lib/publishing/diff'
 
 test('scalar copy changes have a readable field name and exact before/after text', () => {
   assert.deepEqual(
@@ -75,4 +75,33 @@ test('punctuation and emoji highlights do not split Unicode characters', () => {
     beforeEnd: 6,
     afterEnd: 6,
   })
+})
+
+
+test('compact punctuation diffs omit distant context and expand without losing text', () => {
+  const paragraph = 'An introductory sentence that is far from the edit. Young athletes push their limits, celebrate progress, and succeed together'
+  const compact = diffExcerpt(paragraph + '.', paragraph + '!')
+  assert.equal(compact.removed, '.')
+  assert.equal(compact.added, '!')
+  assert.equal(compact.collapsed, true)
+  assert.equal(compact.incomplete, false)
+  assert.ok(compact.prefix.startsWith('…'))
+  assert.ok(compact.prefix.length <= 41)
+  const full = diffExcerpt(paragraph + '.', paragraph + '!', true)
+  assert.equal(full.prefix + full.removed + full.suffix, paragraph + '.')
+  assert.equal(full.prefix + full.added + full.suffix, paragraph + '!')
+  assert.equal(full.collapsed, false)
+})
+
+test('compact diffs preserve changed emoji, additions and deletions and label oversized changes', () => {
+  const start = '😀'.repeat(60)
+  const end = '😃'.repeat(60)
+  const edit = diffExcerpt(start + 'old' + end, start + 'new' + end)
+  assert.equal(edit.prefix, '…' + '😀'.repeat(40))
+  assert.equal(edit.suffix, '😃'.repeat(40) + '…')
+  assert.equal(edit.removed, 'old')
+  assert.equal(edit.added, 'new')
+  assert.equal(diffExcerpt('', 'New line').added, 'New line')
+  assert.equal(diffExcerpt('Removed line', '').removed, 'Removed line')
+  assert.equal(diffExcerpt('x'.repeat(2500), 'y'.repeat(2500)).incomplete, true)
 })

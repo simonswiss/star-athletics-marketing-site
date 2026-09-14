@@ -42,12 +42,14 @@ function fixtureTree(content: string) {
 async function mockEditor(
   page: Page,
   {
+    reviewPatch,
     viewerId = 1,
     conflict = false,
     initialPending = true,
     holdStatus,
     draftExists = true,
   }: {
+    reviewPatch?: string;
     viewerId?: number;
     conflict?: boolean;
     initialPending?: boolean;
@@ -105,7 +107,7 @@ async function mockEditor(
               {
                 filename: "src/content/contacts.mdx",
                 status: "modified",
-                patch: "@@ -1 +1 @@\n-title: Contact us.\n+title: Contact us!",
+                patch: reviewPatch ?? "@@ -1 +1 @@\n-title: Contact us.\n+title: Contact us!",
                 additions: 1,
                 deletions: 1,
               },
@@ -415,16 +417,19 @@ test("only a missing draft branch runs first-time preparation", async ({
   expect(requests.filter((action) => action === "prepare")).toHaveLength(1);
 });
 
-test("review displays before and after copy and highlights the actual punctuation change", async ({
+test("review shows unified removed and added lines with the punctuation highlighted", async ({
   page,
 }) => {
   await mockEditor(page);
   await page.goto("/keystatic");
   await page.getByRole("button", { name: "Review & publish" }).click();
   const dialog = page.getByRole("dialog");
-  await expect(dialog.getByText("Before", { exact: true })).toBeVisible();
-  await expect(dialog.getByText("After", { exact: true })).toBeVisible();
+  await expect(dialog.getByRole("group", { name: "Removed text" })).toBeVisible();
+  await expect(dialog.getByText("Before", { exact: true })).toHaveCount(0);
+  await expect(dialog.getByRole("group", { name: "Added text" })).toBeVisible();
+  await expect(dialog.getByText("After", { exact: true })).toHaveCount(0);
   await expect(dialog.locator("del")).toHaveText(".");
+  expect((await dialog.getByRole("group", { name: "Removed text" }).boundingBox())!.height).toBeLessThan(40);
   await expect(dialog.locator("ins")).toHaveText("!");
   await expect(dialog).not.toContainText("@@");
   await expect(
@@ -478,4 +483,25 @@ test("two editors cannot see or publish each other’s saved batch, even using a
     await first.close();
     await second.close();
   }
+});
+
+
+test("long unchanged paragraphs collapse and can be expanded in the review", async ({ page }) => {
+  const paragraph = "An introductory sentence that is far from the edit. Young athletes push their limits, celebrate progress, and succeed together";
+  await mockEditor(page, { reviewPatch: `@@ -1 +1 @@\n-${paragraph}.\n+${paragraph}!` });
+  await page.goto("/keystatic");
+  await page.getByRole("button", { name: "Review & publish" }).click();
+  const dialog = page.getByRole("dialog");
+  const removed = dialog.getByRole("group", { name: "Removed text" });
+  const added = dialog.getByRole("group", { name: "Added text" });
+  await expect(removed).not.toContainText("An introductory sentence");
+  await expect(added).not.toContainText("An introductory sentence");
+  await expect(removed).toContainText("…");
+  await expect(dialog.locator("del")).toHaveText(".");
+  await expect(dialog.locator("ins")).toHaveText("!");
+  await dialog.getByRole("button", { name: "Show full lines" }).click();
+  await expect(removed).toContainText(paragraph + ".");
+  await expect(added).toContainText(paragraph + "!");
+  await dialog.getByRole("button", { name: "Collapse unchanged text" }).click();
+  await expect(removed).not.toContainText("An introductory sentence");
 });

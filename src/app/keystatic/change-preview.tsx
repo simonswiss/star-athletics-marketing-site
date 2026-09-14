@@ -1,11 +1,14 @@
 'use client'
 
+import { useState } from 'react'
+import { Button } from '@keystar/ui/button'
 import { Flex } from '@keystar/ui/layout'
 import { Text } from '@keystar/ui/typography'
-import { parsePatch, replacementRange } from '@/lib/publishing/diff'
+import { parsePatch, diffExcerpt } from '@/lib/publishing/diff'
 import type { ChangedFile } from '@/lib/publishing/github'
 
 export function ChangePreview({ file }: { file: ChangedFile }) {
+  const [expanded, setExpanded] = useState(false)
   if (!file.patch) {
     const image = /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(file.filename)
     return (
@@ -23,15 +26,18 @@ export function ChangePreview({ file }: { file: ChangedFile }) {
     file.additions,
     file.deletions,
   )
-  // Keep large batches usable; the full immutable comparison remains linked.
   const visible = changes.slice(0, 4)
+  const excerpts = visible.map((change) =>
+    diffExcerpt(change.before, change.after, expanded),
+  )
+  const canExpand = visible.some(
+    (change) => diffExcerpt(change.before, change.after).collapsed,
+  )
   const shortened =
     changes.length > visible.length ||
-    visible.some(
-      (change) => change.before.length > 2000 || change.after.length > 2000,
-    )
+    excerpts.some((excerpt) => excerpt.incomplete)
   return (
-    <Flex direction="column" gap="large">
+    <Flex direction="column" gap="medium">
       {visible.map((change, index) => {
         if (change.before === change.after)
           return (
@@ -39,53 +45,78 @@ export function ChangePreview({ file }: { file: ChangedFile }) {
               Formatting changed; the text is unchanged.
             </Text>
           )
-        const range = replacementRange(change.before, change.after)
+        const excerpt = excerpts[index]
         return (
-          <Flex direction="column" gap="medium" key={index}>
+          <Flex direction="column" gap="small" key={index}>
             {change.field && (
               <Text size="small" weight="medium">
                 {change.field}
               </Text>
             )}
-            {(['before', 'after'] as const).map((side) => {
-              const value = change[side]
-              if (!value && !change.field) return null
-              const end = side === 'before' ? range.beforeEnd : range.afterEnd
-              const limit = 2000
-              return (
-                <Flex direction="column" gap="small" key={side}>
-                  <Text
-                    size="small"
-                    color={side === 'before' ? 'critical' : 'positive'}
-                    weight="medium"
+            <Flex direction="column">
+              {(['before', 'after'] as const).map((side) => {
+                if (!change[side] && !change.field) return null
+                const removed = side === 'before'
+                const tone = removed ? 'critical' : 'positive'
+                return (
+                  <Flex
+                    key={side}
+                    role="group"
+                    aria-label={removed ? 'Removed text' : 'Added text'}
+                    backgroundColor={tone}
+                    paddingX="medium"
+                    paddingY="small"
+                    gap="medium"
+                    alignItems="baseline"
                   >
-                    {side === 'before' ? 'Before' : 'After'}
-                  </Text>
-                  <Text
-                    elementType="p"
-                    UNSAFE_style={{
-                      whiteSpace: 'pre-wrap',
-                      overflowWrap: 'anywhere',
-                    }}
-                  >
-                    {!value && 'Empty'}
-                    {value.slice(0, Math.min(range.start, limit))}
-                    <Text
-                      elementType={side === 'before' ? 'del' : 'ins'}
-                      color={side === 'before' ? 'critical' : 'positive'}
-                      weight="medium"
-                    >
-                      {value.slice(range.start, Math.min(end, limit))}
+                    <Text aria-hidden="true" color={tone} size="small" trim={false}>
+                      {removed ? '−' : '+'}
                     </Text>
-                    {value.slice(end, limit)}
-                    {value.length > limit ? '…' : ''}
-                  </Text>
-                </Flex>
-              )
-            })}
+                    <Text
+                      elementType="code"
+                      size="small"
+                      trim={false}
+                      UNSAFE_style={{
+                        fontFamily: 'var(--kui-typography-font-family-code)',
+                        whiteSpace: 'pre-wrap',
+                        overflowWrap: 'anywhere',
+                        minWidth: 0,
+                      }}
+                    >
+                      {excerpt.prefix}
+                      <Text
+                        elementType={removed ? 'del' : 'ins'}
+                        color="onEmphasis"
+                        weight="medium"
+                        UNSAFE_style={{
+                          backgroundColor: `var(--kui-color-background-${tone}-emphasis)`,
+                          textDecoration: 'none',
+                          fontFamily: 'inherit',
+                        }}
+                      >
+                        {removed ? excerpt.removed : excerpt.added}
+                      </Text>
+                      {excerpt.suffix}
+                      {!change[side] && '(empty)'}
+                    </Text>
+                  </Flex>
+                )
+              })}
+            </Flex>
           </Flex>
         )
       })}
+      {canExpand && (
+        <Flex>
+          <Button
+            prominence="low"
+            onPress={() => setExpanded((value) => !value)}
+            aria-expanded={expanded}
+          >
+            {expanded ? 'Collapse unchanged text' : 'Show full lines'}
+          </Button>
+        </Flex>
+      )}
       {(incomplete || shortened || !changes.length) && (
         <Text color="neutralSecondary" size="small">
           This preview is incomplete. Open the full comparison to review all

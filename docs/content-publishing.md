@@ -124,11 +124,11 @@ were retained because no smaller candidate met the quality policy.
 ## Reviewing copy changes
 
 The review uses GitHub's patch for the exact compared commit revisions. It shows
-changed blocks with Before and After labels and highlights the replaced text.
+compact unified diff rows: red minus lines for removals, green plus lines for additions, and stronger highlights on the changed characters. Distant unchanged text is collapsed; **Show full lines** expands it.
 Simple top-level YAML fields get readable names and unquoted values; MDX is
 displayed as text, never executed. Formatting-only changes are labelled as such.
 
-Each file previews up to four changed blocks and 2,000 characters per side.
+Each file previews up to four changed blocks. Compact rows show up to 40 unchanged characters on either side of the edit; expanded context and changed runs are each capped at 2,000 characters.
 Incomplete GitHub patches and shortened previews are explicitly labelled, and
 the dialog links to the full GitHub comparison at the same immutable revisions.
 Images and other files without a text patch get a clear fallback message.

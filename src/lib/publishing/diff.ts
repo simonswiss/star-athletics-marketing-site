@@ -126,3 +126,29 @@ export function replacementRange(before: string, after: string) {
       .length,
   }
 }
+
+/** Keep every changed character; collapse only distant, unchanged context. */
+export function diffExcerpt(before: string, after: string, expanded = false) {
+  const range = replacementRange(before, after)
+  const context = expanded ? 2000 : 40
+  const prefix = Array.from(before.slice(0, range.start))
+  const suffix = Array.from(before.slice(range.beforeEnd))
+  const hiddenStart = prefix.length > context
+  const hiddenEnd = suffix.length > context
+  const lead = (hiddenStart ? '…' : '') + prefix.slice(-context).join('')
+  const tail = suffix.slice(0, context).join('') + (hiddenEnd ? '…' : '')
+  const removed = Array.from(before.slice(range.start, range.beforeEnd))
+  const added = Array.from(after.slice(range.start, range.afterEnd))
+  return {
+    prefix: lead,
+    suffix: tail,
+    removed:
+      removed.slice(0, 2000).join('') + (removed.length > 2000 ? '…' : ''),
+    added: added.slice(0, 2000).join('') + (added.length > 2000 ? '…' : ''),
+    collapsed: hiddenStart || hiddenEnd,
+    incomplete:
+      removed.length > 2000 ||
+      added.length > 2000 ||
+      (expanded && (hiddenStart || hiddenEnd)),
+  }
+}
